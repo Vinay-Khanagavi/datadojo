@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react';
-import {Container, Box, Typography, TextField, Button} from '@mui/material';
+import {Container, Box, Typography, TextField, Button, Link} from '@mui/material';
 import { createTheme, ThemeProvider, useTheme} from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -144,7 +144,7 @@ export default function Home() {
 
               <Box
                 width='100vw'
-                height='62vh'
+                height='30vh'
                 display='flex'
                 justifyContent='center'
               >
@@ -221,8 +221,16 @@ export default function Home() {
                       </Button>
                   </form>
                   </ThemeProvider>
+                  
+                  
               </Box>
-
+              <Box
+                width='100vw'
+              >
+                    <Typography
+                      textAlign='center'
+                    >Already have an account? <Link href='../signin/'>Log in</Link></Typography>
+              </Box>
       </Box>
   );
 }

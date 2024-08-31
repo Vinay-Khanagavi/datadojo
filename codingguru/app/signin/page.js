@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react';
-import {Container, Box, Typography, TextField, Button} from '@mui/material';
+import {Container, Box, Typography, TextField, Button, Link} from '@mui/material';
 import { createTheme, ThemeProvider, useTheme} from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -127,7 +127,7 @@ export default function Home() {
                           color={col4}
                           variant='h4'
                       >
-                        Welcome to Learn Buddy
+                        Welcome back!
                       </Typography>
                       <Typography
                         variant='h5'
@@ -136,7 +136,7 @@ export default function Home() {
                         color={col4}
                         fontWeight='100'
                       >
-                        Create a free Learn Buddy account and quench your curiosity today!
+                        Sign In to access your account
                       </Typography>
               </Box>
 
@@ -144,7 +144,7 @@ export default function Home() {
 
               <Box
                 width='100vw'
-                height='62vh'
+                height='30vh'
                 display='flex'
                 justifyContent='center'
               >
@@ -217,12 +217,20 @@ export default function Home() {
                           color:'#fff'
                         }}
                       >
-                          Create FREE account
+                          Login
                       </Button>
                   </form>
                   </ThemeProvider>
+                  
+                  
               </Box>
-
+              <Box
+                width='100vw'
+              >
+                    <Typography
+                      textAlign='center'
+                    > Don't have an account? <Link href='../signup/'>Sign up</Link></Typography>
+              </Box>
       </Box>
   );
 }
