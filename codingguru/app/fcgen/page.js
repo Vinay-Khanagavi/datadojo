@@ -4,12 +4,11 @@ import { collection, writeBatch, doc, getDoc} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { Container, Typography, Card, Box, Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
-import {useUser} from '@clerk/nextjs';
 import {db} from '../firebase';
 import Head from 'next/head';
 
 export default function Generate(){
-    const {isLoaded, isSignedIn, user} = useUser()
+
     const [flashcards, setFlashcards] = useState([])
     const [flipped, setFlipped] = useState([])
     const [text, setText] = useState('')
