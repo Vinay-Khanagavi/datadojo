@@ -5,6 +5,7 @@ import { useEffect, useState, useRef, classes} from "react";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SendIcon from '@mui/icons-material/Send';
+import ReactMarkdown from 'react-markdown';
 
 const col1 = ['#3D405B'] // Dark shade
 const col2 = ['#E07A5F'] //red
@@ -45,16 +46,10 @@ export default function Home() {
     }
   };
 
-  const lightMode = () => {
-    if (mode === "dark") {
-      setMode("light");
-      setBgOne("#D9D9D9");
-      setBgTwo("#BDC3C7");
-      setBgThree("#FFFFFF");
-      setBgFour("#E67E22");
-      setcolorOne('#111');
-      setglowOne('0 0 30px 1px #786fa6');
-      setbuttonOne('#786fa6');
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
     }
   };
 
@@ -190,7 +185,7 @@ export default function Home() {
               <Box color={col1} padding={'1em'} borderRadius={'2em'} bgcolor={
                 message.role === 'assistant' ? col4 : col3
               }>
-                {message.content}
+                <ReactMarkdown>{message.content}</ReactMarkdown>
               </Box>
             </Box>
           ))}
@@ -248,6 +243,7 @@ export default function Home() {
             }}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
         </Box>
         <Button
