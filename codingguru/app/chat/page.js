@@ -4,17 +4,23 @@ import { Box, Typography, Stack, TextField, Button, Icon} from "@mui/material";
 import { useEffect, useState, useRef, classes} from "react";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import SendIcon from '@mui/icons-material/Send';
 
+const col1 = ['#3D405B'] // Dark shade
+const col2 = ['#E07A5F'] //red
+const col3 = ['#81B29A'] //green
+const col4 = ['#F4F1DE'] //white
+const col5 = ['#F2CC8F'] //yellow
 
 export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm the Headstarter support assistant. How can I help you today?",
+      content: "Hey! I'm here to assist you with DSA, using the Socratic method to guide your learning. Let's dive in and chat!",
     },
   ]);
   
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
   const [bgOne, setBgOne] = useState("#D9D9D9");
   const [bgTwo, setBgTwo] = useState("#BDC3C7");
   const [bgThree, setBgThree] = useState("#FFFFFF");
@@ -68,15 +74,15 @@ export default function Home() {
 
     try {
       const response = await fetch('/api/chat', {
-        method: 'POST', // Use POST method
+        method: 'POST', 
         headers: {
-          'Content-Type': 'application/json' // Set content type
+          'Content-Type': 'application/json' 
         },
         body: JSON.stringify({
           messages: [
             { role: "user", content: message }
           ]
-        }) // Send the messages in the request body
+        }) 
       });
 
       const reader = response.body.getReader();
@@ -125,7 +131,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    document.title = "Compendio";
+    document.title = "Learn Buddy";
     scrollToBottom();
   }, [messages]);
 
@@ -133,107 +139,34 @@ export default function Home() {
 
   return (
     <Box
-      backgroundColor={bgOne}
+      backgroundColor={col1}
       width={'100vw'}
       height={'100vh'}
-      position={'relative'}
       overflow={'hidden'}
+      boxSizing={'border-box'}
+      
     >
       {/*/////////// Left pane //////////////*/}
       <Box
-        position={'absolute'}
-        width={{ xs: '100vw', sm: '50vw', md: '28vw' }}
-        height={{xs:'13vh',sm:'100vh', md:'100vh'}}
-        top={'0'}
-        left={'0'}
-        backgroundColor={bgTwo}
-      >
-        
-        {/*///////// Menu /////////// */}
-        <Box
-          position={{xs:'fixed',sm:'absolute',md:'absolute'}}
-          width={{ xs: '30vw', sm: '20vw', md: '14vw' }}
-          backgroundColor={bgOne}
-          borderRadius={'2em'}
-          top={{xs:'2vh',sm:'1vh',md:'2vh'}}
-          left={{ xs: '5vw', sm: '10vw', md: '7vw' }}
-          padding={{xs:'0.1em',sm:'0.3em',md:'1em'}}
-          display={'flex'}
-          alignContent={'center'}
-          justifyContent={'space-around'}
-        >
-          <Box
-          margin={{xs:'0',sm:'0 0.5em',md:'0 2em'}}
-          onClick={lightMode}
-          >
-            <LightModeOutlinedIcon
-              
-              sx={{ color:colorOne, transition:'0.5s', '&:hover':{
-                transform: 'scale(1.3)'
-              } }}
-            ></LightModeOutlinedIcon>
-          </Box>
-          
-          <Typography
-            sx={{ color: mode === 'light' ? colorOne : colorOne }}
-          >|</Typography>
-
-          <Box
-          margin={{xs:'0',sm:'0 0.5em',md:'0 2em'}}
-          onClick={darkMode}
-          >
-            <DarkModeOutlinedIcon
-              sx={{ color:colorOne, transition:'0.5s', '&:hover':{
-                transform: 'scale(1.3)'
-              } }}
-            ></DarkModeOutlinedIcon>
-          </Box>
-          
-        </Box>
-
-        {/* ////////////// DP placeholder ///////////////////// */}
-        <Box
-          width={{ xs: '40px', md: '200px' }}
-          height={{ xs: '40px', md: '200px' }}
-          borderRadius={'50%'}
-          backgroundColor={bgOne}
-          position={{xs:'fixed', sm:'static',md:'static'}}
-          right={{xs:'5vw'}}
-          top={{xs:'2vh'}}
-          margin={{xs:'0', sm: '4em auto', md: '9em auto' }}
-          marginBottom={{xs:'0',sm:'0',md:'0.5em'}}
-          boxShadow={'0 0 30px 1px #786fa6'}
-        >
-        </Box>
-        <Typography
-          color={colorOne}
-          textAlign={'center'}
-          fontSize={{xs:'0.8em',sm:'1em',md:'2em'}}
-          position={{xs:'fixed',sm:'static',md:'static'}}
-          right={{xs:'3vw'}}
-          top={{xs:'9vh'}}
-        >
-          Hi, John Doe!
-        </Typography>
-        <Typography
-        color={colorOne}
-        textAlign={'center'}
-        fontSize={'0.8em'}
-        display={{xs:'none'}}
-        >
-          Bio
-        </Typography>
-        
-      </Box>
+              width='92vw'
+              height='8vh'
+              display='flex'
+              justifyContent='space-between'
+              alignItems='center'
+              padding={'0 4vw'}
+            >
+                <Typography
+                  color={col4}
+                  margin='0.5em'
+                  fontSize='2em'
+                >Learn Buddy</Typography>
+            </Box>
       {/* ///////////////// Left pane ends here ////////////////// */}
       <Box
-        position={'absolute'}
-        right={0}
-        top={{xs:'15vh',sm:'0',md:'0'}}
-        height={'90vh'}
+        height={'70vh'}
         padding={'1em'}
         margin={{xs:'0 0 10vh 0'}}
-        width={{ xs: '90vw', sm: '80vw', md: '62vw' }}
+        width={{ xs: '90vw', sm: '80vw', md: '100vw' }}
       >
         <Stack
           direction={'column'}
@@ -254,8 +187,8 @@ export default function Home() {
                 message.role === 'assistant' ? 'flex-start' : 'flex-end'
               }
             >
-              <Box color={'#fff'} padding={'1em'} borderRadius={'2em'} bgcolor={
-                message.role === 'assistant' ? '#786fa6' : '#cf6a87'
+              <Box color={col1} padding={'1em'} borderRadius={'2em'} bgcolor={
+                message.role === 'assistant' ? col4 : col3
               }>
                 {message.content}
               </Box>
@@ -267,34 +200,36 @@ export default function Home() {
       <Box
         position={"fixed"}
         bottom={{xs:'0',sm:'5vh',md:'5vh'}}
-        right={'3vw'}
-        width={{ xs: '90vw', sm: '80vw', md: '62vw' }}
+        right={'10vw'}
+        width={{ xs: '90vw', sm: '80vw', md: '80vw' }}
         display={'flex'}
         alignContent={'center'}
-        backgroundColor={bgOne}
+        backgroundColor={col4}
         padding={'0.5em'}
         zIndex={'10'}
+        borderRadius={'2em'}
       >
-        <Box width={'80%'}
-
+        <Box
+        width={'100%'}
+        
         >
           <TextField
             id="outlined-textarea"
             placeholder="Hey"
             multiline
             fullWidth
-            label="Compendio Message"
+            label="Ask me anything"
             sx={{
               '& .MuiOutlinedInput-root': {
                 color: colorOne,
                 '& fieldset': {
-                  borderColor: colorOne,
+                  borderColor: col4,
                 },
                 '&:hover fieldset': {
-                  borderColor: bgFour,
+                  borderColor: col4,
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: bgFour,
+                  borderColor: col4,
                 },
               },
               '& .MuiInputLabel-root': {
@@ -319,15 +254,16 @@ export default function Home() {
           onClick={sendMessage}
           disabled={isLoading}
           sx={{
-            backgroundColor: buttonOne,
-            color: 'white',
+            backgroundColor: 'transparent',
+            color: col3,
             '&:hover': {
-              backgroundColor: buttonTwo,
-              color: 'black',
+              backgroundColor: 'transparent',
+              color: col1,
             },
           }}
         >
-          {isLoading ? 'Sending...' : 'Send'}
+          <SendIcon />
+         {/* {isLoading ? 'Sending...' : 'Send'} */}
         </Button>
       </Box>
 
