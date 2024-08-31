@@ -17,8 +17,8 @@ export default function Generate(){
     const router = useRouter()
     
     const handleSubmit =async() =>{
-
-        fetch('api/generate',{
+        
+        fetch('api/fcgen',{
             method: 'POST',
             body:text,
         })
