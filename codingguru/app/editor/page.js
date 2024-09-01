@@ -103,6 +103,13 @@ const CodeEditor = () => {
                         Learn Buddy
                     </Link>
                 </Typography>
+
+                <Box
+                    display={'flex'}
+                    justifyContent={'center'}
+                >
+
+                </Box>
             </Box>
       <Box
           display="flex"
