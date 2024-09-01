@@ -20,6 +20,13 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { db } from '../firebase';
 import { ref, push, set } from 'firebase/database';
 
+
+import HomeIcon from '@mui/icons-material/Home';
+import CodeIcon from '@mui/icons-material/Code';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import BoltIcon from '@mui/icons-material/Bolt';
+import Person4Icon from '@mui/icons-material/Person4';
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: '#fff',
   ...theme.typography.body2,
@@ -83,34 +90,96 @@ const CodeEditor = () => {
         bgcolor={col1}
     >
         <Box
-              width='92vw'
-              height='8vh'
-              display='flex'
-              justifyContent='space-between'
-              alignItems='center'
-              padding={'0 4vw'}
-            >
-                <Typography
-                  color={col4}
-                  margin='0.5em'
-                  fontSize='2em'
-                >
-                    <Link
-                        color='inherit'
-                        underline='none'
-                        href='./'
-                    >
-                        Learn Buddy
-                    </Link>
-                </Typography>
+                        width='92vw'
+                        height='8vh'
+                        display='flex'
+                        justifyContent='space-between'
+                        alignItems='center'
+                        padding={'0 4vw'}
+                        >
+                            <Typography
+                            color={col4}
+                            margin='0.5em'
+                            fontSize='2em'
+                            >
+                                <Link
+                                    color='inherit'
+                                    underline='none'
+                                    href='./'
+                                >
+                                    Learn Buddy
+                                </Link>
+                            </Typography>
 
-                <Box
-                    display={'flex'}
-                    justifyContent={'center'}
-                >
+                            <Box
+                                display={'flex'}
+                                justifyContent={'space-around'}
+                                width={'30vw'}
+                            >
+                                <Button
+                                    href='./profile/'
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
 
-                </Box>
-            </Box>
+                                    }}
+                                >
+                                    <HomeIcon display={'block'} />
+                                    
+                                </Button>
+                                <Button
+                                    href='./editor/'
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    <CodeIcon />
+                                </Button>
+                                <Button
+                                    href='./chat/'
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    <SupportAgentIcon />
+                                </Button>
+                                <Button
+                                    href='./fcgen/'
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    <BoltIcon />
+                                </Button>
+                            </Box>
+
+                            <Button
+                                href="./"
+                                sx={{color:col4,
+                                    '&:hover':{
+                                        color:col1,
+                                        backgroundColor:col4
+                                    }
+
+                                }}
+                            >
+                                <Person4Icon/>
+                            </Button>
+                        </Box>
       <Box
           display="flex"
           flexDirection="row"

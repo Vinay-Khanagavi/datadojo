@@ -24,7 +24,6 @@ export default function Home(){
         <Box
             width={'100vw'}
             height={'100vh'}
-            display={'flex'}
             bgcolor={col1}
         >
                     <Box
@@ -64,7 +63,8 @@ export default function Home(){
 
                                     }}
                                 >
-                                    <HomeIcon />
+                                    <HomeIcon display={'block'} />
+                                    
                                 </Button>
                                 <Button
                                     href='./editor/'
@@ -117,6 +117,60 @@ export default function Home(){
                                 <Person4Icon/>
                             </Button>
                         </Box>
+
+                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
+                        
+                        <Box
+                            height={'92vh'}
+                            width={'100vw'}
+                            display={'flex'}
+                            justifyContent={'center'}
+                            gap={7}
+                            alignItems={'flex-start'}
+                            flexWrap={'wrap'}
+                            flexDirection={'row'}
+                        >
+                            <Box
+                                height={'40vh'}
+                                width={'25vw'}
+                                bgcolor={col4}
+                                borderRadius={'0.5em'}
+                                padding={'2em'}
+                                boxSizing={'border-box'}
+                            >
+                                <Typography
+                                    variant="h2"
+                                    color={col1}
+                                >Welcome, John Doe!</Typography>
+                            </Box>
+                            <Box
+                                height={'40vh'}
+                                width={'55vw'}
+                                bgcolor={col6}
+                                borderRadius={'0.5em'}
+                            >
+
+                            </Box>
+
+                            <Box
+                                height={'40vh'}
+                                width={'55vw'}
+                                bgcolor={col6}
+                                borderRadius={'0.5em'}
+                            >
+
+                            </Box>
+
+                            <Box
+                                height={'40vh'}
+                                width={'25vw'}
+                                bgcolor={col6}
+                                borderRadius={'0.5em'}
+                            >
+
+                            </Box>
+                        </Box>
+                        
         </Box>
     )
 }
