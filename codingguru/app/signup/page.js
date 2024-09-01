@@ -164,7 +164,7 @@ export default function Home() {
                   >
                     <TextField
                         variant='filled'
-                        label='Email Address'
+                        label='Name'
                         fullWidth
                         
                         sx={{
@@ -180,6 +180,29 @@ export default function Home() {
                         }}
                     >
 
+                    </TextField>
+                    <Box
+                    padding='1em'
+                    width='25vw'
+                    ></Box>
+                    <TextField
+                        variant='filled'
+                        label='Email Address'
+                        fullWidth
+                        
+                        sx={{
+                          backgroundColor: col4,
+                          '& .MuiFilledInput-root': {
+                            backgroundColor: col4,
+                            borderRadius: '0.5em',
+                            '&:before, &:after': {
+                              borderRadius: '12px',
+                            },
+                          },
+                          color: '#000'
+                        }}
+                    >
+                    
                     </TextField>
                     <Box
                     padding='1em'
