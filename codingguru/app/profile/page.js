@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react"
-import {Box, Link, Typography, Button} from "@mui/material"
+import {Box, Link, Typography, Button, Stack} from "@mui/material"
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -130,6 +130,7 @@ export default function Home(){
                             flexWrap={'wrap'}
                             flexDirection={'row'}
                         >
+                            {/*///////////// First Box /////////////*/}
                             <Box
                                 height={'40vh'}
                                 width={'25vw'}
@@ -143,12 +144,29 @@ export default function Home(){
                                     color={col1}
                                 >Welcome, John Doe!</Typography>
                             </Box>
+                            {/*///////////// Second Box /////////////*/}
                             <Box
                                 height={'40vh'}
                                 width={'55vw'}
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
                             >
+                                <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    borderBottom={"1px solid "+ col1}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                >
+                                    <Typography
+                                        color={col4}
+                                    >
+                                        <SupportAgentIcon/> Socratic Agent Discussions
+                                    </Typography>
+                                </Box>
+
+                                <Stack></Stack>
 
                             </Box>
 

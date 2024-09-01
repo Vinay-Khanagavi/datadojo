@@ -6,12 +6,18 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import ReactMarkdown from 'react-markdown';
+import {db} from '../firebase';
+import { collection, addDoc} from 'firebase/firestore';
+
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
+import SaveIcon from '@mui/icons-material/Save';
+import { Save } from "lucide-react";
+
 
 const col1 = ['#3D405B'] // Dark shade
 const col2 = ['#E07A5F'] //red
@@ -131,6 +137,20 @@ export default function Home() {
   })
 
 
+  const saveThread = async () => {
+    
+    try {
+      alert();
+      await addDoc(collection(db, "threads"), {
+        messages: messages,
+      });
+      alert("Thread saved successfully!",messages);
+    } catch (error) {
+      console.error("Error saving thread: ", error);
+      alert("Error!",error);
+    }
+  };
+
   useEffect(() => {
     document.title = "Learn Buddy";
     scrollToBottom();
@@ -139,6 +159,10 @@ export default function Home() {
   
 
   return (
+    
+
+
+
     <Box
       backgroundColor={col1}
       width={'100vw'}
@@ -239,6 +263,7 @@ export default function Home() {
                                 <Person4Icon/>
                             </Button>
                         </Box>
+                        
       {/* ///////////////// Top pane ends here ////////////////// */}
       <Box
         height={'70vh'}
@@ -344,8 +369,24 @@ export default function Home() {
           <SendIcon />
          {/* {isLoading ? 'Sending...' : 'Send'} */}
         </Button>
+        <Button
+            onClick={saveThread}
+            sx={{
+              backgroundColor: 'transparent',
+              color: col3,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: col1,
+              },
+            }}
+        >
+            <SaveIcon />
+        </Button>
       </Box>
-
+      
+      
     </Box>
+
+    
   );
 }
