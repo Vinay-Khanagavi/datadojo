@@ -138,7 +138,6 @@ export default function Home() {
 
 
   const saveThread = async () => {
-    
     try {
       alert();
       await addDoc(collection(db, "threads"), {

@@ -2,12 +2,14 @@
 
 import { useState } from "react"
 import {Box, Link, Typography, Button, Stack} from "@mui/material"
+import questions from '../editor/questions.json';
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
+import { FlashlightIcon } from "lucide-react";
 
 const col1 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -166,6 +168,7 @@ export default function Home(){
                                     </Typography>
                                 </Box>
 
+                                {/*////////////////////// Update this section. map the saved chats here /////////////////////////////*/}
                                 <Stack></Stack>
 
                             </Box>
@@ -176,6 +179,44 @@ export default function Home(){
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
                             >
+                                <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    borderBottom={"1px solid "+ col1}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                    >
+                                    <Typography
+                                        color={col4}
+                                        
+                                    >
+                                        <CodeIcon/> DSA problems
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    height={'32vh'}
+                                    width={'100%'}
+                                    overflow={'auto'}
+                                >
+                                    {questions.questions.map((question) => (
+                                            <Box
+                                                key={question.id}
+                                                color={col4}
+                                                width={'100%'}
+                                                height={'5vh'}
+                                                boxSizing={'border-box'}
+                                                borderBottom={"1px solid "+ col1}
+                                                display={'flex'}
+                                                alignItems={'center'}
+                                            >
+                                                <Typography
+                                                    marginLeft={'1em'}
+                                                >{question.shortTitle}</Typography>
+                                            </Box>
+                                    ))}
+                                </Box>
 
                             </Box>
 
@@ -185,7 +226,21 @@ export default function Home(){
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
                             >
-
+                                <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    borderBottom={"1px solid "+ col1}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                    >
+                                    <Typography
+                                        color={col4}
+                                        
+                                    >
+                                        <BoltIcon/> Flashcards
+                                    </Typography>
+                                </Box>
                             </Box>
                         </Box>
                         
