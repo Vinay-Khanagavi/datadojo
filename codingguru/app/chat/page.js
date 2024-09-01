@@ -164,7 +164,7 @@ export default function Home() {
                     </Link>
                 </Typography>
             </Box>
-      {/* ///////////////// Left pane ends here ////////////////// */}
+      {/* ///////////////// Top pane ends here ////////////////// */}
       <Box
         height={'70vh'}
         padding={'1em'}

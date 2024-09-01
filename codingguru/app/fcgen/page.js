@@ -2,7 +2,7 @@
 
 import { collection, writeBatch, doc, getDoc} from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { Container, Typography, Card, Box, Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { Container,Link, Typography, Card, Box, Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
 import {db} from '../firebase';
 import Head from 'next/head';
@@ -102,17 +102,40 @@ export default function Generate(){
             minHeight={'100vh'}
             backgroundColor={col1}
             >
+                <Box
+                    width='92vw'
+                    height='8vh'
+                    display='flex'
+                    justifyContent='space-between'
+                    alignItems='center'
+                    padding={'0 4vw'}
+                    >
+                        <Typography
+                        color={col4}
+                        margin='0.5em'
+                        fontSize='2em'
+                        >
+                            <Link
+                                color='inherit'
+                                underline='none'
+                                href='./'
+                            >
+                                Learn Buddy
+                            </Link>
+                        </Typography>
+                </Box>
             <Box
                 sx={{mt:4, mb:6, display:'flex', flexDirection: 'column', alignItems: 'center'}}
-                backgroundColor ={bgOne}
+                backgroundColor ={col1}
                 
                 justifyContent={'center'}
                 alignContent={'center'}
             >
                 <Typography
-                    variant="h4"
+                    fontSize={'1.5em'}                    color={col4}
+                    fontWeight={100}
                 >
-                    Generate
+                    Generate flashcards and save them in your account
                 </Typography>
                 <Paper
                     sx={{p:4, backgroundColor: '#1e272e', borderRadius:'0.5em', border:'1px solid #706fd3'}}
@@ -124,7 +147,7 @@ export default function Generate(){
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     
-                    label="Enter text"
+                    label="Enter prompt"
                     fullWidth
                     rows={4}
                     borderColor={'#fff'}
@@ -151,7 +174,7 @@ export default function Generate(){
                     />
                     <Button
                         variant='contained'
-                        color='secondary'
+                        
                         onClick={handleSubmit}
                         
                     >
