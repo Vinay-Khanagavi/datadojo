@@ -104,7 +104,15 @@ export default function Home() {
                   color={col4}
                   margin='0.5em'
                   fontSize='2em'
-                >Learn Buddy</Typography>
+                >
+                    <Link
+                        color='inherit'
+                        underline='none'
+                        href='./'
+                    >
+                        Learn Buddy
+                    </Link>
+                </Typography>
             </Box>
           {/*/////////////////////// Central box /////////////////////////////*/}
 

@@ -7,6 +7,14 @@ import { useState} from "react";
 import {db} from '../firebase';
 import Head from 'next/head';
 
+
+const col1 = ['#3D405B'] // Dark shade
+const col2 = ['#E07A5F'] //red
+const col3 = ['#81B29A'] //green
+const col4 = ['#F4F1DE'] //white
+const col5 = ['#F2CC8F'] //yellow
+
+
 export default function Generate(){
 
     const [flashcards, setFlashcards] = useState([])
@@ -88,17 +96,16 @@ export default function Generate(){
 
     return(
         
-        <Container
-            maxWidth={'100vw'}
-        >
-            <Head>
-                <title>Flashy</title>
-                <meta name="description" content="Create flashcard from text"></meta>
-            </Head>
+        
+            <Box
+            width={'100vw'}
+            minHeight={'100vh'}
+            backgroundColor={col1}
+            >
             <Box
                 sx={{mt:4, mb:6, display:'flex', flexDirection: 'column', alignItems: 'center'}}
                 backgroundColor ={bgOne}
-                padding={4}
+                
                 justifyContent={'center'}
                 alignContent={'center'}
             >
@@ -275,7 +282,8 @@ export default function Generate(){
                     <Button onClick={saveFlashcards}>Save</Button>
                 </DialogActions>
             </Dialog>
-        </Container>
+            </Box>
+        
 
     )
 }

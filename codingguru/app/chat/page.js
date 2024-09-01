@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography, Stack, TextField, Button, Icon} from "@mui/material";
+import { Box, Typography, Stack, TextField, Button, Link} from "@mui/material";
 import { useEffect, useState, useRef, classes} from "react";
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -154,7 +154,15 @@ export default function Home() {
                   color={col4}
                   margin='0.5em'
                   fontSize='2em'
-                >Learn Buddy</Typography>
+                >
+                    <Link
+                        color='inherit'
+                        underline='none'
+                        href='./'
+                    >
+                        Learn Buddy
+                    </Link>
+                </Typography>
             </Box>
       {/* ///////////////// Left pane ends here ////////////////// */}
       <Box
