@@ -210,10 +210,16 @@ export default function Home(){
                                                 borderBottom={"1px solid "+ col1}
                                                 display={'flex'}
                                                 alignItems={'center'}
+                                                justifyContent={'space-between'}
                                             >
                                                 <Typography
                                                     marginLeft={'1em'}
                                                 >{question.shortTitle}</Typography>
+                                                <Typography
+                                                    marginRight={'1em'}
+                                                >
+                                                    {question.difficulty}
+                                                </Typography>
                                             </Box>
                                     ))}
                                 </Box>
