@@ -12,6 +12,7 @@
     "firebase-admin": "^12.4.0",
     "lucide-react": "^0.437.0",
     "openai": "^4.57.0",
-    "react-markdown": "^9.0.1"
+    "react-markdown": "^9.0.1",
+    "styled-components": "^6.1.13"
   }
 }
