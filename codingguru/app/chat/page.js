@@ -199,7 +199,7 @@ export default function Home() {
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='./profile/'
+                                    href='./dashboard/'
                                     sx={{color:col4,
                                         '&:hover':{
                                             color:col1,
@@ -250,7 +250,7 @@ export default function Home() {
                             </Box>
 
                             <Button
-                                href="./"
+                                href="./profile/"
                                 sx={{color:col4,
                                     '&:hover':{
                                         color:col1,

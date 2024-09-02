@@ -117,7 +117,7 @@ const CodeEditor = () => {
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='./profile/'
+                                    href='./dashboard/'
                                     sx={{color:col4,
                                         '&:hover':{
                                             color:col1,
@@ -168,7 +168,7 @@ const CodeEditor = () => {
                             </Box>
 
                             <Button
-                                href="./"
+                                href="./profile/"
                                 sx={{color:col4,
                                     '&:hover':{
                                         color:col1,
