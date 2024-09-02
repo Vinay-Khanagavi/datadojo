@@ -202,8 +202,8 @@ export default function Home(){
                                 >
                                     {questions.questions.map((question) => (
                                             <Link
-                                                href={`/editor/${question.id}`}
-                                                passHref 
+                                                href={`./editor/${question.id}`}
+                                                
                                             >
                                                 <Box
                                                     key={question.id}
