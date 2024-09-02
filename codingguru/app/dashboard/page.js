@@ -201,26 +201,31 @@ export default function Home(){
                                     overflow={'auto'}
                                 >
                                     {questions.questions.map((question) => (
-                                            <Box
-                                                key={question.id}
-                                                color={col4}
-                                                width={'100%'}
-                                                height={'5vh'}
-                                                boxSizing={'border-box'}
-                                                borderBottom={"1px solid "+ col1}
-                                                display={'flex'}
-                                                alignItems={'center'}
-                                                justifyContent={'space-between'}
+                                            <Link
+                                                href={`/editor/${question.id}`}
+                                                passHref 
                                             >
-                                                <Typography
-                                                    marginLeft={'1em'}
-                                                >{question.shortTitle}</Typography>
-                                                <Typography
-                                                    marginRight={'1em'}
+                                                <Box
+                                                    key={question.id}
+                                                    color={col4}
+                                                    width={'100%'}
+                                                    height={'5vh'}
+                                                    boxSizing={'border-box'}
+                                                    borderBottom={"1px solid "+ col1}
+                                                    display={'flex'}
+                                                    alignItems={'center'}
+                                                    justifyContent={'space-between'}
                                                 >
-                                                    {question.difficulty}
-                                                </Typography>
-                                            </Box>
+                                                    <Typography
+                                                        marginLeft={'1em'}
+                                                    >{question.shortTitle}</Typography>
+                                                    <Typography
+                                                        marginRight={'1em'}
+                                                    >
+                                                        {question.difficulty}
+                                                    </Typography>
+                                                </Box>
+                                            </Link>
                                     ))}
                                 </Box>
 
