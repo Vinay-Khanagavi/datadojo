@@ -1,31 +1,22 @@
-'use client'
+'use client';
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import styled from 'styled-components';
 
-import { useState, useEffect } from 'react';
-import { 
-  Paper, 
-  Typography, 
-  Tabs, 
-  Tab, 
-  Button, 
-  TextField, 
-  List, 
-  ListItem, 
+
+import {
+  Box,
+  Typography,
+  Button,
   Link,
-  ListItemText,
-  Box 
 } from '@mui/material';
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { db } from '../firebase';
-import { ref, push, set } from 'firebase/database';
-
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const col1 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -34,118 +25,249 @@ const col4 = ['#F4F1DE']; // white
 const col5 = ['#F2CC8F']; // yellow
 const col6 = ['#191c35']; // Darker shade
 
-export default function profile(){
-  
+const Container = styled.div`
+  background-color: #282c34;
+  color: #3d405b;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+`;
+
+const Navigation = styled.div`
+  width: 92vw;
+  height: 8vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4vw;
+  margin-bottom: 2rem;
+`;
+
+const ProfileCard = styled.div`
+  background-color: #f4f1de;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 70vw;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const ProfileHeader = styled.div`
+  text-align: center;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ProfileName = styled.h1`
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const EditButton = styled.button`
+  background-color: #e07a5f;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(#e07a5f, 10%);
+  }
+`;
+
+const StatItem = styled.div`
+  background-color: #e07a5f;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+`;
+
+const StatLabel = styled.p`
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+`;
+
+const StatValue = styled.p`
+  font-size: 1.8rem;
+  font-weight: bold;
+`;
+
+function Profile() {
+  const router = useRouter();
+
   return (
-    <Box
-        width={'100vw'}
-        height={'100vh'}
-        bgcolor={col1}
-    >
-        <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
-                        >
-                            <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
-                            >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='./'
-                                >
-                                    Learn Buddy
-                                </Link>
-                            </Typography>
+    <Container>
+      {/* Navigation Section */}
+      <Navigation>
+        <Typography color={col4} margin="0.5em" fontSize="2em">
+          <Link color="inherit" underline="none" href="./">
+            Learn Buddy
+          </Link>
+        </Typography>
 
-                            <Box
-                                display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
-                            >
-                                <Button
-                                    href='./dashboard/'
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
+        <Box display={'flex'} justifyContent={'space-around'} width={'30vw'}>
+          <Button
+            href="./dashboard/"
+            sx={{
+              color: col4,
+              '&:hover': {
+                color: col1,
+                backgroundColor: col4,
+              },
+            }}
+          >
+            <HomeIcon display={'block'} />
+          </Button>
+          <Button
+            href="./editor/"
+            sx={{
+              color: col4,
+              '&:hover': {
+                color: col1,
+                backgroundColor: col4,
+              },
+            }}
+          >
+            <CodeIcon />
+          </Button>
+          <Button
+            href="./chat/"
+            sx={{
+              color: col4,
+              '&:hover': {
+                color: col1,
+                backgroundColor: col4,
+              },
+            }}
+          >
+            <SupportAgentIcon />
+          </Button>
+          <Button
+            href="./fcgen/"
+            sx={{
+              color: col4,
+              '&:hover': {
+                color: col1,
+                backgroundColor: col4,
+              },
+            }}
+          >
+            <BoltIcon />
+          </Button>
+        </Box>
 
-                                    }}
-                                >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='./editor/'
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='./chat/'
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='./fcgen/'
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-
-                            <Button
-                                href="./profile/"
-                                sx={{color:col4,
-                                    '&:hover':{
-                                        color:col1,
-                                        backgroundColor:col4
-                                    }
-
-                                }}
-                            >
-                                <Person4Icon/>
-                            </Button>
-                        </Box>
-      <Box
-          display="flex"
-          flexDirection="row"
-          bgcolor={col1}
-          width={'100vw'}
-          height={'92vh'}
+        <Button
+          href="./profile/"
+          sx={{
+            color: col4,
+            '&:hover': {
+              color: col1,
+              backgroundColor: col4,
+            },
+          }}
         >
-        {/*/////////////////////////////////////////////////////////////////////////////////////*/}
-        {/*///////////////////////////////////   Your code goes here ///////////////////////////*/}
-        {/*/////////////////////////////////////////////////////////////////////////////////////*/}
-      </Box>
-    </Box>
-  );
-};
+          <Person4Icon />
+        </Button>
+      </Navigation>
 
+      {/* Profile Content */}
+      <ProfileCard>
+        <ProfileHeader>
+          <Button onClick={() => router.back()} sx={{ color: col1 }}>
+            <ArrowBackIcon />
+          </Button>
+          <ProfileName>Profile</ProfileName>
+          <EditButton>Edit Profile</EditButton>
+        </ProfileHeader>
 
+        <h2>Statistics</h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem',
+          }}
+        >
+        <StatItem>
+            <StatLabel>Questions Solved</StatLabel>
+            <StatValue>1200</StatValue>
+        </StatItem>
+        <StatItem>
+            <StatLabel>Easy Questions</StatLabel>
+            <StatValue>800</StatValue>
+        </StatItem>
+        <StatItem>
+            <StatLabel>Medium Questions</StatLabel>
+            <StatValue>300</StatValue>
+        </StatItem>
+        <StatItem>
+            <StatLabel>Hard Questions</StatLabel>
+            <StatValue>100</StatValue>
+        </StatItem>
+        <StatItem>
+            <StatLabel>Questions to Solve</StatLabel>
+            <StatValue>200</StatValue>
+        </StatItem>
+        </div>
+
+        <h2>Achievements</h2>
+        <div
+        style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem',
+        }}
+        >
+        {/* Achievement Item 1 */}
+        <div
+            style={{
+            backgroundColor: '#e07a5f',
+            color: 'white',
+            padding: '1rem',
+            borderRadius: '5px',
+            textAlign: 'center',
+            }}
+    >
+            <img
+              src="path/to/achievement1.png"
+              alt="Achievement 1 Icon"
+              style={{ width: '50px', height: '50px', marginBottom: '10px' }}
+            />
+            <h3>Achievement Title 1</h3>
+            <p>Level 2</p>
+        </div>
+
+          {/* Achievement Item 2 (Repeat as needed) */}
+        <div
+            style={{
+              backgroundColor: '#e07a5f',
+              color: 'white',
+              padding: '1rem',
+              borderRadius: '5px',
+              textAlign: 'center',
+            }}
+        >
+            <img
+            src="path/to/achievement2.png"
+            alt="Achievement 2 Icon"
+            style={{ width: '50px', height: '50px', marginBottom: '10px' }}
+            />
+            <h3>Achievement Title 2</h3>
+            <p>Level 5</p>
+        </div>
+          {/* Add more achievement items as needed */}
+        </div>
+    </ProfileCard>
+    </Container>
+);
+}
+
+export default Profile;
