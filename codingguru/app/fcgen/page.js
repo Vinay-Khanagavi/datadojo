@@ -2,10 +2,11 @@
 
 import { collection, writeBatch, doc, getDoc} from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { Container,Link, Typography, Card, Box, Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
 import {db} from '../firebase';
 import Head from 'next/head';
+
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -19,7 +20,7 @@ const col2 = ['#E07A5F'] //red
 const col3 = ['#81B29A'] //green
 const col4 = ['#F4F1DE'] //white
 const col5 = ['#F2CC8F'] //yellow
-
+const col6 = ['#191c35']; // Darker shade
 
 export default function Generate(){
 
@@ -270,20 +271,20 @@ export default function Generate(){
                                 
                                 >
                                 <Card
-                                sx={{background:bgOne, borderRadius:'0.5em'}}
+                                sx={{background:col1, borderRadius:'0.5em'}}
                                 >
                                     <CardActionArea
                                         sx={{background:bgOne, borderRadius:'0.5em'}}
                                         onClick={() => {
                                             handleCardClick(index)
                                         }}
-                                        backgroundColor={bgOne}
+                                        backgroundColor={col1}
                                     >
                                         <CardContent
                                             sx={{background:bgOne, borderRadius:'0.5em'}}
                                         >
                                             <Box
-                                                backgroundColor={bgTwo}
+                                                backgroundColor={col6}
                                                 sx={{
                                                     fontWeight:'200',
                                                     perspective: '1000px',
@@ -322,6 +323,7 @@ export default function Generate(){
                                                         <Typography
                                                             variant="h5"
                                                             component="div"
+                                                            color={col4}
                                                         >
                                                             {flashcard.front}
                                                         </Typography>
@@ -330,6 +332,7 @@ export default function Generate(){
                                                         <Typography
                                                             variant="h5"
                                                             component="div"
+                                                            color={col4}
                                                         >
                                                             {flashcard.back}
                                                         </Typography>
@@ -345,7 +348,15 @@ export default function Generate(){
                     </Grid>
 
                     <Box sx={{mt:4, display:'flex', justifyContent:'center'}}>
-                        
+                        <Button
+                            variant="contained"
+                            onClick={handleOpen}
+                            sx={{
+                                backgroundColor:col3
+                            }}
+                        >
+                            Save
+                        </Button>
                     </Box>
                 </Box>
             )}

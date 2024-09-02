@@ -84,7 +84,7 @@ export default function Home() {
   const col3 = ['#81B29A'] //green
   const col4 = ['#F4F1DE'] //white
   const col5 = ['#F2CC8F'] //yellow
-
+  const col6 = ['#191c35']; // Darker shade
   return (
       <Box
         width='100vw'
