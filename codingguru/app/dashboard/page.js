@@ -202,8 +202,8 @@ export default function Home(){
                                 >
                                     {questions.questions.map((question) => (
                                             <Link
+                                                underline="none"
                                                 href={`./editor/${question.id}`}
-                                                
                                             >
                                                 <Box
                                                     key={question.id}
@@ -215,6 +215,10 @@ export default function Home(){
                                                     display={'flex'}
                                                     alignItems={'center'}
                                                     justifyContent={'space-between'}
+                                                    sx={{'&:hover':{
+                                                        bgcolor:col4,
+                                                        color:col1
+                                                    }}}
                                                 >
                                                     <Typography
                                                         marginLeft={'1em'}
