@@ -1,5 +1,5 @@
 'use client'
-import user from '@clerk/nextjs';
+
 import {useEffect, useState} from 'react';
 import {db} from '../firebase';
 import {doc, getDoc, setDoc, CollectionReference, collection} from 'firebase/firestore';
