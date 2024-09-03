@@ -16,7 +16,75 @@ import Person4Icon from '@mui/icons-material/Person4';
 import Link from 'next/link';
 
 export default function ProblemSolver() {
-  const router = useRouter();
+
+  // Redirect section
+  const router = useRouter(); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
+
+  useEffect(() => {
+      console.log("Component mounted, starting auth check");
+      const timeoutId = setTimeout(() => {
+          if (isLoading) {
+              console.log("Auth check timed out");
+              setAuthError("Authentication check timed out");
+              setIsLoading(false);
+          }
+      }, 10000); // 10 second timeout
+
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+          console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
+          if (user) {
+              console.log("User authenticated, setting loading to false");
+              setIsLoading(false);
+          } else {
+              console.log("User not authenticated, redirecting to signin");
+              router.push('/signin');
+          }
+      }, (error) => {
+          console.error("Auth error:", error);
+          setAuthError(error.message);
+          setIsLoading(false);
+      });
+
+      return () => {
+          unsubscribe();
+          clearTimeout(timeoutId);
+      };
+  }, [router]);
+
+  if (isLoading) {
+      return (
+          <Box
+              bgcolor={col4}
+              width={'100vw'}
+              height={'100vh'}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+          >
+              <Typography variant="h4">Loading...</Typography>
+          </Box>
+      ); 
+  }
+
+  if (authError) {
+      return (
+          <Box
+              bgcolor={col4}
+              width={'100vw'}
+              height={'100vh'}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+          >
+              <Typography variant="h4">Error: {authError}</Typography>
+          </Box>
+      );
+  }
+
+
+      // Redirect section ends
   const { id } = router.query;
 
   // For Handling undefined or non-integer id gracefully
