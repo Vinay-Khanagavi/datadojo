@@ -7,7 +7,7 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import ReactMarkdown from 'react-markdown';
 import {auth, db} from '../firebase';
-import { collection, addDoc} from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc} from 'firebase/firestore';
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
 import {CircularProgress} from '@mui/material';
@@ -149,15 +149,21 @@ export default function Home() {
 
 
   const saveThread = async () => {
+    const documentName = prompt("Enter document name for this thread:");
+    if (!documentName) {
+      alert("Document name is required!");
+      return;
+    }
+  
     try {
-      alert();
-      await addDoc(collection(db, "threads"), {
+      await setDoc(doc(db, "threads", documentName), {
         messages: messages,
       });
-      alert("Thread saved successfully!",messages);
+      alert("Thread saved successfully with document name: " + documentName);
     } catch (error) {
+      console.log(documentName);
       console.error("Error saving thread: ", error);
-      alert("Error!",error);
+      alert("Error saving thread: " + error.message);
     }
   };
 
@@ -174,7 +180,7 @@ export default function Home() {
             setAuthError("Authentication check timed out");
             setIsLoading(false);
         }
-    }, 1200000); // 10 second timeout
+    }, 1200000); // 20 min timeout
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
         console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
@@ -197,26 +203,7 @@ export default function Home() {
     };
 }, [router]);  
 
-if (isLoading) {
-  return (
-      <Box
-          bgcolor={col4}
-          width={'100vw'}
-          height={'100vh'}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-      >
-          <CircularProgress
-                    height={'10'}
-                    borderRadius={'10'}
-                    color="success"
-          >
 
-          </CircularProgress>
-      </Box>
-  ); 
-}
 
 if (authError) {
   return (
