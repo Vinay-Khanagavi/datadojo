@@ -278,8 +278,9 @@ export default function Home() {
                 width='100vw'
               >
                     <Typography
+                      color={col4}
                       textAlign='center'
-                    > Don't have an account? <Link href='../signup/'>Sign up</Link></Typography>
+                    > Don't have an account? <Link underline='none' color={col2} href='../signup/'>Sign up</Link></Typography>
               </Box>
       </Box>
   );

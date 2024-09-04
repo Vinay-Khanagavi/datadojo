@@ -86,143 +86,44 @@ export default function Home() {
   const col5 = ['#F2CC8F'] //yellow
 
   return (
-      <Box
-        width='100vw'
-        height='100vh'
-        bgcolor={col1}
-      >
-            {/*/////////////////// Navbar /////////////////*/}
-            <Box
-              width='100vw'
-              height='8vh'
-              display='flex'
-              justifContent='space-between'
-              alignItems='center'
-              
-            >
-                <Typography
-                  color={col4}
-                  margin='0.5em'
-                  fontSize='2em'
-                >Learn Buddy</Typography>
-            </Box>
-          {/*/////////////////////// Central box /////////////////////////////*/}
+<Box
+  bgcolor={col1}
+  width={'100vw'}
+  height={'100vh'}
+  display={'flex'}
+  justifyContent={'center'}
+  alignItems={'center'}
+>
+    <Box
+      display={'flex'}
+      justifyContent={'center'}
+      flexDirection={'column'}
+    >
+        <Typography
+          color={col4}
+          fontSize={'3em'}
+          margin={'1em'}
+        >
+          Learn Buddy
+        </Typography>
 
-              <Box
-                width='40vw'
-                height='30vh'
-                
-                margin={'0 auto'}
-              >
-                {/*///////////////////// Image placeholder //////////////////////////// */}
-                      <Box
-                        height='10vw'
-                        width='10vw'
-                      >
-
-                      </Box>
-                      <Typography
-                          fontSize='1.2em'
-                          textAlign='center'
-                          color={col4}
-                          variant='h4'
-                      >
-                        Welcome to Learn Buddy
-                      </Typography>
-                      <Typography
-                        variant='h5'
-                        fontSize='1em'
-                        textAlign='center'
-                        color={col4}
-                        fontWeight='100'
-                      >
-                        Create a free Learn Buddy account and quench your curiosity today!
-                      </Typography>
-              </Box>
-
-              {/*/////////////////////////// Login container /////////////////////////////*/}
-
-              <Box
-                width='100vw'
-                height='62vh'
-                display='flex'
-                justifyContent='center'
-              >
-                  <ThemeProvider theme={customTheme(outerTheme)}>
-                  <form
-                    width='50vw'
-                    display='flex'
-                    justifyContent='center'
-                  >
-                    <TextField
-                        variant='filled'
-                        label='Email Address'
-                        fullWidth
-                        
-                        sx={{
-                          backgroundColor: col4,
-                          '& .MuiFilledInput-root': {
-                            backgroundColor: col4,
-                            borderRadius: '0.5em',
-                            '&:before, &:after': {
-                              borderRadius: '12px',
-                            },
-                          },
-                          color: '#000'
-                        }}
-                    >
-
-                    </TextField>
-                    <Box
-                    padding='1em'
-                    width='25vw'
-                    ></Box>
-                    <TextField
-                        variant='filled'
-                        label='Password'
-                        fullWidth
-                        sx={{
-                          backgroundColor: col4,
-                          '& .MuiFilledInput-root': {
-                            backgroundColor: col4,
-                          },
-                          color: '#000'
-                        }}
-                    >
-                      <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-                        <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                        <Input
-                          id="standard-adornment-password"
-                          type={showPassword ? 'text' : 'password'}
-                          endAdornment={
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                onMouseUp={handleMouseUpPassword}
-                              >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                            </InputAdornment>
-                          }
-                        />
-                      </FormControl>
-                      </TextField>
-                      <Box
-                        padding='1em'
-                        ></Box>
-                      <Button
-                        sx={{backgroundColor:col2,
-                          color:'#fff'
-                        }}
-                      >
-                          Create FREE account
-                      </Button>
-                  </form>
-                  </ThemeProvider>
-              </Box>
-
-      </Box>
+        <Button
+          href='../signin/'
+          size='large'
+          sx={{bgcolor:col2,
+            color:col4,
+            borderRadius:'2em',
+            '&:hover':
+            {
+              bgcolor:col4,
+              color:col2
+            }
+          }}
+        >
+          Launch
+        </Button>
+    </Box>
+    
+</Box>
   );
 }

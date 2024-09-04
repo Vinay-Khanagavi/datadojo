@@ -10,6 +10,7 @@ import {auth, db} from '../firebase';
 import { collection, addDoc} from 'firebase/firestore';
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
+import {CircularProgress} from '@mui/material';
 
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -206,7 +207,13 @@ if (isLoading) {
           justifyContent="center"
           alignItems="center"
       >
-          <Typography variant="h4">Loading...</Typography>
+          <CircularProgress
+                    height={'10'}
+                    borderRadius={'10'}
+                    color="success"
+          >
+
+          </CircularProgress>
       </Box>
   ); 
 }
