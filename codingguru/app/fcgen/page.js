@@ -294,10 +294,12 @@ export default function Generate(){
                     Generate flashcards and save them in your account
                 </Typography>
                 <Paper
-                    sx={{p:4, backgroundColor: '#1e272e', borderRadius:'0.5em', border:'1px solid #706fd3'}}
+                    sx={{p:4, backgroundColor: col6, borderRadius:'0.5em'}}
                     padding={2}
                     width={{md:'80%',sm:'80%',xs:'80%'}}
-                    
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
                 >
                     <TextField
                     value={text}
@@ -330,11 +332,15 @@ export default function Generate(){
                     />
                     <Button
                         variant='contained'
-                        
+                        sx={{
+                            bgcolor:col5,
+                            color:col1
+                        }}
                         onClick={handleSubmit}
                         
                     >
                         Submit
+                        <BoltIcon></BoltIcon>
                     </Button>
                 </Paper>
             </Box>
@@ -343,6 +349,8 @@ export default function Generate(){
                     <Typography
                         variant="h5"
                         color={col4}
+                        textAlign={'center'}
+                        fontWeight={'100'}
                     >
                         Flashcards Preview
                     </Typography>
@@ -364,14 +372,14 @@ export default function Generate(){
                                 sx={{background:col1, borderRadius:'0.5em'}}
                                 >
                                     <CardActionArea
-                                        sx={{background:bgOne, borderRadius:'0.5em'}}
+                                        sx={{background:col4, borderRadius:'0.5em'}}
                                         onClick={() => {
                                             handleCardClick(index)
                                         }}
                                         backgroundColor={col1}
                                     >
                                         <CardContent
-                                            sx={{background:bgOne, borderRadius:'0.5em'}}
+                                            sx={{background:col6, borderRadius:'0.5em'}}
                                         >
                                             <Box
                                                 backgroundColor={col6}
@@ -409,18 +417,48 @@ export default function Generate(){
                                                 }}
                                             >
                                                 <div>
-                                                    <div>
+                                                    <div
+                                                        display={'flex'}
+                                                    >
+                                                        <Box
+                                                            width={'20%'}
+                                                            height={'100%'}
+                                                            display={'flex'}
+                                                            alignItems={'center'}
+                                                        >
+                                                            <Typography
+                                                            color={col5}
+                                                            variant="h5"
+                                                            textAlign={'center'}
+                                                            display={'block'}
+                                                            fontWeight={'800'}
+                                                            >
+                                                                <BoltIcon />
+                                                            </Typography>
+                                                        </Box>
+                                                        <Box
+                                                            width={'80%'}
+                                                            height={'100%'}
+                                                            display={'flex'}
+                                                            alignItems={'center'}
+                                                        >
                                                         <Typography
                                                             variant="h5"
                                                             component="div"
                                                             color={col4}
                                                         >
+                                                            
                                                             {flashcard.front}
                                                         </Typography>
+                                                        </Box>
+                                                        
                                                     </div>
                                                     <div>
                                                         <Typography
                                                             variant="h5"
+                                                            fontWeight={'100'}
+                                                            fontSize={'1.2em'}
+                                                            textAlign={'center'}
                                                             component="div"
                                                             color={col4}
                                                         >

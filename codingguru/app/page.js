@@ -99,6 +99,7 @@ export default function Home() {
       justifyContent={'center'}
       flexDirection={'column'}
     >
+      <img src={'logo.png'} />
         <Typography
           color={col4}
           fontSize={'3em'}
