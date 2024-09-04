@@ -4,8 +4,10 @@ import { collection, writeBatch, doc, getDoc} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
-import {db} from '../firebase';
+import {auth, db} from '../firebase';
 import Head from 'next/head';
+import { useEffect } from "react";
+import useLogout from '../components/logout';
 
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -13,7 +15,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
-
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const col1 = ['#3D405B'] // Dark shade
 const col2 = ['#E07A5F'] //red
@@ -28,6 +30,7 @@ export default function Generate(){
     const router = useRouter(); 
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
+    const handleLogout = useLogout();
 
     useEffect(() => {
         console.log("Component mounted, starting auth check");
@@ -98,7 +101,6 @@ export default function Generate(){
     const [text, setText] = useState('')
     const [name, setName] = useState('')
     const [open, setOpen] = useState(false)
-    const router = useRouter()
     
     const handleSubmit =async() =>{
         
@@ -255,20 +257,37 @@ export default function Generate(){
                                     <BoltIcon />
                                 </Button>
                             </Box>
+                            
+                            <Box>
+                                <Button
+                                    href="./profile/"
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
 
-                            <Button
-                                href="./profile/"
-                                sx={{color:col4,
-                                    '&:hover':{
-                                        color:col1,
-                                        backgroundColor:col4
-                                    }
-
-                                }}
-                            >
-                                <Person4Icon/>
-                            </Button>
+                                    }}
+                                >
+                                    <Person4Icon/>
+                                </Button>
+                                <Button
+                                    href="./profile/"
+                                    onClick={handleLogout}
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+                                    }}
+                                >
+                                    <LogoutIcon/>
+                                </Button>
+                            </Box>
+                            
                         </Box>
+
+                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
             <Box
                 sx={{mt:4, mb:6, display:'flex', flexDirection: 'column', alignItems: 'center'}}
                 backgroundColor ={col1}

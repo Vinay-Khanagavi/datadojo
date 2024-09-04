@@ -2,7 +2,9 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-
+import {useState, useEffect} from "react";
+import {auth} from '../firebase';
+import useLogout from '../components/logout';
 
 import {
   Box,
@@ -17,6 +19,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const col1 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -116,7 +119,7 @@ function Profile() {
               setAuthError("Authentication check timed out");
               setIsLoading(false);
           }
-      }, 10000); // 10 second timeout
+      }, 1200000); // 10 second timeout
 
       const unsubscribe = auth.onAuthStateChanged((user) => {
           console.log("Auth state changed:", user ? "User logged in" : "User not logged in");

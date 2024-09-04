@@ -6,8 +6,10 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import ReactMarkdown from 'react-markdown';
-import {db} from '../firebase';
+import {auth, db} from '../firebase';
 import { collection, addDoc} from 'firebase/firestore';
+import { useRouter } from "next/navigation";
+import useLogout from '../components/logout';
 
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -16,6 +18,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import SaveIcon from '@mui/icons-material/Save';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Save } from "lucide-react";
 
 
@@ -26,76 +29,6 @@ const col4 = ['#F4F1DE'] //white
 const col5 = ['#F2CC8F'] //yellow
 
 export default function Home() {
-
-  // Redirect section
-  const router = useRouter(); 
-  const [isLoading, setIsLoading] = useState(true);
-  const [authError, setAuthError] = useState(null);
-
-  useEffect(() => {
-      console.log("Component mounted, starting auth check");
-      const timeoutId = setTimeout(() => {
-          if (isLoading) {
-              console.log("Auth check timed out");
-              setAuthError("Authentication check timed out");
-              setIsLoading(false);
-          }
-      }, 10000); // 10 second timeout
-
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-          console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
-          if (user) {
-              console.log("User authenticated, setting loading to false");
-              setIsLoading(false);
-          } else {
-              console.log("User not authenticated, redirecting to signin");
-              router.push('/signin');
-          }
-      }, (error) => {
-          console.error("Auth error:", error);
-          setAuthError(error.message);
-          setIsLoading(false);
-      });
-
-      return () => {
-          unsubscribe();
-          clearTimeout(timeoutId);
-      };
-  }, [router]);
-
-  if (isLoading) {
-      return (
-          <Box
-              bgcolor={col4}
-              width={'100vw'}
-              height={'100vh'}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-          >
-              <Typography variant="h4">Loading...</Typography>
-          </Box>
-      ); 
-  }
-
-  if (authError) {
-      return (
-          <Box
-              bgcolor={col4}
-              width={'100vw'}
-              height={'100vh'}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-          >
-              <Typography variant="h4">Error: {authError}</Typography>
-          </Box>
-      );
-  }
-
-
-      // Redirect section ends
-
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -112,8 +45,17 @@ export default function Home() {
   const [glowOne, setglowOne] = useState('0 0 30px 1px #786fa6');
   const [buttonOne, setbuttonOne] = useState('#786fa6');
   const [buttonTwo, setbuttonTwo] = useState('#fff');
+  const [message, setMessage] = useState('');
+  const messagesEndRef = useRef(null);
+  const handleLogout = useLogout();
 
-  
+
+  // Redirect section
+  const router = useRouter(); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
+
+
 
   const darkMode = () => {
     if (mode === "light") {
@@ -135,8 +77,6 @@ export default function Home() {
     }
   };
 
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const sendMessage = async () => {
     if (!message.trim() || isLoading) return;
@@ -192,7 +132,7 @@ export default function Home() {
     }
   };
 
-  const messagesEndRef = useRef(null);
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -225,7 +165,66 @@ export default function Home() {
     scrollToBottom();
   }, [messages]);
 
-  
+  useEffect(() => {
+    console.log("Component mounted, starting auth check");
+    const timeoutId = setTimeout(() => {
+        if (isLoading) {
+            console.log("Auth check timed out");
+            setAuthError("Authentication check timed out");
+            setIsLoading(false);
+        }
+    }, 1200000); // 10 second timeout
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+        console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
+        if (user) {
+            console.log("User authenticated, setting loading to false");
+            setIsLoading(false);
+        } else {
+            console.log("User not authenticated, redirecting to signin");
+            router.push('/signin');
+        }
+    }, (error) => {
+        console.error("Auth error:", error);
+        setAuthError(error.message);
+        setIsLoading(false);
+    });
+
+    return () => {
+        unsubscribe();
+        clearTimeout(timeoutId);
+    };
+}, [router]);  
+
+if (isLoading) {
+  return (
+      <Box
+          bgcolor={col4}
+          width={'100vw'}
+          height={'100vh'}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+      >
+          <Typography variant="h4">Loading...</Typography>
+      </Box>
+  ); 
+}
+
+if (authError) {
+  return (
+      <Box
+          bgcolor={col4}
+          width={'100vw'}
+          height={'100vh'}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+      >
+          <Typography variant="h4">Error: {authError}</Typography>
+      </Box>
+  );
+}
 
   return (
     
@@ -240,7 +239,7 @@ export default function Home() {
       boxSizing={'border-box'}
       
     >
-      {/*/////////// Left pane //////////////*/}
+      {/*/////////// Navbar starts //////////////*/}
       <Box
                         width='92vw'
                         height='8vh'
@@ -318,20 +317,37 @@ export default function Home() {
                                     <BoltIcon />
                                 </Button>
                             </Box>
+                            
+                            <Box>
+                                <Button
+                                    href="./profile/"
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
 
-                            <Button
-                                href="./profile/"
-                                sx={{color:col4,
-                                    '&:hover':{
-                                        color:col1,
-                                        backgroundColor:col4
-                                    }
-
-                                }}
-                            >
-                                <Person4Icon/>
-                            </Button>
+                                    }}
+                                >
+                                    <Person4Icon/>
+                                </Button>
+                                <Button
+                                    href="./profile/"
+                                    onClick={handleLogout}
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+                                    }}
+                                >
+                                    <LogoutIcon/>
+                                </Button>
+                            </Box>
+                            
                         </Box>
+
+                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
                         
       {/* ///////////////// Top pane ends here ////////////////// */}
       <Box

@@ -8,9 +8,12 @@ import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
+import LogoutIcon from '@mui/icons-material/Logout';
+
 import {auth} from '../firebase';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import useLogout from '../components/logout';
 
 const col1 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -25,6 +28,15 @@ export default function Home(){
     const router = useRouter(); 
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
+    const [name, setName] = useState('');
+    const handleLogout = useLogout();
+
+    const getName = async() => {
+        const userRef = collection(db, "users");
+        const snap = await getDocs(userRef)
+        // Balance code
+    
+    }
 
     useEffect(() => {
         console.log("Component mounted, starting auth check");
@@ -34,7 +46,7 @@ export default function Home(){
                 setAuthError("Authentication check timed out");
                 setIsLoading(false);
             }
-        }, 10000); // 10 second timeout
+        }, 1200000); 
 
         const unsubscribe = auth.onAuthStateChanged((user) => {
             console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
@@ -60,14 +72,23 @@ export default function Home(){
     if (isLoading) {
         return (
             <Box
-                bgcolor={col4}
+                bgcolor={col1}
                 width={'100vw'}
                 height={'100vh'}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h4">Loading...</Typography>
+                <Typography variant="h4">
+                <div class="cube">
+                    <div class="top">Top</div>
+                    <div class="right">Right</div>
+                    <div class="bottom">Bottom</div>
+                    <div class="left">Left</div>
+                    <div class="front">Front</div>
+                    <div class="back">Back</div>
+                </div>
+                </Typography>
             </Box>
         ); 
     }
@@ -174,19 +195,34 @@ export default function Home(){
                                     <BoltIcon />
                                 </Button>
                             </Box>
+                            
+                            <Box>
+                                <Button
+                                    href="./profile/"
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
 
-                            <Button
-                                href="./profile/"
-                                sx={{color:col4,
-                                    '&:hover':{
-                                        color:col1,
-                                        backgroundColor:col4
-                                    }
-
-                                }}
-                            >
-                                <Person4Icon/>
-                            </Button>
+                                    }}
+                                >
+                                    <Person4Icon/>
+                                </Button>
+                                <Button
+                                    href="./profile/"
+                                    onClick={handleLogout}
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+                                    }}
+                                >
+                                    <LogoutIcon/>
+                                </Button>
+                            </Box>
+                            
                         </Box>
 
                         {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}

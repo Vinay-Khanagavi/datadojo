@@ -10,6 +10,10 @@ import FormControl from '@mui/material/FormControl';
 import Input from '@mui/material/Input';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {auth, db} from '../firebase';
+import {useRouter} from 'next/navigation';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import {useState} from "react";
 
 
 const customTheme = (outerTheme) =>
@@ -67,6 +71,10 @@ const customTheme = (outerTheme) =>
 export default function Home() {
 
   const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -76,6 +84,23 @@ export default function Home() {
 
   const handleMouseUpPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+    
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push('/dashboard');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const outerTheme = useTheme();
@@ -161,10 +186,13 @@ export default function Home() {
                     width='50vw'
                     display='flex'
                     justifyContent='center'
+                    onSubmit={handleLogin}
                   >
                     <TextField
                         variant='filled'
                         label='Email Address'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         fullWidth
                         
                         sx={{
@@ -189,6 +217,9 @@ export default function Home() {
                         variant='filled'
                         label='Password'
                         fullWidth
+                        value={password}
+                        type={showPassword?'text':'password'}
+                        onChange={(e) => setPassword(e.target.value)}
                         sx={{
                           backgroundColor: col4,
                           '& .MuiFilledInput-root': {
@@ -221,12 +252,23 @@ export default function Home() {
                         padding='1em'
                         ></Box>
                       <Button
+                        type='submit'
                         sx={{backgroundColor:col2,
-                          color:'#fff'
+                          color:'#fff',
+                          '&:hover':
+                          {
+                            backgroundColor:'#fff',
+                            color:col2
+                          }
                         }}
                       >
                           Login
                       </Button>
+                      {error && (
+                        <Typography color="error" sx={{ mt: 2 }}>
+                          {error}
+                        </Typography>
+                      )}
                   </form>
                   </ThemeProvider>
                   
