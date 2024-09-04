@@ -10,7 +10,8 @@ import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import {auth} from '../firebase';
+import {auth, db} from '../firebase';
+import {collection, query, where, getDocs} from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
@@ -31,12 +32,26 @@ export default function Home(){
     const [name, setName] = useState('');
     const handleLogout = useLogout();
 
-    const getName = async() => {
-        const userRef = collection(db, "users");
-        const snap = await getDocs(userRef)
-        // Balance code
+    const getNameByEmail = async (email) => {
+        console.log(email)
+        try {
+          const userRef = collection(db, "users");
+          const q = query(userRef, where("email", "==", email)); 
+          const querySnapshot = await getDocs(q);
     
-    }
+          if (!querySnapshot.empty) {
+            const userDoc = querySnapshot.docs[0];
+            const userData = userDoc.data();
+            setName(userData.name); 
+          } else {
+            console.log("No user found with this email.");
+            setAuthError("User data not found.");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          setAuthError(error.message);
+        }
+      };
 
     useEffect(() => {
         console.log("Component mounted, starting auth check");
@@ -53,6 +68,7 @@ export default function Home(){
             if (user) {
                 console.log("User authenticated, setting loading to false");
                 setIsLoading(false);
+                getNameByEmail(user.email);
             } else {
                 console.log("User not authenticated, redirecting to signin");
                 router.push('/signin');
@@ -249,7 +265,7 @@ export default function Home(){
                                 <Typography
                                     variant="h2"
                                     color={col1}
-                                >Welcome, John Doe!</Typography>
+                                >Welcome, {name}!</Typography>
                             </Box>
                             {/*///////////// Second Box /////////////*/}
                             <Box
