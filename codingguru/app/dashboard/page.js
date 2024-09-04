@@ -31,6 +31,7 @@ export default function Home(){
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
     const [name, setName] = useState('');
+    const [chats, setChats] = useState([]);
     const handleLogout = useLogout();
 
     const getNameByEmail = async (email) => {
@@ -54,7 +55,16 @@ export default function Home(){
         }
       };
 
+      const getChats = async() => {
+        const chatRef = collection(db, "threads");
+        const querySnapshot = await getDocs(chatRef);
+        const docTitles = querySnapshot.docs.map((doc) => doc.id);
+        setChats(docTitles);
+      }
+
+
     useEffect(() => {
+        getChats();
         console.log("Component mounted, starting auth check");
         const timeoutId = setTimeout(() => {
             if (isLoading) {
@@ -285,8 +295,42 @@ export default function Home(){
                                     </Typography>
                                 </Box>
 
-                                {/*////////////////////// Update this section. map the saved chats here /////////////////////////////*/}
-                                <Stack></Stack>
+                                {/*////////////////////// the saved chats here /////////////////////////////*/}
+                                <Box
+                                    display={'flex'}
+                                    margin={1}
+                                    gap={1}
+                                    overflow={'auto'}
+                                    flexWrap={'wrap'}
+                                >
+                                    {chats.map((chat) =>(
+                                    <Link
+                                        underline="none"
+                                        href=""
+                                    >
+                                        <Typography
+                                        key={chat}
+                                        color={col4}
+                                        bgcolor={col1}
+                                        padding={'0.5em 1em'}
+                                        borderRadius={2}
+                                        sx={{
+                                            '&:hover':
+                                            {
+                                                bgcolor:col4,
+                                                color:col1
+                                            }
+                                        }}
+                                        
+                                    >
+                                        {chat}
+                                    </Typography>
+                                    </Link>
+                                    
+                                    ))}
+                                </Box>
+                                
+
 
                             </Box>
 
