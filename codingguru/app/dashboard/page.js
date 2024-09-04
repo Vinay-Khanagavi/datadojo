@@ -32,6 +32,7 @@ export default function Home(){
     const [authError, setAuthError] = useState(null);
     const [name, setName] = useState('');
     const [chats, setChats] = useState([]);
+    const [cards, setCards] = useState([]);
     const handleLogout = useLogout();
 
     const getNameByEmail = async (email) => {
@@ -62,8 +63,16 @@ export default function Home(){
         setChats(docTitles);
       }
 
+      const getCards = async() => {
+        const cardsRef = collection(db, "cards");
+        const qSnap = await getDocs(cardsRef);
+        const cardTitles = qSnap.docs.map((doc) => doc.id);
+        setCards(cardTitles);
+
+      }
 
     useEffect(() => {
+        getCards();
         getChats();
         console.log("Component mounted, starting auth check");
         const timeoutId = setTimeout(() => {
@@ -412,11 +421,48 @@ export default function Home(){
                                     >
                                     <Typography
                                         color={col4}
-                                        
                                     >
                                         <BoltIcon/> Flashcards
                                     </Typography>
                                 </Box>
+                                
+                                <Box
+                                    display={'flex'}
+                                    height={'32vh'}
+                                    margin={1}
+                                    gap={1}
+                                    overflow={'auto'}
+                                    flexWrap={'wrap'}
+                                    flexAlign={'center'}
+                                >
+                                    {cards.map((card) =>(
+                                    <Link
+                                        underline="none"
+                                        href=""
+                                    >
+                                        <Typography
+                                        key={card}
+                                        color={col4}
+                                        bgcolor={col1}
+                                        
+                                        padding={'1em 1em'}
+                                        borderRadius={2}
+                                        sx={{
+                                            '&:hover':
+                                            {
+                                                bgcolor:col4,
+                                                color:col1
+                                            }
+                                        }}
+                                        
+                                    >
+                                        {card}
+                                    </Typography>
+                                    </Link>
+                                    
+                                    ))}
+                                </Box>
+
                             </Box>
                         </Box>
                         

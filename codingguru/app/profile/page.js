@@ -152,7 +152,11 @@ function Profile() {
               justifyContent="center"
               alignItems="center"
           >
-              <Typography variant="h4">Loading...</Typography>
+              <CircularProgress
+                    height={'10'}
+                    borderRadius={'10'}
+                    color="success"
+                ></CircularProgress>
           </Box>
       ); 
   }

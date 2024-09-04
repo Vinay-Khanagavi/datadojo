@@ -1,6 +1,6 @@
 'use client'
 
-import { collection, writeBatch, doc, getDoc} from "firebase/firestore";
+import { collection, writeBatch, doc, getDoc, setDoc} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
@@ -16,6 +16,8 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { CircularProgress } from "@mui/material";
+
 
 const col1 = ['#3D405B'] // Dark shade
 const col2 = ['#E07A5F'] //red
@@ -71,36 +73,20 @@ export default function Generate(){
             alert('Please enter a name')
             return
         }
-        const batch = writeBatch(db)
-        const userDocRef =  doc(collection(db, 'cards'), user.id)
-        const docSnap = await getDoc(userDocRef)
 
-        if(docSnap.exists())
-        {
-            const collections = docSnap.data().flashcards || []
-            if (collections.find((f) => f.name === name))
-            {
-                alert("Flashcard collection with the same name exists")
-                return
-            }
-            else
-            {
-                collections.push({name})
-                batch.set(userDocRef, {flashcards: collections}, {merge: true})
-            }
-        }
-        else
-        {
-            batch.set(userDocRef, {flashcards: [{name}]})
-        }
-
-        const colRef = collection(userDocRef, name)
-        flashcards.forEach((flashcard) => {
-            const cardDocRef = doc(colRef)
-            batch.set(cardDocRef, flashcard)
-        });
-
-        await batch.commit()
+        try {
+            await setDoc(doc(db, "cards", name), {
+              flashcards: flashcards,
+            });
+            alert("Flashcards saved!");
+          }
+          catch (error) {
+            
+            console.error("Error saving thread: ", error);
+            alert("Error saving thread: " + error.message);
+          }
+          
+        
         handleClose()
         router.push('/flashcards')
     }
@@ -146,7 +132,11 @@ export default function Generate(){
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h4">Loading...</Typography>
+                <CircularProgress
+                    height={'10'}
+                    borderRadius={'10'}
+                    color="success"
+                ></CircularProgress>
             </Box>
         ); 
     }
@@ -297,7 +287,8 @@ export default function Generate(){
                 alignContent={'center'}
             >
                 <Typography
-                    fontSize={'1.5em'}                    color={col4}
+                    fontSize={'1.5em'}
+                    color={col4}
                     fontWeight={100}
                 >
                     Generate flashcards and save them in your account
@@ -349,9 +340,19 @@ export default function Generate(){
             </Box>
             {
                 flashcards.length>0 && (<Box sx={{mt:4}}>
-                    <Typography variant="h5">
+                    <Typography
+                        variant="h5"
+                        color={col4}
+                    >
                         Flashcards Preview
                     </Typography>
+                    <Box
+                    width={'100vw'}
+                    display={'flex'}
+                    justifyContent={'center'}
+                    >
+                    <Box
+                    width={'80vw'}>
                     <Grid container spacing={3}
                     
                     >
@@ -432,10 +433,12 @@ export default function Generate(){
                                     </CardActionArea>
                                 </Card>
                             </Grid>
+                            
                             )
                         )}
                     </Grid>
-
+                    </Box>
+                    </Box>
                     <Box sx={{mt:4, display:'flex', justifyContent:'center'}}>
                         <Button
                             variant="contained"
