@@ -9,6 +9,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { CircularProgress } from "@mui/material";
 
 import {auth, db} from '../firebase';
 import {collection, query, where, getDocs} from 'firebase/firestore';
@@ -95,16 +96,11 @@ export default function Home(){
                 justifyContent="center"
                 alignItems="center"
             >
-                <Typography variant="h4">
-                <div class="cube">
-                    <div class="top">Top</div>
-                    <div class="right">Right</div>
-                    <div class="bottom">Bottom</div>
-                    <div class="left">Left</div>
-                    <div class="front">Front</div>
-                    <div class="back">Back</div>
-                </div>
-                </Typography>
+                <CircularProgress
+                    height={'10'}
+                    borderRadius={'10'}
+                    color="success"
+                ></CircularProgress>
             </Box>
         ); 
     }
