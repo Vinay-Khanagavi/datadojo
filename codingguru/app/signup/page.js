@@ -11,6 +11,11 @@ import Input from '@mui/material/Input';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { CircularProgress } from "@mui/material";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {db, auth} from '../firebase';
+import {useRouter} from 'next/navigation';
+import {useState} from 'react';
+import { collection } from 'firebase/firestore';
 
 
 const customTheme = (outerTheme) =>
@@ -66,8 +71,33 @@ const customTheme = (outerTheme) =>
   });
 
 export default function Home() {
-
+  const[name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const auth = getAuth();
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log('User signed up successfully',email);
+      try
+      {
+        await addDoc(doc(db, "users"),{email:email, name:name});
+        router.push('/signin');
+      }
+      catch(error)
+      {
+        console.log(error.message);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -155,12 +185,13 @@ export default function Home() {
 
               <Box
                 width='100vw'
-                height='30vh'
+                height='45vh'
                 display='flex'
                 justifyContent='center'
               >
                   <ThemeProvider theme={customTheme(outerTheme)}>
                   <form
+                    onSubmit={handleSubmit}
                     width='50vw'
                     display='flex'
                     justifyContent='center'
@@ -169,7 +200,8 @@ export default function Home() {
                         variant='filled'
                         label='Name'
                         fullWidth
-                        
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                         sx={{
                           backgroundColor: col4,
                           '& .MuiFilledInput-root': {
@@ -192,7 +224,8 @@ export default function Home() {
                         variant='filled'
                         label='Email Address'
                         fullWidth
-                        
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
                         sx={{
                           backgroundColor: col4,
                           '& .MuiFilledInput-root': {
@@ -215,6 +248,8 @@ export default function Home() {
                         variant='filled'
                         label='Password'
                         fullWidth
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                         sx={{
                           backgroundColor: col4,
                           '& .MuiFilledInput-root': {
@@ -247,6 +282,7 @@ export default function Home() {
                         padding='1em'
                         ></Box>
                       <Button
+                        type='submit'
                         sx={{backgroundColor:col2,
                           color:'#fff'
                         }}
@@ -263,7 +299,8 @@ export default function Home() {
               >
                     <Typography
                       textAlign='center'
-                    >Already have an account? <Link href='../signin/'>Log in</Link></Typography>
+                      color={col4}
+                    >Already have an account? <Link href='../signin/' color={col2} underline='none'>Log in</Link></Typography>
               </Box>
       </Box>
   );
