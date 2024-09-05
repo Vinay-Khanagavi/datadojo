@@ -46,9 +46,10 @@ export default function Generate({params}){
         const querySnapshot = await getDocs(cardRef);
         const cardTitles = querySnapshot.docs.map((doc) => doc.id);
         console.log(cardTitles)
-        console.log(card)
+        const dcard = decodeURIComponent(card)
+        console.log(dcard)
         try {
-          const cardDoc = await getDoc(doc(db, "cards", card));
+          const cardDoc = await getDoc(doc(db, "cards", dcard));
     
           if (cardDoc.exists()) {
             const cardData = cardDoc.data();
