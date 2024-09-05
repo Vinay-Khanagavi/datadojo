@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {useState, useEffect} from "react";
 import {auth} from '../firebase';
 import useLogout from '../components/logout';
+import { CircularProgress } from "@mui/material";
 
 import {
   Box,
