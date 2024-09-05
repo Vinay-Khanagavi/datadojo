@@ -88,7 +88,7 @@ export default function Generate(){
           
         
         handleClose()
-        router.push('/flashcards')
+        router.push('/dashboard')
     }
 
     useEffect(() => {

@@ -43,22 +43,27 @@ export default function Generate({params}){
     
     const fetchFlashcards = async () => {
         const cardRef = collection(db, "cards");
-        const q = query(cardRef, where('id', "==", card));
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(cardRef);
+        const cardTitles = querySnapshot.docs.map((doc) => doc.id);
+        console.log(cardTitles)
+        console.log(card)
+        try {
+          const cardDoc = await getDoc(doc(db, "cards", card));
     
-        if (!querySnapshot.empty) {
-          const cardDoc = querySnapshot.docs[0];
-          const cardData = cardDoc.data();
-          console.log(cardData);
-          if (cardData.flashcards && Array.isArray(cardData.flashcards)) {
-            setFlashcards(cardData.flashcards);
-            console.log(flashcards);
-            setFlipped(new Array(cardData.flashcards.length).fill(false));
+          if (cardDoc.exists()) {
+            const cardData = cardDoc.data();
+            console.log("Card data:", cardData);
+            if (cardData.flashcards && Array.isArray(cardData.flashcards)) {
+              setFlashcards(cardData.flashcards);
+              setFlipped(new Array(cardData.flashcards.length).fill(false));
+            } else {
+              console.log("No flashcards found in the document.");
+            }
           } else {
-            console.log("No flashcards found in the document.");
+            console.log("No card found with this id.");
           }
-        } else {
-          console.log("No card found with this id.");
+        } catch (error) {
+          console.error("Error fetching flashcards:", error);
         }
       };
     
@@ -77,10 +82,13 @@ export default function Generate({params}){
         setOpen(false)
     }
     
-    
+    useEffect(() => {
+        if (card) {
+          fetchFlashcards();
+        }
+      }, [card]);
 
     useEffect(() => {
-        fetchFlashcards();
         console.log("Component mounted, starting auth check");
         const timeoutId = setTimeout(() => {
             if (isLoading) {
@@ -399,17 +407,7 @@ export default function Generate({params}){
                     </Grid>
                     </Box>
                     </Box>
-                    <Box sx={{mt:4, display:'flex', justifyContent:'center'}}>
-                        <Button
-                            variant="contained"
-                            onClick={handleOpen}
-                            sx={{
-                                backgroundColor:col3
-                            }}
-                        >
-                            Save
-                        </Button>
-                    </Box>
+                    
                 </Box>
             )}
             </Box>
