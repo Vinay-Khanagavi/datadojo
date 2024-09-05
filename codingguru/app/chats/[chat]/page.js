@@ -66,7 +66,7 @@ export default function Home({params}) {
           setMessages(prevMessages => [...prevMessages, ...chatData.messages]);
           console.log(messages);
         } else {
-          console.log("No messages found in the document or invalid format");
+          console.log("No messages found in the document");
         }
       } else {
         console.log("No chat found with this id:", dchat);
