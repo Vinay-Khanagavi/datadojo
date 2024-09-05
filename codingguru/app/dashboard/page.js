@@ -315,7 +315,7 @@ export default function Home(){
                                     {chats.map((chat) =>(
                                     <Link
                                         underline="none"
-                                        href=""
+                                        href={`./chats/${chat}`}
                                     >
                                         <Typography
                                         key={chat}
@@ -433,7 +433,7 @@ export default function Home(){
                                     gap={1}
                                     overflow={'auto'}
                                     flexWrap={'wrap'}
-                                    flexAlign={'center'}
+                                    
                                 >
                                     {cards.map((card) =>(
                                     <Link
