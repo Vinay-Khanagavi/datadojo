@@ -438,7 +438,7 @@ export default function Home(){
                                     {cards.map((card) =>(
                                     <Link
                                         underline="none"
-                                        href=""
+                                        href={`./flashcards/${card}`}
                                     >
                                         <Typography
                                         key={card}

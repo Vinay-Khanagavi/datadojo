@@ -15,7 +15,7 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import {db, auth} from '../firebase';
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
-import { collection } from 'firebase/firestore';
+import { collection, setDoc, doc } from 'firebase/firestore';
 
 
 const customTheme = (outerTheme) =>
@@ -81,18 +81,20 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const auth = getAuth();
-
+  
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log('User signed up successfully',email);
-      try
-      {
-        await addDoc(doc(db, "users"),{email:email, name:name});
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('User signed up successfully', email);
+      console.log('Name',name);
+      try {
+        await setDoc(doc(db, "users", email), { 
+          email: email, 
+          name: name
+        });
+        console.log('User data added to Firestore');
         router.push('/signin');
-      }
-      catch(error)
-      {
-        console.log(error.message);
+      } catch (error) {
+        console.error("Error adding document: ", error);
       }
     } catch (error) {
       setError(error.message);
