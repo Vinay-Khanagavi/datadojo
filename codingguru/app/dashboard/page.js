@@ -152,6 +152,7 @@ export default function Home(){
             width={'100vw'}
             height={'100vh'}
             bgcolor={col1}
+            overflow={'hidden'}
         >
                     <Box
                         width='92vw'
@@ -263,14 +264,15 @@ export default function Home(){
                         {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
                         
                         <Box
-                            height={'92vh'}
+                            height={'46vh'}
                             width={'100vw'}
                             display={'flex'}
                             justifyContent={'center'}
-                            gap={7}
-                            alignItems={'flex-start'}
+                            
+                            alignItems={'center'}
                             flexWrap={'wrap'}
                             flexDirection={'row'}
+                            boxSizing={'border-box'}
                         >
                             {/*///////////// First Box /////////////*/}
                             <Box
@@ -279,6 +281,7 @@ export default function Home(){
                                 bgcolor={col4}
                                 borderRadius={'0.5em'}
                                 padding={'2em'}
+                                margin={'3vh'}
                                 boxSizing={'border-box'}
                                 display={'flex'}
                                 flexDirection={'column'}
@@ -356,12 +359,25 @@ export default function Home(){
 
 
                             </Box>
-
+                        </Box>
+                        {/*//////////////////////// Container for 3rd and 4th Box //////////////////////////*/}
+                        <Box
+                            height={'43vh'}
+                            width={'100vw'}
+                            display={'flex'}
+                            justifyContent={'center'}
+                            
+                            alignItems={'center'}
+                            flexWrap={'wrap'}
+                            flexDirection={'row'}
+                            paddingBottom={'3vh'}
+                        >
                             <Box
-                                height={'40vh'}
+                                height={'43vh'}
                                 width={'55vw'}
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
+                                margin={'0 3vh'}
                             >
                                 <Box
                                     height={'8vh'}
@@ -380,7 +396,7 @@ export default function Home(){
                                 </Box>
 
                                 <Box
-                                    height={'32vh'}
+                                    height={'35vh'}
                                     width={'100%'}
                                     overflow={'auto'}
                                 >
@@ -436,7 +452,7 @@ export default function Home(){
                             </Box>
 
                             <Box
-                                height={'40vh'}
+                                height={'43vh'}
                                 width={'25vw'}
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
