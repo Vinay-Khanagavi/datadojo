@@ -21,12 +21,12 @@ import MoodIcon from '@mui/icons-material/Mood';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 
-const col1 = ['#3D405B']; // Dark shade
+const col6 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
 const col3 = ['#81B29A']; // green
 const col4 = ['#F4F1DE']; // white
 const col5 = ['#F2CC8F']; // yellow
-const col6 = ['#191c35']; // Darker shade
+const col1 = ['#191c35']; // Darker shade
 
 export default function Home(){
 
@@ -38,6 +38,38 @@ export default function Home(){
     const [chats, setChats] = useState([]);
     const [cards, setCards] = useState([]);
     const handleLogout = useLogout();
+    const [yourScore, setYourScore] = useState('');
+    const [highestScore, setHighestScore] = useState('');
+    
+    
+    const getMaxScore = async() => {
+        try {
+            const userRef = collection(db, "users");
+            
+            
+            const querySnapshot = await getDocs(userRef);
+            
+            if (!querySnapshot.empty) {
+              let maxScore = 0;
+              
+              
+              querySnapshot.forEach((doc) => {
+                const userData = doc.data();
+                const userScore = userData.score;
+                
+                if (userScore > maxScore) {
+                  maxScore = userScore;
+                }
+              });
+              
+              setHighestScore(maxScore); 
+            }
+        }
+        catch(error)
+        {
+            console.error(error.message);
+        }
+   }
 
     const getNameByEmail = async (email) => {
         console.log(email)
@@ -50,6 +82,7 @@ export default function Home(){
             const userDoc = querySnapshot.docs[0];
             const userData = userDoc.data();
             setName(userData.name); 
+            setYourScore(userData.score);
           } else {
             console.log("No user found with this email.");
             setAuthError("User data not found.");
@@ -76,6 +109,7 @@ export default function Home(){
       }
 
     useEffect(() => {
+        getMaxScore();
         getCards();
         getChats();
         console.log("Component mounted, starting auth check");
@@ -183,10 +217,13 @@ export default function Home(){
                             >
                                 <Button
                                     href='./dashboard/'
+                                    
                                     sx={{color:col4,
+                                        borderBottom:`4px solid ${col4}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col4,
+                                                    
                                         }
 
                                     }}
@@ -196,10 +233,11 @@ export default function Home(){
                                 </Button>
                                 <Button
                                     href='./editor/'
-                                    sx={{color:col4,
+                                    sx={{color:col2,
+                                        borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col2
                                         }
 
                                     }}
@@ -208,10 +246,11 @@ export default function Home(){
                                 </Button>
                                 <Button
                                     href='./chat/'
-                                    sx={{color:col4,
+                                    sx={{color:col3,
+                                        borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col3
                                         }
 
                                     }}
@@ -220,10 +259,11 @@ export default function Home(){
                                 </Button>
                                 <Button
                                     href='./fcgen/'
-                                    sx={{color:col4,
+                                    sx={{color:col5,
+                                        borderBottom:`4px solid ${col5}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col5
                                         }
 
                                     }}
@@ -236,6 +276,7 @@ export default function Home(){
                                 <Button
                                     href="./profile/"
                                     sx={{color:col4,
+                                        
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -284,6 +325,7 @@ export default function Home(){
                                 margin={'3vh'}
                                 boxSizing={'border-box'}
                                 display={'flex'}
+                                alignContent={'space-around'}
                                 flexDirection={'column'}
                                 justifyContent={'space-between'}
                             >
@@ -291,13 +333,50 @@ export default function Home(){
                                     variant="h2"
                                     color={col1}
                                 >Welcome, {name}!</Typography>
+                                <Box
+                                    display={'flex'}
+                                    justifyContent={'space-between'}
+                                    borderTop={'1px solid rgba(0,0,0,0.3)'}
+                                    padding={'1em'}
+                                >
+                                    <Typography
+                                        width={'100%'}
+                                        textAlign={'center'}
+                                        fontSize={'0.7em'}                                >
+                                        Your Score 
+                                        <Typography
+                                            variant="span"
+                                            padding={'0.2em 0.8em'}
+                                            bgcolor={col3}
+                                            color={col4}
+                                            fontSize={'2.7em'}
+                                            borderRadius={'0.5em'}
+                                            margin={'0 0.2em'}
+                                        >
+                                            {yourScore}
+                                        </Typography>
+                                    </Typography>
+                                    
 
-                                <Typography
-                                    width={'100%'}
-                                    textAlign={'center'}
-                                    fontSize={'1.5em'}                                >
-                                    Your Score: | Highest Score:
-                                </Typography>
+                                    <Typography
+                                        width={'100%'}
+                                        textAlign={'center'}
+                                        fontSize={'0.7em'}                                >
+                                        High Score 
+                                        <Typography
+                                            variant="span"
+                                            padding={'0.2em 0.8em'}
+                                            fontSize={'2.7em'}
+                                            bgcolor={col2}
+                                            color={col4}
+                                            borderRadius={'0.5em'}
+                                            margin={'0 0.2em'}
+                                        >
+                                            {highestScore}
+                                        </Typography>
+                                    </Typography>
+                                </Box>
+                                
                             </Box>
                             {/*///////////// Second Box /////////////*/}
                             <Box
@@ -372,9 +451,13 @@ export default function Home(){
                             flexDirection={'row'}
                             paddingBottom={'3vh'}
                         >
+
+                            {/*/////////////////////////// Third Box /////////////////////////////////////*/}
+                            
+
                             <Box
                                 height={'43vh'}
-                                width={'55vw'}
+                                width={'40vw'}
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
                                 margin={'0 3vh'}
@@ -450,10 +533,10 @@ export default function Home(){
                                 </Box>
 
                             </Box>
-
+                            {/*/////////////////////////// Fourth Box //////////////////////////////////*/}
                             <Box
                                 height={'43vh'}
-                                width={'25vw'}
+                                width={'40vw'}
                                 bgcolor={col6}
                                 borderRadius={'0.5em'}
                             >
@@ -490,8 +573,12 @@ export default function Home(){
                                         key={card}
                                         color={col4}
                                         bgcolor={col1}
+                                        minWidth={'3em'}
+                                        maxWidth={'5em'}
+                                        minHeight={'6em'}
                                         padding={'1em 1em'}
                                         borderRadius={2}
+                                        textAlign={'center'}
                                         sx={{
                                             '&:hover':
                                             {
@@ -501,6 +588,15 @@ export default function Home(){
                                         }}
                                         
                                     >
+                                        <Typography
+                                            variant="span"
+                                            display={'inline-block'}
+                                            width={'100%'}
+                                            color={col5}
+                                        >
+                                            <BoltIcon />
+                                        </Typography>
+                                        
                                         {card}
                                     </Typography>
                                     </Link>
