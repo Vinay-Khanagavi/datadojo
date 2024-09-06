@@ -2,6 +2,7 @@
 import * as React from 'react';
 import {Container, Box, Typography, TextField, Button, Link} from '@mui/material';
 import { createTheme, ThemeProvider, useTheme} from '@mui/material/styles';
+import Image from 'next/image';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
@@ -99,7 +100,17 @@ export default function Home() {
       justifyContent={'center'}
       flexDirection={'column'}
     >
-      <img src={'logo.png'} />
+      <Box
+        alignItems={'center'}
+      >
+        <Image
+            src={'/logo.png'}
+            width={300}
+            height={300}
+            margin={'0 auto'}
+          />
+      </Box>
+        
         <Typography
           color={col4}
           fontSize={'3em'}
