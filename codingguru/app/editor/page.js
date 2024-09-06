@@ -44,24 +44,55 @@ export default function ProblemSolver() {
     setCode('');
     setOutput('');
   };
-  const handleRunCode = () => {
-    // Simulate backend code execution
-    setOutput('Output from backend');
 
-    
 
-    const newScore = score + 1;
-    setScore(newScore);
 
-    const scoresRef = ref(db, 'scores');
-    const newScoreRef = push(scoresRef);
-    set(newScoreRef, {
-      score: newScore,
-      timestamp: Date.now(),
+  const handleRunCode = async () => {
+  try {
+
+    const messages = [
+      {
+        role: "system",
+        content: "You are a code execution engine that runs code and validates it against test cases.",
+      },
+      {
+        role: "user",
+        content: `Here is the code:\n${code}\nTest cases input:\n${JSON.stringify(testCase.input)}`,
+      },
+    ];
+
+    const response = await fetch('/api/editor', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ messages }),
     });
-  };
 
-  console.log(questions);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let result = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        break; 
+      }
+      result += decoder.decode(value, { stream: true });
+    }
+
+    console.log(result); // Process the result
+    return result;
+  } catch (error) {
+    console.error('Failed to fetch:', error);
+  }
+};
+
+
 
 
 
@@ -241,7 +272,20 @@ export default function ProblemSolver() {
                 fullWidth
                 multiline
                 rows={10}
-                sx={{ color: col4 }}
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: col4, // Set the text color to white
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: col4, // Optionally, set the border color to white
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: col4, // Set the label color to white
+                  },
+                }}
+                inputProps={{
+                  style: { color: col4 }, // Ensure the entered text color is white
+                }}
                 variant="outlined"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}

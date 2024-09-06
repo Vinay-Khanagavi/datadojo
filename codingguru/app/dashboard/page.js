@@ -17,6 +17,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
 
+import MoodIcon from '@mui/icons-material/Mood';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import MoodBadIcon from '@mui/icons-material/MoodBad';
+
 const col1 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
 const col3 = ['#81B29A']; // green
@@ -395,8 +399,22 @@ export default function Home(){
                                                     >{question.shortTitle}</Typography>
                                                     <Typography
                                                         marginRight={'1em'}
+                                                        color={question.difficulty === 'easy' ? (
+                                                            col3
+                                                        ) : question.difficulty === 'medium' ? (
+                                                            col5
+                                                        ) : question.difficulty === 'hard' ? (
+                                                            col2
+                                                        ) : null}
                                                     >
-                                                        {question.difficulty}
+                                                        {question.difficulty === 'easy' ? (
+                                                            <MoodIcon />
+                                                        ) : question.difficulty === 'medium' ? (
+                                                            <SentimentSatisfiedIcon />
+                                                        ) : question.difficulty === 'hard' ? (
+                                                            <MoodBadIcon />
+                                                        ) : null}
+                                                        
                                                     </Typography>
                                                 </Box>
                                             </Link>
