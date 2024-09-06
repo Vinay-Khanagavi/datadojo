@@ -396,7 +396,7 @@ export default function Home(){
                                     <Typography
                                         color={col4}
                                     >
-                                        <SupportAgentIcon/> Socratic Agent Discussions
+                                        <SupportAgentIcon/> Discussion Threads
                                     </Typography>
                                 </Box>
 

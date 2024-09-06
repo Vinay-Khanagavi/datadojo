@@ -7,6 +7,7 @@ import { ref, push, set } from 'firebase/database';
 import { db } from '../firebase';
 import questions from './questions.json'; // Direct import from JSON
 import useLogout from '../components/logout';
+import Editor from '@monaco-editor/react';
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -42,6 +43,9 @@ export default function ProblemSolver() {
     setLanguage(newValue);
   };
 
+  const languages = ['python', 'javascript', 'c'];
+
+
 
   const handleQuestionSelect = (question) => {
     setSelectedQuestion(question);
@@ -62,7 +66,7 @@ export default function ProblemSolver() {
       },
       {
         role: "user",
-        content: `Here is the code:\n${code}\nTest cases input:\n${JSON.stringify(testCase.input)}`,
+        content: `Here is the code:\n${code}\nTest cases:\n${JSON.stringify(selectedQuestion.testCases)}`,
       },
     ];
 
@@ -91,6 +95,7 @@ export default function ProblemSolver() {
     }
 
     console.log(result); // Process the result
+    setOutput(result);
     return result;
   } catch (error) {
     console.error('Failed to fetch:', error);
@@ -295,29 +300,22 @@ export default function ProblemSolver() {
               <Tab label="C" sx={{ color: col4 }} />
             </Tabs>
             <Box sx={{ mt: 2 }}>
-              <TextField
-                fullWidth
-                multiline
-                rows={10}
-                sx={{
-                  '& .MuiInputBase-input': {
-                    color: col4, // Set the text color to white
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: col4, // Optionally, set the border color to white
-                  },
-                  '& .MuiInputLabel-root': {
-                    color: col4, // Set the label color to white
-                  },
-                }}
-                inputProps={{
-                  style: { color: col4 }, // Ensure the entered text color is white
-                }}
-                variant="outlined"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder={`Enter your ${['Python', 'JavaScript', 'C'][language]} code here...`}
+              
+              <Editor
+                  height="30vh"
+                  language={languages[language]} // Switches the editor language dynamically
+                  value={code}
+                  theme="vs-dark"
+                  onChange={(value) => setCode(value)}
+                  options={{
+                    fontSize: 18, // Set the font size
+                    fontFamily: ' monospace', // Set the font family
+                    lineHeight: 22, // Optional: Adjust the line height
+                    
+                  }}
               />
+
+              
             </Box>
             <Box sx={{ mt: 2 }}>
               <Button variant="contained" sx={{ bgcolor: col2 }} startIcon={<PlayArrowIcon />} onClick={handleRunCode}>
@@ -328,7 +326,16 @@ export default function ProblemSolver() {
               <Typography variant="h6" gutterBottom>
                 Output
               </Typography>
-              <TextField fullWidth multiline rows={4} variant="outlined" value={output} InputProps={{ readOnly: true }} />
+              <TextField sx={{
+                            '& .MuiOutlinedInput-root': {
+                              '& .MuiInputBase-input': {
+                                color: col4, // Change the font color
+                              },
+                            },
+                          }}
+                          fullWidth multiline rows={6} variant="outlined" value={output} InputProps={{ readOnly: true }}>
+                {output}
+              </TextField>
             </Box>
           </Paper>
         </Box>
