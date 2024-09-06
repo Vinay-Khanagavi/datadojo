@@ -193,7 +193,7 @@ if (authError) {
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='./dashboard/'
+                                    href='../dashboard/'
                                     
                                     sx={{color:col4,
                                         borderBottom:`4px solid ${col4}`,
@@ -209,7 +209,7 @@ if (authError) {
                                     
                                 </Button>
                                 <Button
-                                    href='./editor/'
+                                    href='../editor/'
                                     sx={{color:col2,
                                         borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
@@ -222,7 +222,7 @@ if (authError) {
                                     <CodeIcon />
                                 </Button>
                                 <Button
-                                    href='./chat/'
+                                    href='../chat/'
                                     sx={{color:col3,
                                         borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
@@ -235,7 +235,7 @@ if (authError) {
                                     <SupportAgentIcon />
                                 </Button>
                                 <Button
-                                    href='./fcgen/'
+                                    href='../fcgen/'
                                     sx={{color:col5,
                                         borderBottom:`4px solid ${col5}`,
                                         '&:hover':{

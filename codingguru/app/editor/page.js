@@ -337,8 +337,22 @@ useEffect(() => {
           <Paper
               elevation={3} sx={{ p: 2, mb: 2, bgcolor: col6, color: col4 }} marginTop={'2'}
           >
-            <Typography variant="h6" sx={{ mt: 2 }}>
-              Current Score: {score}
+            <Typography variant="h6" sx={{ mt: 2 }}
+              textAlign={'center'}
+            >
+              Score 
+              <Typography
+                variant="span"
+                padding={'0.2em 0.8em'}
+                bgcolor={col3}
+                color={col4}
+                fontSize={'1.5em'}
+                borderRadius={'0.5em'}
+                margin={'0 0.2em'}
+              >
+                  {score}
+              </Typography>
+              
             </Typography>
           </Paper>
           
