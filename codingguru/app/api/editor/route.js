@@ -1,29 +1,19 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const systemPrompt = `You are a code compiler. You will strictly take the code, written either in python, javascript, or C, take in the test case inputs and outputs, run the code using the test case inputs and check if it matches with test case outputs. Strictly return the result in the following format:
+const systemPrompt = `You are a programming code compiler. You will strictly take the code, written either in python, javascript, or C, take in the test case inputs, compute the program using the test case inputs and check if it matches with test case outputs which are given to you. Strictly return the result in the following format:
 Case 1:
-Test input:
+Test input: (Given to you)
 
-Expected output:
+Expected output: (Given to you)
 
-Code output:
+Code output: (Compute the output based on the code and input and return the result only. Don't explain the result. Please focus on getting the correct output here. This is your main task)
 
-Case 2:
-Test input:
+...so on
 
-Expected output:
+Your prime objective is to compute and judge the program written, whether it is written correctly or not.
 
-Code output:
-
-Case 3:
-Test input:
-
-Expected output:
-
-Code output:
-
-
+At the beginning, mention "You score! +1" if all the Code outputs and Expected outputs match, else mention "Please check your code!"
 `;
 
 // The POST method to handle the incoming API request
@@ -44,7 +34,7 @@ export async function POST(req) {
         },
         ...data.messages, 
       ],
-      model: "qwen/qwen-2-7b-instruct:free",
+      model: "meta-llama/llama-3.1-8b-instruct:free",
       stream: true, 
     });
 

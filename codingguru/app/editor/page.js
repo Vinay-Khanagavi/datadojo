@@ -8,6 +8,9 @@ import { db } from '../firebase';
 import questions from './questions.json'; // Direct import from JSON
 import useLogout from '../components/logout';
 import Editor from '@monaco-editor/react';
+import {collection, query, where, getDocs, doc, updateDoc} from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -37,7 +40,29 @@ export default function ProblemSolver() {
   const [score, setScore] = useState(0);
   const [selectedQuestionId, setSelectedQuestionId] = useState('');
   const handleLogout = useLogout();
+  const auth = getAuth();
+  const[user, setUser] = useState('');
 
+
+  const getScore = async(email) => {
+    console.log(email);
+    try {
+      const userRef = collection(db, "users");
+      const q = query(userRef, where("email", "==", email)); 
+      const querySnapshot = await getDocs(q);
+  
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0];
+        const userData = userDoc.data();
+        setScore(userData.score); 
+      }
+    }
+    catch(error)
+    {
+      console.log(error.messages);
+    }
+
+  }
 
   const handleLanguageChange = (event, newValue) => {
     setLanguage(newValue);
@@ -94,15 +119,42 @@ export default function ProblemSolver() {
       result += decoder.decode(value, { stream: true });
     }
 
-    console.log(result); // Process the result
+
     setOutput(result);
+    const found = output.includes("You score! +1");
+    console.log(found);
+    if(found !="No match found.")
+    {
+      setScore(score+1);
+      console.log(user.email);
+      if (user.email)
+        {
+        const userRef = doc(db, 'users', user.email); // Adjust if you're using a different key
+        await updateDoc(userRef, {
+          score: score + 1,
+        });
+    }
     return result;
-  } catch (error) {
+  }
+}
+  catch (error) {
     console.error('Failed to fetch:', error);
   }
 };
 
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+  });
 
+  return () => unsubscribe();
+}, []);
+
+useEffect(() => {
+  if (user?.email) {
+    getScore(user.email); 
+  }
+}, [user.email]);
 
 
 

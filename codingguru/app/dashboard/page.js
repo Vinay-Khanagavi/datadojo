@@ -72,7 +72,6 @@ export default function Home(){
    }
 
     const getNameByEmail = async (email) => {
-        console.log(email)
         try {
           const userRef = collection(db, "users");
           const q = query(userRef, where("email", "==", email)); 
