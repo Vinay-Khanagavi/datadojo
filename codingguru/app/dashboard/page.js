@@ -444,7 +444,6 @@ export default function Home(){
                                         key={card}
                                         color={col4}
                                         bgcolor={col1}
-                                        
                                         padding={'1em 1em'}
                                         borderRadius={2}
                                         sx={{
