@@ -85,15 +85,6 @@ export default function Home({params}) {
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
-
-
-  
-
-
-
-
-  
-
   const styles = theme => ({
     multilineInput:
     {
@@ -102,9 +93,6 @@ export default function Home({params}) {
 
   })
 
-
-  
-  
   useEffect(() => {
     document.title = "Learn Buddy";
     console.log("useEffect triggered. Chat:", chat);
@@ -193,7 +181,7 @@ if (authError) {
                                 <Link
                                     color='inherit'
                                     underline='none'
-                                    href='../'
+                                    href='./'
                                 >
                                     Learn Buddy
                                 </Link>
@@ -205,11 +193,14 @@ if (authError) {
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='../dashboard/'
+                                    href='./dashboard/'
+                                    
                                     sx={{color:col4,
+                                        borderBottom:`4px solid ${col4}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col4,
+                                                    
                                         }
 
                                     }}
@@ -218,11 +209,12 @@ if (authError) {
                                     
                                 </Button>
                                 <Button
-                                    href='../editor/'
-                                    sx={{color:col4,
+                                    href='./editor/'
+                                    sx={{color:col2,
+                                        borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col2
                                         }
 
                                     }}
@@ -230,11 +222,12 @@ if (authError) {
                                     <CodeIcon />
                                 </Button>
                                 <Button
-                                    href='../chat/'
-                                    sx={{color:col4,
+                                    href='./chat/'
+                                    sx={{color:col3,
+                                        borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col3
                                         }
 
                                     }}
@@ -242,11 +235,12 @@ if (authError) {
                                     <SupportAgentIcon />
                                 </Button>
                                 <Button
-                                    href='../fcgen/'
-                                    sx={{color:col4,
+                                    href='./fcgen/'
+                                    sx={{color:col5,
+                                        borderBottom:`4px solid ${col5}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col5
                                         }
 
                                     }}
@@ -257,8 +251,9 @@ if (authError) {
                             
                             <Box>
                                 <Button
-                                    href="../profile/"
+                                    href="./profile/"
                                     sx={{color:col4,
+                                        
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -269,7 +264,7 @@ if (authError) {
                                     <Person4Icon/>
                                 </Button>
                                 <Button
-                                    href="../profile/"
+                                    href="./profile/"
                                     onClick={handleLogout}
                                     sx={{color:col4,
                                         '&:hover':{

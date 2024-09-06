@@ -6,6 +6,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { ref, push, set } from 'firebase/database';
 import { db } from '../../firebase';
 import questions from '../questions.json'; // Direct import from JSON
+import Editor from '@monaco-editor/react';
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -21,10 +22,10 @@ export default function ProblemSolver({params}) {
   // For Handling undefined or non-integer id gracefully
   const question = questions.questions.find(q => q.id === parseInt(id)) || null;
 
-  const col1 = '#3D405B'; // Dark shade
+  const col6 = '#3D405B'; // Dark shade
   const col2 = '#E07A5F'; // Red
   const col4 = '#F4F1DE'; // White
-  const col6 = '#191c35'; // Darker shade
+  const col1 = '#191c35'; // Darker shade
 
   const [language, setLanguage] = useState(0);
   const [code, setCode] = useState('');
@@ -86,11 +87,14 @@ export default function ProblemSolver({params}) {
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='../dashboard/'
+                                    href='./dashboard/'
+                                    
                                     sx={{color:col4,
+                                        borderBottom:`4px solid ${col4}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col4,
+                                                    
                                         }
 
                                     }}
@@ -99,11 +103,12 @@ export default function ProblemSolver({params}) {
                                     
                                 </Button>
                                 <Button
-                                    href='../editor/'
-                                    sx={{color:col4,
+                                    href='./editor/'
+                                    sx={{color:col2,
+                                        borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col2
                                         }
 
                                     }}
@@ -111,11 +116,12 @@ export default function ProblemSolver({params}) {
                                     <CodeIcon />
                                 </Button>
                                 <Button
-                                    href='../chat/'
-                                    sx={{color:col4,
+                                    href='./chat/'
+                                    sx={{color:col3,
+                                        borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col3
                                         }
 
                                     }}
@@ -123,11 +129,12 @@ export default function ProblemSolver({params}) {
                                     <SupportAgentIcon />
                                 </Button>
                                 <Button
-                                    href='../fcgen/'
-                                    sx={{color:col4,
+                                    href='./fcgen/'
+                                    sx={{color:col5,
+                                        borderBottom:`4px solid ${col5}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col5
                                         }
 
                                     }}
@@ -135,19 +142,35 @@ export default function ProblemSolver({params}) {
                                     <BoltIcon />
                                 </Button>
                             </Box>
+                            
+                            <Box>
+                                <Button
+                                    href="./profile/"
+                                    sx={{color:col4,
+                                        
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
 
-                            <Button
-                                href="../profile/"
-                                sx={{color:col4,
-                                    '&:hover':{
-                                        color:col1,
-                                        backgroundColor:col4
-                                    }
-
-                                }}
-                            >
-                                <Person4Icon/>
-                            </Button>
+                                    }}
+                                >
+                                    <Person4Icon/>
+                                </Button>
+                                <Button
+                                    href="./profile/"
+                                    onClick={handleLogout}
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+                                    }}
+                                >
+                                    <LogoutIcon/>
+                                </Button>
+                            </Box>
+                            
                         </Box>
 
       <Box display="flex" flexDirection="row" bgcolor={col1} gap={2} width="100vw" height="92vh">
@@ -183,7 +206,7 @@ export default function ProblemSolver({params}) {
               <Tab label="C" sx={{ color: col4 }} />
             </Tabs>
             <Box sx={{ mt: 2 }}>
-              <TextField
+              {/*<TextField
                 fullWidth
                 multiline
                 rows={10}
@@ -192,7 +215,17 @@ export default function ProblemSolver({params}) {
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 placeholder={`Enter your ${['Python', 'JavaScript', 'C'][language]} code here...`}
-              />
+              /> */}
+              <Editor
+                height={'40vh'}
+                defaultLanguage="python"
+                defaultValue={code}
+                theme="vs-dark"
+                onChange={(value) => setCode(value)}
+                
+              >
+
+              </Editor>
             </Box>
             <Box sx={{ mt: 2 }}>
               <Button variant="contained" sx={{ bgcolor: col2 }} startIcon={<PlayArrowIcon />} onClick={handleRunCode}>

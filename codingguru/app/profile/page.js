@@ -7,6 +7,7 @@ import {auth} from '../firebase';
 import useLogout from '../components/logout';
 import { CircularProgress } from "@mui/material";
 
+
 import {
   Box,
   Typography,
@@ -105,7 +106,7 @@ const StatValue = styled.p`
 `;
 
 function Profile() {
-
+  const handleLogout = useLogout();
 
   // Redirect section
   const router = useRouter(); 
@@ -183,77 +184,119 @@ function Profile() {
   return (
     <Container>
       {/* Navigation Section */}
-      <Navigation>
-        <Typography color={col4} margin="0.5em" fontSize="2em">
-          <Link color="inherit" underline="none" href="./">
-            Learn Buddy
-          </Link>
-        </Typography>
+      <Box
+                        width='92vw'
+                        height='8vh'
+                        display='flex'
+                        justifyContent='space-between'
+                        alignItems='center'
+                        padding={'0 4vw'}
+                        >
+                            <Typography
+                            color={col4}
+                            margin='0.5em'
+                            fontSize='2em'
+                            >
+                                <Link
+                                    color='inherit'
+                                    underline='none'
+                                    href='./'
+                                >
+                                    Learn Buddy
+                                </Link>
+                            </Typography>
 
-        <Box display={'flex'} justifyContent={'space-around'} width={'30vw'}>
-          <Button
-            href="./dashboard/"
-            sx={{
-              color: col4,
-              '&:hover': {
-                color: col1,
-                backgroundColor: col4,
-              },
-            }}
-          >
-            <HomeIcon display={'block'} />
-          </Button>
-          <Button
-            href="./editor/"
-            sx={{
-              color: col4,
-              '&:hover': {
-                color: col1,
-                backgroundColor: col4,
-              },
-            }}
-          >
-            <CodeIcon />
-          </Button>
-          <Button
-            href="./chat/"
-            sx={{
-              color: col4,
-              '&:hover': {
-                color: col1,
-                backgroundColor: col4,
-              },
-            }}
-          >
-            <SupportAgentIcon />
-          </Button>
-          <Button
-            href="./fcgen/"
-            sx={{
-              color: col4,
-              '&:hover': {
-                color: col1,
-                backgroundColor: col4,
-              },
-            }}
-          >
-            <BoltIcon />
-          </Button>
-        </Box>
+                            <Box
+                                display={'flex'}
+                                justifyContent={'space-around'}
+                                width={'30vw'}
+                            >
+                                <Button
+                                    href='./dashboard/'
+                                    
+                                    sx={{color:col4,
+                                        borderBottom:`4px solid ${col4}`,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4,
+                                                    
+                                        }
 
-        <Button
-          href="./profile/"
-          sx={{
-            color: col4,
-            '&:hover': {
-              color: col1,
-              backgroundColor: col4,
-            },
-          }}
-        >
-          <Person4Icon />
-        </Button>
-      </Navigation>
+                                    }}
+                                >
+                                    <HomeIcon display={'block'} />
+                                    
+                                </Button>
+                                <Button
+                                    href='./editor/'
+                                    sx={{color:col2,
+                                        borderBottom:`4px solid ${col2}`,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col2
+                                        }
+
+                                    }}
+                                >
+                                    <CodeIcon />
+                                </Button>
+                                <Button
+                                    href='./chat/'
+                                    sx={{color:col3,
+                                        borderBottom:`4px solid ${col3}`,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col3
+                                        }
+
+                                    }}
+                                >
+                                    <SupportAgentIcon />
+                                </Button>
+                                <Button
+                                    href='./fcgen/'
+                                    sx={{color:col5,
+                                        borderBottom:`4px solid ${col5}`,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col5
+                                        }
+
+                                    }}
+                                >
+                                    <BoltIcon />
+                                </Button>
+                            </Box>
+                            
+                            <Box>
+                                <Button
+                                    href="./profile/"
+                                    sx={{color:col4,
+                                        
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    <Person4Icon/>
+                                </Button>
+                                <Button
+                                    href="./profile/"
+                                    onClick={handleLogout}
+                                    sx={{color:col4,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+                                    }}
+                                >
+                                    <LogoutIcon/>
+                                </Button>
+                            </Box>
+                            
+                        </Box>
 
       {/* Profile Content */}
       <ProfileCard>

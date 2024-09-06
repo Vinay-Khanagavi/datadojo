@@ -19,12 +19,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { CircularProgress } from "@mui/material";
 
 
-const col1 = ['#3D405B'] // Dark shade
+const col6 = ['#3D405B'] // Dark shade
 const col2 = ['#E07A5F'] //red
 const col3 = ['#81B29A'] //green
 const col4 = ['#F4F1DE'] //white
 const col5 = ['#F2CC8F'] //yellow
-const col6 = ['#191c35']; // Darker shade
+const col1 = ['#191c35']; // Darker shade
 
 export default function Generate(){
 
@@ -200,10 +200,13 @@ export default function Generate(){
                             >
                                 <Button
                                     href='./dashboard/'
+                                    
                                     sx={{color:col4,
+                                        borderBottom:`4px solid ${col4}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col4,
+                                                    
                                         }
 
                                     }}
@@ -213,10 +216,11 @@ export default function Generate(){
                                 </Button>
                                 <Button
                                     href='./editor/'
-                                    sx={{color:col4,
+                                    sx={{color:col2,
+                                        borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col2
                                         }
 
                                     }}
@@ -225,10 +229,11 @@ export default function Generate(){
                                 </Button>
                                 <Button
                                     href='./chat/'
-                                    sx={{color:col4,
+                                    sx={{color:col3,
+                                        borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col3
                                         }
 
                                     }}
@@ -237,10 +242,11 @@ export default function Generate(){
                                 </Button>
                                 <Button
                                     href='./fcgen/'
-                                    sx={{color:col4,
+                                    sx={{color:col5,
+                                        borderBottom:`4px solid ${col5}`,
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col4
+                                            backgroundColor:col5
                                         }
 
                                     }}
@@ -253,6 +259,7 @@ export default function Generate(){
                                 <Button
                                     href="./profile/"
                                     sx={{color:col4,
+                                        
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4

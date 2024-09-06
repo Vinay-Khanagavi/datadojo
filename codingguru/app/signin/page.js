@@ -104,12 +104,13 @@ export default function Home() {
   };
 
   const outerTheme = useTheme();
-  const col1 = ['#3D405B'] // Dark shade
+  const col6 = ['#3D405B'] // Dark shade
   const col2 = ['#E07A5F'] //red
   const col3 = ['#81B29A'] //green
   const col4 = ['#F4F1DE'] //white
   const col5 = ['#F2CC8F'] //yellow
-
+  const col1 = ['#191c35']; // Darker shade
+  
   return (
       <Box
         width='100vw'
