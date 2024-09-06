@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { ref, push, set } from 'firebase/database';
 import { db } from '../firebase';
-import questions from '../questions.json'; // Direct import from JSON
+import questions from './questions.json'; // Direct import from JSON
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';

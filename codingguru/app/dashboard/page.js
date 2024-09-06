@@ -280,11 +280,21 @@ export default function Home(){
                                 borderRadius={'0.5em'}
                                 padding={'2em'}
                                 boxSizing={'border-box'}
+                                display={'flex'}
+                                flexDirection={'column'}
+                                justifyContent={'space-between'}
                             >
                                 <Typography
                                     variant="h2"
                                     color={col1}
                                 >Welcome, {name}!</Typography>
+
+                                <Typography
+                                    width={'100%'}
+                                    textAlign={'center'}
+                                    fontSize={'1.5em'}                                >
+                                    Your Score: | Highest Score:
+                                </Typography>
                             </Box>
                             {/*///////////// Second Box /////////////*/}
                             <Box
@@ -396,6 +406,7 @@ export default function Home(){
                                                 >
                                                     <Typography
                                                         marginLeft={'1em'}
+                                                        textAlign={'center'}
                                                     >{question.shortTitle}</Typography>
                                                     <Typography
                                                         marginRight={'1em'}
@@ -407,6 +418,7 @@ export default function Home(){
                                                             col2
                                                         ) : null}
                                                     >
+                                                        
                                                         {question.difficulty === 'easy' ? (
                                                             <MoodIcon />
                                                         ) : question.difficulty === 'medium' ? (
