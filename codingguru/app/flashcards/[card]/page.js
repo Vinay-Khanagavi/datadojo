@@ -194,7 +194,7 @@ export default function Generate({params}){
                                 width={'30vw'}
                             >
                                 <Button
-                                    href='./dashboard/'
+                                    href='../dashboard/'
                                     
                                     sx={{color:col4,
                                         borderBottom:`4px solid ${col4}`,
@@ -210,7 +210,7 @@ export default function Generate({params}){
                                     
                                 </Button>
                                 <Button
-                                    href='./editor/'
+                                    href='../editor/'
                                     sx={{color:col2,
                                         borderBottom:`4px solid ${col2}`,
                                         '&:hover':{
@@ -223,7 +223,7 @@ export default function Generate({params}){
                                     <CodeIcon />
                                 </Button>
                                 <Button
-                                    href='./chat/'
+                                    href='../chat/'
                                     sx={{color:col3,
                                         borderBottom:`4px solid ${col3}`,
                                         '&:hover':{
@@ -236,7 +236,7 @@ export default function Generate({params}){
                                     <SupportAgentIcon />
                                 </Button>
                                 <Button
-                                    href='./fcgen/'
+                                    href='../fcgen/'
                                     sx={{color:col5,
                                         borderBottom:`4px solid ${col5}`,
                                         '&:hover':{
@@ -251,7 +251,7 @@ export default function Generate({params}){
                             </Box>
                             
                             <Box>
-                                <Button
+                                {/* <Button
                                     href="./profile/"
                                     sx={{color:col4,
                                         
@@ -263,9 +263,9 @@ export default function Generate({params}){
                                     }}
                                 >
                                     <Person4Icon/>
-                                </Button>
+                                </Button> */}
                                 <Button
-                                    href="./profile/"
+                                    href="../profile/"
                                     onClick={handleLogout}
                                     sx={{color:col4,
                                         '&:hover':{

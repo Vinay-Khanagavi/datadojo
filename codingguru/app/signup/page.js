@@ -89,7 +89,8 @@ export default function Home() {
       try {
         await setDoc(doc(db, "users", email), { 
           email: email, 
-          name: name
+          name: name,
+          score:0
         });
         console.log('User data added to Firestore');
         router.push('/signin');

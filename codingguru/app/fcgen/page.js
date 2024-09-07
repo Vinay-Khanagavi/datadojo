@@ -125,7 +125,7 @@ export default function Generate(){
     if (isLoading) {
         return (
             <Box
-                bgcolor={col4}
+                bgcolor={col1}
                 width={'100vw'}
                 height={'100vh'}
                 display="flex"
@@ -256,7 +256,7 @@ export default function Generate(){
                             </Box>
                             
                             <Box>
-                                <Button
+                                {/* <Button
                                     href="./profile/"
                                     sx={{color:col4,
                                         
@@ -268,7 +268,7 @@ export default function Generate(){
                                     }}
                                 >
                                     <Person4Icon/>
-                                </Button>
+                                </Button> */}
                                 <Button
                                     href="./profile/"
                                     onClick={handleLogout}

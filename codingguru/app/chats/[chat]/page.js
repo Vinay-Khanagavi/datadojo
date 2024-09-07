@@ -251,7 +251,7 @@ if (authError) {
                             </Box>
                             
                             <Box>
-                                <Button
+                                {/* <Button
                                     href="./profile/"
                                     sx={{color:col4,
                                         
@@ -263,7 +263,7 @@ if (authError) {
                                     }}
                                 >
                                     <Person4Icon/>
-                                </Button>
+                                </Button> */}
                                 <Button
                                     href="./profile/"
                                     onClick={handleLogout}

@@ -234,8 +234,8 @@ export default function ProblemSolver({params}) {
                             </Box>
                             
                             <Box>
-                                <Button
-                                    href="../profile/"
+                                {/* <Button
+                                    href="./profile/"
                                     sx={{color:col4,
                                         
                                         '&:hover':{
@@ -246,7 +246,7 @@ export default function ProblemSolver({params}) {
                                     }}
                                 >
                                     <Person4Icon/>
-                                </Button>
+                                </Button> */}
                                 <Button
                                     href="../profile/"
                                     onClick={handleLogout}
