@@ -182,7 +182,7 @@ if (authError) {
                                 <Link
                                     color='inherit'
                                     underline='none'
-                                    href='./'
+                                    href='../'
                                 >
                                     Learn Buddy
                                 </Link>
@@ -284,7 +284,7 @@ if (authError) {
                         
       {/* ///////////////// Top pane ends here ////////////////// */}
       <Box
-        height={'70vh'}
+        height={'90vh'}
         padding={'1em'}
         margin={{xs:'0 0 10vh 0'}}
         width={{ xs: '90vw', sm: '80vw', md: '100vw' }}
@@ -318,8 +318,6 @@ if (authError) {
           <div ref={messagesEndRef} />
         </Stack>
       </Box>
-      
-      
       
     </Box>
 

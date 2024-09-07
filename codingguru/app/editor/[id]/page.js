@@ -165,7 +165,7 @@ export default function ProblemSolver({params}) {
                                 <Link
                                     color='inherit'
                                     underline='none'
-                                    href='./'
+                                    href='../'
                                 >
                                     Learn Buddy
                                 </Link>

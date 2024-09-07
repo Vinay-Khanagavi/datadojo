@@ -182,7 +182,7 @@ export default function Generate({params}){
                                 <Link
                                     color='inherit'
                                     underline='none'
-                                    href='./'
+                                    href='../'
                                 >
                                     Learn Buddy
                                 </Link>
