@@ -62,7 +62,7 @@ export default function ProblemSolver() {
       console.log(error.messages);
     }
 
-  }
+  };
 
   const handleLanguageChange = (event, newValue) => {
     setLanguage(newValue);
@@ -129,7 +129,7 @@ export default function ProblemSolver() {
       console.log(user.email);
       if (user.email)
         {
-        const userRef = doc(db, 'users', user.email); // Adjust if you're using a different key
+        const userRef = doc(db, 'users', user.email);
         await updateDoc(userRef, {
           score: score + 1,
         });
@@ -369,14 +369,14 @@ useEffect(() => {
               
               <Editor
                   height="30vh"
-                  language={languages[language]} // Switches the editor language dynamically
+                  language={languages[language]} 
                   value={code}
                   theme="vs-dark"
                   onChange={(value) => setCode(value)}
                   options={{
-                    fontSize: 18, // Set the font size
-                    fontFamily: ' monospace', // Set the font family
-                    lineHeight: 22, // Optional: Adjust the line height
+                    fontSize: 18,
+                    fontFamily: ' monospace', 
+                    lineHeight: 22, 
                     
                   }}
               />
@@ -405,6 +405,9 @@ useEffect(() => {
             </Box>
           </Paper>
         </Box>
+
+
+
       </Box>
     </Box>
   );

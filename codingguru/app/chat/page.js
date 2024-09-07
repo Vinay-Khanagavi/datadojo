@@ -159,6 +159,7 @@ export default function Home() {
     try {
       await setDoc(doc(db, "threads", documentName), {
         messages: messages,
+        hot:0
       });
       alert("Thread saved successfully with document name: " + documentName);
     } catch (error) {
