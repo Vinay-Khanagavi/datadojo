@@ -1,393 +1,245 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
-import {useState, useEffect} from "react";
-import {auth} from '../firebase';
-import useLogout from '../components/logout';
-import { CircularProgress } from "@mui/material";
-
+"use client";
 
 import {
-  Box,
-  Typography,
-  Button,
-  Link,
-} from '@mui/material';
+    Box,
+    Typography,
+    IconButton,
+    Stack,
+    Link
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import StarIcon from "@mui/icons-material/Star";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import BookIcon from "@mui/icons-material/Book";
 
-import HomeIcon from '@mui/icons-material/Home';
-import CodeIcon from '@mui/icons-material/Code';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import BoltIcon from '@mui/icons-material/Bolt';
-import Person4Icon from '@mui/icons-material/Person4';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import LogoutIcon from '@mui/icons-material/Logout';
+import { auth, db } from "../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const col1 = ['#3D405B']; // Dark shade
-const col2 = ['#E07A5F']; // red
-const col3 = ['#81B29A']; // green
-const col4 = ['#F4F1DE']; // white
-const col5 = ['#F2CC8F']; // yellow
-const col6 = ['#191c35']; // Darker shade
+const col6 = "#3D405B";
+const col2 = "#E07A5F";
+const col3 = "#81B29A";
+const col4 = "#F4F1DE";
+const col5 = "#F2CC8F";
+const col1 = "#191c35";
 
-const Container = styled.div`
-  background-color: #282c34;
-  color: #3d405b;
-  font-family: 'Roboto', sans-serif;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-`;
+export default function Profile() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+    const [authError, setAuthError] = useState(null);
+    const [name, setName] = useState("");
+    const [cards, setCards] = useState([]);
+    const [yourScore, setYourScore] = useState("");
+    const [highestScore, setHighestScore] = useState("");
 
-const Navigation = styled.div`
-  width: 92vw;
-  height: 8vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 4vw;
-  margin-bottom: 2rem;
-`;
+    const getMaxScore = async () => {
+        try {
+            const userRef = collection(db, "users");
+            const querySnapshot = await getDocs(userRef);
 
-const ProfileCard = styled.div`
-  background-color: #f4f1de;
-  border-radius: 8px;
-  padding: 2rem;
-  width: 70vw;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-`;
+            if (!querySnapshot.empty) {
+                let maxScore = 0;
+                querySnapshot.forEach((doc) => {
+                    const userData = doc.data();
+                    const userScore = userData.score;
+                    if (userScore > maxScore) {
+                        maxScore = userScore;
+                    }
+                });
+                setHighestScore(maxScore);
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
 
-const ProfileHeader = styled.div`
-  text-align: center;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+    const getNameByEmail = async (email) => {
+        try {
+            const userRef = collection(db, "users");
+            const q = query(userRef, where("email", "==", email));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                const userDoc = querySnapshot.docs[0];
+                const userData = userDoc.data();
+                setName(userData.name);
+                setYourScore(userData.score);
+            } else {
+                console.log("No user found with this email.");
+                setAuthError("User data not found.");
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            setAuthError(error.message);
+        }
+    };
 
-const ProfileName = styled.h1`
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-`;
+    const getCards = async () => {
+        try {
+            const cardsRef = collection(db, "cards");
+            const qSnap = await getDocs(cardsRef);
+            const cardTitles = qSnap.docs.map((doc) => doc.id);
+            setCards(cardTitles);
+        } catch (error) {
+            console.error("Error fetching cards:", error);
+        }
+    };
 
-const EditButton = styled.button`
-  background-color: #e07a5f;
-  color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
-  cursor: pointer;
+    useEffect(() => {
+        getMaxScore();
+        getCards();
 
-  &:hover {
-    background-color: darken(#e07a5f, 10%);
-  }
-`;
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                setIsLoading(false);
+                getNameByEmail(user.email);
+            } else {
+                router.push("/signin");
+            }
+        }, (error) => {
+            setAuthError(error.message);
+            setIsLoading(false);
+        });
 
-const StatItem = styled.div`
-  background-color: #e07a5f;
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  text-align: center;
-`;
+        return () => {
+            unsubscribe();
+        };
+    }, [router]);
 
-const StatLabel = styled.p`
-  font-size: 0.9rem;
-  margin-bottom: 0.3rem;
-`;
+    if (isLoading) {
+        return (
+            <Box
+                bgcolor={col1}
+                width="100vw"
+                height="100vh"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Typography variant="h4" color={col4}>Loading...</Typography>
+            </Box>
+        );
+    }
 
-const StatValue = styled.p`
-  font-size: 1.8rem;
-  font-weight: bold;
-`;
+    if (authError) {
+        return (
+            <Box
+                bgcolor={col1}
+                width="100vw"
+                height="100vh"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Typography variant="h4" color={col4}>Error: {authError}</Typography>
+            </Box>
+        );
+    }
 
-function Profile() {
-  const handleLogout = useLogout();
+    return (
+        
+        <Box
+            width="100vw"
+            height="100vh"
+            bgcolor={col1}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            overflow="hidden"
+        >
+            <Box
+                width={{ xs: '95vw', sm: '85vw', md: '45vw' }}
+                height="95vh"
+                bgcolor={col4}
+                borderRadius="20px"
+                overflow="hidden"
+                display="flex"
+                flexDirection="column"
+            >
+                <Box p={2}>
+                    <IconButton onClick={() => router.back()} sx={{ color: col1 }}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                </Box>
 
-  // Redirect section
-  const router = useRouter(); 
-  const [isLoading, setIsLoading] = useState(true);
-  const [authError, setAuthError] = useState(null);
+                <Stack spacing={3} sx={{ px: 4, pb: 4, overflowY: 'auto', flexGrow: 1 }}>
+                    <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', color: col1 }}>
+                        {name}'s Profile
+                    </Typography>
 
-  useEffect(() => {
-      console.log("Component mounted, starting auth check");
-      const timeoutId = setTimeout(() => {
-          if (isLoading) {
-              console.log("Auth check timed out");
-              setAuthError("Authentication check timed out");
-              setIsLoading(false);
-          }
-      }, 1200000); // 10 second timeout
-
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-          console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
-          if (user) {
-              console.log("User authenticated, setting loading to false");
-              setIsLoading(false);
-          } else {
-              console.log("User not authenticated, redirecting to signin");
-              router.push('/signin');
-          }
-      }, (error) => {
-          console.error("Auth error:", error);
-          setAuthError(error.message);
-          setIsLoading(false);
-      });
-
-      return () => {
-          unsubscribe();
-          clearTimeout(timeoutId);
-      };
-  }, [router]);
-
-  if (isLoading) {
-      return (
-          <Box
-              bgcolor={col4}
-              width={'100vw'}
-              height={'100vh'}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-          >
-              <CircularProgress
-                    height={'10'}
-                    borderRadius={'10'}
-                    color="success"
-                ></CircularProgress>
-          </Box>
-      ); 
-  }
-
-  if (authError) {
-      return (
-          <Box
-              bgcolor={col4}
-              width={'100vw'}
-              height={'100vh'}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-          >
-              <Typography variant="h4">Error: {authError}</Typography>
-          </Box>
-      );
-  }
-
-
-      // Redirect section ends
-
-  return (
-    <Container>
-      {/* Navigation Section */}
-      <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
-                        >
-                            <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
-                            >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='./'
-                                >
-                                    Learn Buddy
-                                </Link>
+                    <Box sx={{ bgcolor: col2, p: 2, borderRadius: '10px' }}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                            <StarIcon sx={{ color: col4 }} />
+                            <Typography variant="h6" sx={{ color: col4 }}>
+                                Core Score: {yourScore}
                             </Typography>
+                        </Stack>
+                    </Box>
 
-                            <Box
-                                display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
+                    <Box sx={{ bgcolor: col2, p: 2, borderRadius: '10px' }}>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+                            <EmojiEventsIcon sx={{ color: col4 }} />
+                            <Typography variant="h6" sx={{ color: col4 }}>
+                                High Score: {highestScore}
+                            </Typography>
+                        </Stack>
+                    </Box>
+
+                    <Typography variant="h5" sx={{ color: col1, fontWeight: 'bold' }}>
+                        Flashcards History
+                    </Typography>
+
+                    {cards.length === 0 ? (
+                            <Typography
+                                variant="body1"
+                                textAlign="center"
+                                sx={{ color: col1 }}
                             >
-                                <Button
-                                    href='./dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                                    
-                                        }
-
-                                    }}
-                                >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='./editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col2
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='./chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='./fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col5
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-                            
-                            <Box>
-                                <Button
-                                    href="./profile/"
-                                    sx={{color:col4,
-                                        
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <Person4Icon/>
-                                </Button>
-                                <Button
-                                    href="./profile/"
-                                    onClick={handleLogout}
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-                                    }}
-                                >
-                                    <LogoutIcon/>
-                                </Button>
-                            </Box>
-                            
-                        </Box>
-
-      {/* Profile Content */}
-      <ProfileCard>
-        <ProfileHeader>
-          <Button onClick={() => router.back()} sx={{ color: col1 }}>
-            <ArrowBackIcon />
-          </Button>
-          <ProfileName>Profile</ProfileName>
-          <EditButton>Edit Profile</EditButton>
-        </ProfileHeader>
-
-        <h2>Statistics</h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-          }}
-        >
-        <StatItem>
-            <StatLabel>Questions Solved</StatLabel>
-            <StatValue>1200</StatValue>
-        </StatItem>
-        <StatItem>
-            <StatLabel>Easy Questions</StatLabel>
-            <StatValue>800</StatValue>
-        </StatItem>
-        <StatItem>
-            <StatLabel>Medium Questions</StatLabel>
-            <StatValue>300</StatValue>
-        </StatItem>
-        <StatItem>
-            <StatLabel>Hard Questions</StatLabel>
-            <StatValue>100</StatValue>
-        </StatItem>
-        <StatItem>
-            <StatLabel>Questions to Solve</StatLabel>
-            <StatValue>200</StatValue>
-        </StatItem>
-        </div>
-
-        <h2>Achievements</h2>
-        <div
-        style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-        }}
-        >
-        {/* Achievement Item 1 */}
-        <div
-            style={{
-            backgroundColor: '#e07a5f',
-            color: 'white',
-            padding: '1rem',
-            borderRadius: '5px',
-            textAlign: 'center',
-            }}
-    >
-            <img
-              src="path/to/achievement1.png"
-              alt="Achievement 1 Icon"
-              style={{ width: '50px', height: '50px', marginBottom: '10px' }}
-            />
-            <h3>Achievement Title 1</h3>
-            <p>Level 2</p>
-        </div>
-
-          {/* Achievement Item 2 (Repeat as needed) */}
-        <div
-            style={{
-              backgroundColor: '#e07a5f',
-              color: 'white',
-              padding: '1rem',
-              borderRadius: '5px',
-              textAlign: 'center',
-            }}
-        >
-            <img
-            src="path/to/achievement2.png"
-            alt="Achievement 2 Icon"
-            style={{ width: '50px', height: '50px', marginBottom: '10px' }}
-            />
-            <h3>Achievement Title 2</h3>
-            <p>Level 5</p>
-        </div>
-          {/* Add more achievement items as needed */}
-        </div>
-    </ProfileCard>
-    </Container>
-);
+                                No flashcard history yet.
+                            </Typography>
+                        ) : (
+                            <Stack spacing={2}>
+                                {cards.map((card) => (
+                                    <Link 
+                                        key={card} 
+                                        href={`./flashcards/${card}`} // Navigation Link 
+                                        underline="none" // Remove underline from Link 
+                                        sx={{ 
+                                            display: "block",  // Make the entire Link clickable
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                bgcolor: "white",
+                                                p: 2,
+                                                borderRadius: "10px",
+                                                boxShadow: 1,
+                                                '&:hover': { // Add a hover effect
+                                                    bgcolor: col2, 
+                                                    color: col4 
+                                                }
+                                            }}
+                                        >
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                spacing={1}
+                                            >
+                                                <BookIcon sx={{ color: col1 }} />
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{ color: col1 }}
+                                                >
+                                                    {card}
+                                                </Typography>
+                                            </Stack>
+                                        </Box>
+                                    </Link> 
+                                ))}
+                            </Stack>
+                        )}
+                </Stack>
+            </Box>
+        </Box>
+    );
 }
-
-export default Profile;

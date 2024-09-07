@@ -272,7 +272,7 @@ export default function Home(){
                             </Box>
                             
                             <Box>
-                                {/* <Button
+                                <Button
                                     href="./profile/"
                                     sx={{color:col4,
                                         
@@ -284,7 +284,7 @@ export default function Home(){
                                     }}
                                 >
                                     <Person4Icon/>
-                                </Button> */}
+                                </Button>
                                 <Button
                                     href="./profile/"
                                     onClick={handleLogout}
