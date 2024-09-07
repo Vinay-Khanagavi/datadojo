@@ -98,15 +98,18 @@ export default function Home() {
     <Box
       display={'flex'}
       justifyContent={'center'}
+      alignItems={'center'}
       flexDirection={'column'}
     >
       <Box
         alignItems={'center'}
+        height={'300px'}
+        width={'300px'}
       >
         <Image
             src={'/logo.png'}
-            width={300}
-            height={300}
+            width={'300'}
+            height={'300'}
             margin={'0 auto'}
           />
       </Box>
@@ -118,22 +121,29 @@ export default function Home() {
         >
           Learn Buddy
         </Typography>
-
-        <Button
-          href='../signin/'
-          size='large'
-          sx={{bgcolor:col2,
-            color:col4,
-            borderRadius:'2em',
-            '&:hover':
-            {
-              bgcolor:col4,
-              color:col2
-            }
-          }}
+        <Box
+          width={'100%'}
+          display={'flex'}
+          justifyContent={'center'}
+          flexDirection={'column'}
         >
-          Launch
-        </Button>
+            <Button
+              href='../signin/'
+              size='large'
+              sx={{bgcolor:col2,
+                color:col4,
+                borderRadius:'2em',
+                '&:hover':
+                {
+                  bgcolor:col4,
+                  color:col2
+                }
+              }}
+            >
+              Launch
+            </Button>
+        </Box>
+        
     </Box>
     
 </Box>
