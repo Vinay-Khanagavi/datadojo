@@ -251,6 +251,7 @@ export default function Home() {
                         variant='filled'
                         label='Password'
                         fullWidth
+                        type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                         sx={{
@@ -265,7 +266,7 @@ export default function Home() {
                         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                         <Input
                           id="standard-adornment-password"
-                          type={showPassword ? 'text' : 'password'}
+                          
                           endAdornment={
                             <InputAdornment position="end">
                               <IconButton
