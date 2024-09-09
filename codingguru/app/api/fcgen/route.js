@@ -23,7 +23,6 @@ export async function POST(req) {
   
     
       const data = await req.text();
-      console.log(data)
       const completion = await openai.chat.completions.create({
         messages: [
           {
@@ -39,9 +38,6 @@ export async function POST(req) {
         response_format:{type:'json_object'}
       })
       
-      const flashcards = JSON.parse(completion.choices[0].message.content)
-
-      console.log(flashcards)
-      
+      const flashcards = JSON.parse(completion.choices[0].message.content)      
       return NextResponse.json(flashcards.flashcards)
 };
