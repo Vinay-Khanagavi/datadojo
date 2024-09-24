@@ -11,6 +11,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+          <title>DataDojo - Socratic learning app</title>
+          <meta ></meta>
+      </head>
+      
       <body className={inter.className}>{children}</body>
     </html>
   );
