@@ -20,6 +20,7 @@ import useLogout from '../components/logout';
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
+import QuizIcon from '@mui/icons-material/Quiz';
 
 const col6 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -27,6 +28,8 @@ const col3 = ['#81B29A']; // green
 const col4 = ['#F4F1DE']; // white
 const col5 = ['#F2CC8F']; // yellow
 const col1 = ['#191c35']; // Darker shade
+const col7 = ['#5FA8D3']; //Blue
+
 
 export default function Home(){
 
@@ -205,7 +208,7 @@ export default function Home(){
                                     underline='none'
                                     href='./'
                                 >
-                                    Learn Buddy
+                                    DataDojo
                                 </Link>
                             </Typography>
 
@@ -268,6 +271,19 @@ export default function Home(){
                                     }}
                                 >
                                     <BoltIcon />
+                                </Button>
+                                <Button
+                                    href='./test/'
+                                    sx={{color:col7,
+                                        borderBottom:`4px solid ${col7}`,
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col7
+                                        }
+
+                                    }}
+                                >
+                                    <QuizIcon />
                                 </Button>
                             </Box>
                             

@@ -119,7 +119,7 @@ export default function Home() {
           fontSize={'3em'}
           margin={'1em'}
         >
-          Learn Buddy
+          DataDojo
         </Typography>
         <Box
           width={'100%'}
