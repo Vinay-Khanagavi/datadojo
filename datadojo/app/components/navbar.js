@@ -1,4 +1,4 @@
-
+'use client';
 import {Box, Link, Typography, Button, Stack} from "@mui/material"
 
 //MUI Icons used: Keep adding here to have a consistent dependency
@@ -17,6 +17,10 @@ import QuizIcon from '@mui/icons-material/Quiz';
 //Import component
 import handleLogout from './logout';
 
+//Import react components
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 const col6 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
 const col3 = ['#81B29A']; // green
@@ -25,110 +29,158 @@ const col5 = ['#F2CC8F']; // yellow
 const col1 = ['#191c35']; // Darker shade
 const col7 = ['#5FA8D3']; //Blue
 
+const lcol1 = ['#E4E2DE']; //Offwhite
+const lcol2 = ['#FFF']; //White
+const lcol3 = [''];
+
+
 
 const Navbar = () => {
     return(
-    <Box
-                        width='92vw'
-                        height='8vh'
+                    <Box
+                        width='20vw'
+                        height='100vh'
                         display='flex'
+                        boxSizing={'border-box'}
                         justifyContent='space-between'
+                        flexDirection={'column'}
                         alignItems='center'
-                        padding={'0 4vw'}
+                        padding={'0 1vw'}
+                        bgcolor={col6}
                         >
                             <Typography
                             color={col4}
                             margin='0.5em'
                             fontSize='2em'
+                            textAlign={'left'}
+                            borderBottom={'1px solid rgba(0,0,0,0.3)'}
                             >
                                 <Link
                                     color='inherit'
                                     underline='none'
                                     href='./'
+                                    textAlign={'left'}
                                 >
                                     DataDojo
                                 </Link>
                             </Typography>
+                            
+                            <Box
+                                width={'100%'}
 
+                            >
+                                <Typography
+                                color={col4}>
+                                Welcome!
+                                </Typography>
+                                
+                            </Box>
                             <Box
                                 display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
+                                flexDirection={'column'}
+                                justifyContent={'flex-start'}
+                                height={'60vw'}
+                                width={'100%'}
+                                paddingTop={'5vh'}
                             >
                                 <Button
+                                    fullWidth
                                     href='./dashboard/'
                                     
                                     sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
+                                        padding:'1em',
+                                        background:col1,
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4,
-                                                    
                                         }
 
                                     }}
                                 >
                                     <HomeIcon display={'block'} />
-                                    
+                                    Dashboard
                                 </Button>
                                 <Button
+                                    fullWidth
                                     href='./editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
+                                    
+                                    sx={{color:col4,
+                                        padding:'1em',
+                                        
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col2
+                                            backgroundColor:col4
                                         }
 
                                     }}
                                 >
                                     <CodeIcon />
+                                    Code Editor
                                 </Button>
-                                <Button
-                                    href='./chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
 
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
                                 <Button
-                                    href='./fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
+                                    fullWidth
+                                    href='./editor/'
+                                    
+                                    sx={{color:col4,
+                                        padding:'1em',
+                                        
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col5
+                                            backgroundColor:col4
                                         }
 
                                     }}
                                 >
                                     <BoltIcon />
+                                    Flashcards
                                 </Button>
+
                                 <Button
-                                    href='./test/'
-                                    sx={{color:col7,
-                                        borderBottom:`4px solid ${col7}`,
+                                    fullWidth
+                                    href='./editor/'
+                                    
+                                    sx={{color:col4,
+                                        padding:'1em',
+                                        
                                         '&:hover':{
                                             color:col1,
-                                            backgroundColor:col7
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    <SupportAgentIcon />
+                                    Socratic Bot
+                                </Button>
+                                
+                                <Button
+                                    fullWidth
+                                    href='./editor/'
+                                    
+                                    sx={{color:col4,
+                                        padding:'1em',
+                                        
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
                                         }
 
                                     }}
                                 >
                                     <QuizIcon />
+                                    Mock Test
                                 </Button>
+                                
                             </Box>
                             
                             <Box>
+                                
                                 <Button
-                                    href="./profile/"
+                                    fullWidth
+                                    href='./editor/'
                                     sx={{color:col4,
+                                        padding:'1em',
                                         
                                         '&:hover':{
                                             color:col1,
@@ -138,18 +190,24 @@ const Navbar = () => {
                                     }}
                                 >
                                     <Person4Icon/>
+                                    Profile
                                 </Button>
                                 <Button
-                                    href="./profile/"
+                                    fullWidth
+                                    
                                     onClick={handleLogout}
                                     sx={{color:col4,
+                                        padding:'1em',
+                                        
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
                                         }
+
                                     }}
                                 >
                                     <LogoutIcon/>
+                                    Logout
                                 </Button>
                             </Box>
                             

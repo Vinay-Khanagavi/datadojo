@@ -196,14 +196,100 @@ export default function Home(){
             height={'100vh'}
             bgcolor={col1}
             overflow={'hidden'}
+            display={'flex'}
+            justifyContent={'space-between'}
         >
                     <Navbar />
 
                         {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
-                        
+                        {/*////////////////////// Content container starts //////////////////////*/}
+                    <Box
+                        height={'100vh'}
+                        width={'80vw'}
+                    >
+                        {/*////////////////////// Top colourful Box  starts //////////////////////*/}
                         <Box
-                            height={'46vh'}
-                            width={'100vw'}
+                            width={'76vw'}
+                            height={'20vh'}
+                            bgcolor={col3}
+                            margin={'3vh 2vw'}
+                            borderRadius={'0.2em'}
+                            padding={'1em'}
+                            boxSizing={'border-box'}
+                            display={'flex'}
+                            flexDirection={'column'}
+                            gap={1}
+                        >
+                            <Typography
+                                variant="h6"
+                            >
+                                Kickstart your DSA learning journey with DataDojo's efficient and flexible platform
+                            </Typography>
+                            <Typography
+                                variant="p"
+                                fontWeight={'200'}
+                            >
+                                Global learning and Lorem Ipsum
+                            </Typography>
+                            <Box>
+                                <Button
+                                    variant="contained"
+                                    display={'inline-block'}
+                                    size="small"
+                                    sx={{
+                                        background:col6,
+                                        '&:hover':
+                                        {
+                                            background:col4,
+                                            color:col6
+                                        }
+                                    }}
+                                >
+                                    Start Learning
+                                </Button>
+                            </Box>
+                            
+                        </Box>
+
+                        {/*////////////////////// Top colourful Box  ends //////////////////////*/}
+                        
+                        {/*////////////////////// Container Box starts here for three content boxes  //////////////////////*/}
+                        <Box
+                            width={'76vw'}
+                            height={'80vh'}
+                            display={'flex'}
+                            flexDirection={'row'}
+
+                            
+                        >
+                            <Box
+                                width={'20vw'}
+                                height={'70vh'}
+                                margin={'0 1vw 0 2vw'}
+                                bgcolor={col6}
+                            >
+
+                            </Box>
+                            <Box
+                                width={'25vw'}
+                                height={'70vh'}
+                                bgcolor={col6}
+                                margin={'0 1vw 0 1vw'}
+                            >
+
+                            </Box>
+                            <Box
+                                width={'30vw'}
+                                height={'70vh'}
+                                margin={'0 0 0 1vw'}
+                                bgcolor={col6}
+                            >
+
+                            </Box>
+                        </Box>
+                        <Box
+                            height={'50vh'}
+                            width={'80vw'}
                             display={'flex'}
                             justifyContent={'center'}
                             
@@ -503,7 +589,7 @@ export default function Home(){
 
                             </Box>
                         </Box>
-                        
+            </Box>
         </Box>
     )
 }
