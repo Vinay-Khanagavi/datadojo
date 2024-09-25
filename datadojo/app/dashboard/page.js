@@ -34,8 +34,9 @@ const col2 = ['#E07A5F']; // red
 const col3 = ['#81B29A']; // green
 const col4 = ['#F4F1DE']; // white
 const col5 = ['#F2CC8F']; // yellow
-const col1 = ['#191c35']; // Darker shade
+const col1 = ['#191c35']; // Darkest shade
 const col7 = ['#5FA8D3']; //Blue
+const col8 = ['#2b2d44']; //Darker shade
 
 
 export default function Home(){
@@ -255,12 +256,10 @@ export default function Home(){
                         
                         {/*////////////////////// Container Box starts here for three content boxes  //////////////////////*/}
                         <Box
-                            width={'76vw'}
+                            width={'80vw'}
                             height={'80vh'}
                             display={'flex'}
                             flexDirection={'row'}
-
-                            
                         >
                             {/*///////////////// Chat threads box  //////////////////////////*/}
                             <Box
@@ -272,7 +271,7 @@ export default function Home(){
                                     <Box
                                     height={'8vh'}
                                     width={'100%'}
-                                    borderBottom={"1px solid "+ col1}
+
                                     display={'flex'}
                                     alignItems={'center'}
                                     justifyContent={'center'}
@@ -286,23 +285,26 @@ export default function Home(){
 
                                 {/*////////////////////// the saved chats here /////////////////////////////*/}
                                 <Box
-                                    display={'flex'}
-                                    margin={1}
-                                    gap={1}
+                                    height={'62vh'}
+                                    width={'100%'}
                                     overflow={'auto'}
-                                    flexWrap={'wrap'}
+                                    padding={'0.5em'}
+                                    boxSizing={'border-box'}
                                 >
                                     {chats.map((chat) =>(
                                     <Link
                                         underline="none"
                                         href={`./chats/${chat}`}
                                     >
-                                        <Typography
+                                        <Box
                                         key={chat}
                                         color={col4}
-                                        bgcolor={col1}
-                                        padding={'0.5em 1em'}
-                                        borderRadius={2}
+                                        boxSizing={'border-box'}
+                                        bgcolor={col8}
+                                        width={'100%'}
+                                        padding={'0.8em'}
+                                        marginTop={'5px'}
+                                        borderRadius={'0.2em'}
                                         sx={{
                                             '&:hover':
                                             {
@@ -313,29 +315,173 @@ export default function Home(){
                                         
                                     >
                                         {chat}
-                                    </Typography>
+                                    </Box>
                                     </Link>
                                     
                                     ))}
                                 </Box>
                             </Box>
+                            {/*/////////////////// First box finishes here  ///////////////////////////////*/}
+
+                            {/*///////////////////// Second Box starts here ////////////////////////////*/}
                             <Box
                                 width={'25vw'}
                                 height={'70vh'}
                                 bgcolor={col6}
                                 margin={'0 1vw 0 1vw'}
                             >
-
+                                    <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                    >
+                                    <Typography
+                                        color={col4}
+                                    >
+                                        Flashcards Collection
+                                    </Typography>
+                                </Box>
+                                
+                                <Box
+                                    display={'flex'}
+                                    height={'32vh'}
+                                    margin={1}
+                                    gap={1}
+                                    overflow={'auto'}
+                                    flexWrap={'wrap'}
+                                    
+                                >
+                                    {cards.map((card) =>(
+                                    <Link
+                                        underline="none"
+                                        href={`./flashcards/${card}`}
+                                    >
+                                        <Typography
+                                        key={card}
+                                        color={col4}
+                                        bgcolor={col1}
+                                        minWidth={'3em'}
+                                        maxWidth={'5em'}
+                                        minHeight={'6em'}
+                                        padding={'1em 1em'}
+                                        borderRadius={2}
+                                        textAlign={'center'}
+                                        sx={{
+                                            '&:hover':
+                                            {
+                                                bgcolor:col4,
+                                                color:col1
+                                            }
+                                        }}
+                                        
+                                    >
+                                        <Typography
+                                            variant="span"
+                                            display={'inline-block'}
+                                            width={'100%'}
+                                            color={col5}
+                                        >
+                                            <BoltIcon />
+                                        </Typography>
+                                        
+                                        {card}
+                                    </Typography>
+                                    </Link>
+                                    
+                                    ))}
+                                </Box>
                             </Box>
+                            {/*///////////////////// Second Box ends here ////////////////////////////*/}
+
+                            {/*///////////////////// Third Box starts here ////////////////////////////*/}
                             <Box
-                                width={'30vw'}
+                                width={'27vw'}
                                 height={'70vh'}
                                 margin={'0 0 0 1vw'}
                                 bgcolor={col6}
                             >
+                                <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                    >
+                                    <Typography
+                                        color={col4}
+                                        
+                                    >
+                                        Problems
+                                    </Typography>
+                                </Box>
 
+                                <Box
+                                    height={'62vh'}
+                                    width={'100%'}
+                                    overflow={'auto'}
+                                    padding={'0.5em'}
+                                    boxSizing={'border-box'}
+                                >
+                                    {questions.questions.map((question) => (
+                                            <Link
+                                                underline="none"
+                                                href={`./editor/${question.id}`}
+                                            >
+                                                <Box
+                                                    key={question.id}
+                                                    color={col4}
+                                                    bgcolor={col8}
+                                                    width={'100%'}
+                                                    boxSizing={'inherit'}
+                                                    borderRadius={'0.2em'}
+                                                    height={'5vh'}
+                                                    margin={'5px auto'}
+                                                    padding={'0.4em 0'}
+                                                    
+                                                    display={'flex'}
+                                                    alignItems={'center'}
+                                                    justifyContent={'space-between'}
+                                                    sx={{'&:hover':{
+                                                        bgcolor:col4,
+                                                        color:col1
+                                                    }}}
+                                                >
+                                                    <Typography
+                                                        marginLeft={'1em'}
+                                                        textAlign={'center'}
+                                                    >{question.shortTitle}</Typography>
+                                                    <Typography
+                                                        marginRight={'1em'}
+                                                        color={question.difficulty === 'easy' ? (
+                                                            col3
+                                                        ) : question.difficulty === 'medium' ? (
+                                                            col5
+                                                        ) : question.difficulty === 'hard' ? (
+                                                            col2
+                                                        ) : null}
+                                                    >
+                                                        
+                                                        {question.difficulty === 'easy' ? (
+                                                            <MoodIcon />
+                                                        ) : question.difficulty === 'medium' ? (
+                                                            <SentimentSatisfiedIcon />
+                                                        ) : question.difficulty === 'hard' ? (
+                                                            <MoodBadIcon />
+                                                        ) : null}
+                                                        
+                                                    </Typography>
+                                                </Box>
+                                            </Link>
+                                    ))}
+                                </Box>
                             </Box>
+
+                            {/*///////////////////// Third Box ends here ////////////////////////////*/}
                         </Box>
+
+
                         <Box
                             height={'50vh'}
                             width={'80vw'}
