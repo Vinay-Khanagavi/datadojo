@@ -262,13 +262,62 @@ export default function Home(){
 
                             
                         >
+                            {/*///////////////// Chat threads box  //////////////////////////*/}
                             <Box
                                 width={'20vw'}
                                 height={'70vh'}
                                 margin={'0 1vw 0 2vw'}
                                 bgcolor={col6}
                             >
+                                    <Box
+                                    height={'8vh'}
+                                    width={'100%'}
+                                    borderBottom={"1px solid "+ col1}
+                                    display={'flex'}
+                                    alignItems={'center'}
+                                    justifyContent={'center'}
+                                >
+                                    <Typography
+                                        color={col4}
+                                    >
+                                         Discussion Threads
+                                    </Typography>
+                                </Box>
 
+                                {/*////////////////////// the saved chats here /////////////////////////////*/}
+                                <Box
+                                    display={'flex'}
+                                    margin={1}
+                                    gap={1}
+                                    overflow={'auto'}
+                                    flexWrap={'wrap'}
+                                >
+                                    {chats.map((chat) =>(
+                                    <Link
+                                        underline="none"
+                                        href={`./chats/${chat}`}
+                                    >
+                                        <Typography
+                                        key={chat}
+                                        color={col4}
+                                        bgcolor={col1}
+                                        padding={'0.5em 1em'}
+                                        borderRadius={2}
+                                        sx={{
+                                            '&:hover':
+                                            {
+                                                bgcolor:col4,
+                                                color:col1
+                                            }
+                                        }}
+                                        
+                                    >
+                                        {chat}
+                                    </Typography>
+                                    </Link>
+                                    
+                                    ))}
+                                </Box>
                             </Box>
                             <Box
                                 width={'25vw'}
