@@ -304,6 +304,7 @@ const toggleAppraisal = async (threadId) => {
                                     variant="contained"
                                     display={'inline-block'}
                                     size="small"
+                                    href="./chat"
                                     sx={{
                                         background:col6,
                                         '&:hover':

@@ -90,6 +90,7 @@ const Navbar = () => {
                                     sx={{color:col4,
                                         padding:'1em',
                                         background:col1,
+                                        textAlign:'left',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4,
