@@ -22,7 +22,7 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 import Navbar from '../components/navbar';
 
 import {auth, db} from '../firebase';
-import {collection, query, where, getDocs} from 'firebase/firestore';
+import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove } from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
@@ -42,7 +42,7 @@ const col8 = ['#2b2d44']; //Darker shade
 
 export default function Home(){
 
-    // Redirect section
+    // State variables here please:
     const router = useRouter(); 
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
@@ -52,8 +52,10 @@ export default function Home(){
     const handleLogout = useLogout();
     const [yourScore, setYourScore] = useState('');
     const [highestScore, setHighestScore] = useState('');
+    const [appraisalCounts, setAppraisalCounts] = useState({});
+    const [userEmail, setUserEmail] = useState('');
     
-    
+    // Function to fetch max score from db
     const getMaxScore = async() => {
         try {
             const userRef = collection(db, "users");
@@ -83,6 +85,68 @@ export default function Home(){
         }
    }
 
+   // Function to fetch chats and appraisals
+   const getChatsWithAppraisals = async (email) => {
+    const chatRef = collection(db, "threads");
+    const querySnapshot = await getDocs(chatRef);
+    const docTitles = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+    }));
+    const appraisals = {};
+    docTitles.forEach(doc => {
+        appraisals[doc.id] = doc.data.Appraisals ? doc.data.Appraisals.length : 0;
+    });
+    setChats(docTitles);
+    setAppraisalCounts(appraisals);
+};
+
+const toggleAppraisal = async (threadId) => {
+    console.log("userEmail:",userEmail);
+    try {
+        const threadDocRef = doc(db, "threads", threadId);
+        const threadData = chats.find(chat => chat.id === threadId)?.data;
+        
+        if (threadData?.Appraisals?.includes(userEmail)) {
+           
+            await updateDoc(threadDocRef, {
+                Appraisals: arrayRemove(userEmail)
+            });
+            setAppraisalCounts(prev => ({ 
+                ...prev, 
+                [threadId]: Math.max((prev[threadId] || 1) - 1, 0)
+            }));
+        } else {
+            await updateDoc(threadDocRef, {
+                Appraisals: arrayUnion(userEmail)
+            });
+            setAppraisalCounts(prev => ({ 
+                ...prev, 
+                [threadId]: (prev[threadId] || 0) + 1 
+            }));
+        }
+        
+        setChats(prevChats => 
+            prevChats.map(chat => 
+                chat.id === threadId
+                    ? {
+                        ...chat,
+                        data: {
+                            ...chat.data,
+                            Appraisals: chat.data.Appraisals?.includes(userEmail)
+                                ? chat.data.Appraisals.filter(email => email !== userEmail)
+                                : [...(chat.data.Appraisals || []), userEmail]
+                        }
+                    }
+                    : chat
+            )
+        );
+    } catch (error) {
+        console.error("Error updating appraisal: ", error);
+    }
+};
+
+
     const getNameByEmail = async (email) => {
         try {
           const userRef = collection(db, "users");
@@ -92,7 +156,8 @@ export default function Home(){
           if (!querySnapshot.empty) {
             const userDoc = querySnapshot.docs[0];
             const userData = userDoc.data();
-            setName(userData.name); 
+            setName(userData.name);
+            setUserEmail(email);
             setYourScore(userData.score);
           } else {
             console.log("No user found with this email.");
@@ -136,6 +201,7 @@ export default function Home(){
             console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
             if (user) {
                 console.log("User authenticated, setting loading to false");
+                getChatsWithAppraisals(user.email);
                 setIsLoading(false);
                 getNameByEmail(user.email);
             } else {
@@ -316,15 +382,16 @@ export default function Home(){
                                     >
                                         <Link
                                             underline="none"
-                                            href={`./chats/${chat}`}
+                                            href={`./chats/${chat.id}`}
                                             color="inherit"
                                         >
-                                            <Typography>{chat}</Typography>
+                                            <Typography>{chat.id}</Typography>
                                         </Link>
                                         <Button
                                             sx={{color:col2}}
+                                            onClick={() => toggleAppraisal(chat.id)}
                                         >
-                                            5<WhatshotIcon/>
+                                            {appraisalCounts[chat.id] || 0}<WhatshotIcon/>
                                         </Button>
                                     </Box>
                                    
