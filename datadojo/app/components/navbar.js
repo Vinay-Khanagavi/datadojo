@@ -90,7 +90,8 @@ const Navbar = () => {
                                     sx={{color:col4,
                                         padding:'1em',
                                         background:col1,
-                                        textAlign:'left',
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4,
@@ -107,7 +108,8 @@ const Navbar = () => {
                                     
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -125,7 +127,8 @@ const Navbar = () => {
                                     
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -143,7 +146,8 @@ const Navbar = () => {
                                     
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -161,7 +165,8 @@ const Navbar = () => {
                                     
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -182,7 +187,8 @@ const Navbar = () => {
                                     href='./profile/'
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4
@@ -199,7 +205,8 @@ const Navbar = () => {
                                     onClick={handleLogout}
                                     sx={{color:col4,
                                         padding:'1em',
-                                        
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
                                         '&:hover':{
                                             color:col1,
                                             backgroundColor:col4

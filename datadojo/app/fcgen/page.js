@@ -9,6 +9,8 @@ import Head from 'next/head';
 import { useEffect } from "react";
 import useLogout from '../components/logout';
 
+//Components
+import Navbar from "../components/navbar";
 
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
@@ -164,128 +166,313 @@ export default function Generate(){
     const bgThree = "#fff"
 
     return(
-        
-        
             <Box
             width={'100vw'}
             minHeight={'100vh'}
             backgroundColor={col1}
+            display={'flex'}
+            overflow={'hidden'}
             >
-                <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
+                    <Navbar />
+
+                    <Box
+                        width={'80vw'}
+                        height={'100vh'}
+                        bgcolor={col1}
+                        display={'flex'}
+                        flexDirection={'column'}
+
+                    >
+                        <Box
+                            width={'76vw'}
+                            height={'25vh'}
+                            margin={'4vh 2vw 2vh 2vw'}
+                            
+                            borderRadius={'0.2em'}
+                            color={col4}
+                            padding={'1em'}
+                            display={'flex'}
+                            flexDirection={'column'}
                         >
                             <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
+                                variant="h4"
+                                marginBottom={'0.4em'}
                             >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='./'
-                                >
-                                    Learn Buddy
-                                </Link>
+                                Flashcards
                             </Typography>
-
                             <Box
+                                width={'100%'}
                                 display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
+                                flexDirection={'row'}
+                                justifyContent={'center'}
+                                alignItems={'center'}
                             >
-                                <Button
-                                    href='./dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                                    
-                                        }
+                                <Box
+                                    width={'85%'}
+                                >
+                                    <TextField
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                        label="Enter your flashcard prompt"
+                                        fullWidth
 
-                                    }}
+                                        borderColor={'#fff'}
+                                        variant="outlined"
+                                        sx={{
+                                            '& .MuiOutlinedInput-root': {
+                                              '& fieldset': {
+                                                borderColor: 'white',
+                                              },
+                                              '&:hover fieldset': {
+                                                borderColor: 'white',
+                                              },
+                                              '&.Mui-focused fieldset': {
+                                                borderColor: 'white',
+                                              },
+                                            },
+                                            '& .MuiInputLabel-root': {
+                                              color: 'white',
+                                            },
+                                            '& .MuiOutlinedInput-input': {
+                                              color: 'white',
+                                            },
+                                          }}
+                                    />
+                                </Box>
+                                <Box
+                                    width={'15%'}
+                                    padding={'0.5em'}
                                 >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='./editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
-                                        '&:hover':{
+                                    <Button
+                                        variant='contained'
+                                        sx={{
+                                            bgcolor:col5,
                                             color:col1,
-                                            backgroundColor:col2
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='./chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='./fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col5
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-                            
-                            <Box>
-                                {/* <Button
-                                    href="./profile/"
-                                    sx={{color:col4,
-                                        
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <Person4Icon/>
-                                </Button> */}
-                                <Button
-                                    href="./profile/"
-                                    onClick={handleLogout}
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-                                    }}
-                                >
-                                    <LogoutIcon/>
-                                </Button>
+                                            borderRadius:'2em',
+                                            padding:'0.8em 2em',
+                                            '&:hover':{
+                                                background:col4,
+                                                color:col6
+                                            }
+                                        }}
+                                        onClick={handleSubmit}
+                                    >
+                                        Submit
+                                        <BoltIcon></BoltIcon>
+                                    </Button>
+                                </Box>
                             </Box>
                             
                         </Box>
+                        <Box
+                            width={'76vw'}
+                            height={'70vh'}
+                            margin={'0 2vw 4vh 2vw'}
+                            
+                            padding={'1em'}
+                        >
+                            {
+                                flashcards.length>0 && (<Box>
+                                    <Typography
+                                        variant="h5"
+                                        color={col4}
+                                        textAlign={'left'}
+                                        fontWeight={'100'}
+                                    >
+                                        Flashcards Preview
+                                    </Typography>
 
-                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
+                                    <Typography
+                                        variant="p"
+                                        color={col4}
+                                        marginBottom={'0.5em'}
+                                    >
+                                        Review and save the generated flashcards
+                                    </Typography>
+
+                                    <Box
+                                    width={'100%'}
+                                    display={'flex'}
+                                    justifyContent={'center'}
+                                    >
+                                        <Box
+                                        width={'70vw'}
+                                        height={'60vh'}
+                                        overflow={'hidden'}
+                                        >
+                                            <Grid container spacing={3}
+                                            
+                                            >
+                                        {flashcards.map((flashcard, index) =>
+                                            (  <Grid item xs={6} sm={6} md={3} key = {index}
+                                                
+                                                >
+                                                <Card
+                                                sx={{background:col1, borderRadius:'0.5em'}}
+                                                >
+                                                    <CardActionArea
+                                                        sx={{background:col1, borderRadius:'0.5em'}}
+                                                        onClick={() => {
+                                                            handleCardClick(index)
+                                                        }}
+                                                        backgroundColor={col1}
+                                                    >
+                                                        <CardContent
+                                                            sx={{background:col6, borderRadius:'0.5em'}}
+                                                        >
+                                                            <Box
+                                                                
+                                                                sx={{
+                                                                    fontWeight:'200',
+                                                                    perspective: '1000px',
+                                                                    '&>div': {
+                                                                        transition: 'transform 0.6s',
+                                                                        transformStyle: 'preserve-3d',
+                                                                        position: 'relative',
+                                                                        width:'100%',
+                                                                        height:'150px',
+                                                                        boxShadow: '0 4px 8px 0 rgba(0,0,0, 0.6)',
+                                                                        transform: flipped[index]
+                                                                        ? 'rotateY(180deg)'
+                                                                        : 'rotateY(0deg)',
+                                                                    },
+                                                                    '& > div > div': {
+                                                                        transition: 'transform 0.6s',
+                                                                        transformStyle: 'preserve-3d',
+                                                                        position: 'absolute',
+                                                                        width:'100%',
+                                                                        height:'100%',
+                                                                        backfaceVisibility: "hidden",
+                                                                        display: 'flex',
+                                                                        justifyContent: 'center',
+                                                                        alignItems: 'center',
+                                                                        padding: 2,
+                                                                        boxSizing: 'border-box'
+                                                                    },
+                                                                    '& > div > div:nth-of-type(2)': {
+                                                                        transform: 'rotateY(180deg)'
+                                                                    },
+
+                                                                }}
+                                                            >
+                                                                <div>
+                                                                    <div
+                                                                        display={'flex'}
+                                                                    >
+                                                                        <Box
+                                                                            width={'20%'}
+                                                                            height={'100%'}
+                                                                            display={'flex'}
+                                                                            alignItems={'center'}
+                                                                        >
+                                                                            <Typography
+                                                                            color={col5}
+                                                                            variant="h6"
+                                                                            fontSize={'0.8em'}
+                                                                            textAlign={'center'}
+                                                                            display={'block'}
+                                                                            fontWeight={'800'}
+                                                                            >
+                                                                                <BoltIcon />
+                                                                            </Typography>
+                                                                        </Box>
+                                                                        <Box
+                                                                            width={'80%'}
+                                                                            height={'100%'}
+                                                                            display={'flex'}
+                                                                            alignItems={'center'}
+                                                                        >
+                                                                        <Typography
+                                                                            variant="h6"
+                                                                            fontSize={'1.1em'}
+                                                                            component="div"
+                                                                            color={col4}
+                                                                        >
+                                                                            
+                                                                            {flashcard.front}
+                                                                        </Typography>
+                                                                        </Box>
+                                                                        
+                                                                    </div>
+                                                                    <div>
+                                                                        <Typography
+                                                                            variant="h5"
+                                                                            fontWeight={'100'}
+                                                                            fontSize={'1em'}
+                                                                            textAlign={'center'}
+                                                                            component="div"
+                                                                            color={col4}
+                                                                        >
+                                                                            {flashcard.back}
+                                                                        </Typography>
+                                                                    </div>
+                                                                </div>
+                                                            </Box>
+                                                        </CardContent>
+                                                    </CardActionArea>
+                                                </Card>
+                                            </Grid>
+                                            
+                                            )
+                                        )}
+                                    </Grid>
+                                    </Box>
+                                    </Box>
+                                    <Box sx={{mt:4, display:'flex', justifyContent:'center'}}>
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleOpen}
+                                            position={'fixed'}
+                                            zIndex={'10'}
+                                            bottom={'2vh'}
+                                            left={'50%'}
+                                            sx={{
+                                                backgroundColor:col3
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            )}
+                        
+                        </Box>
+                    </Box>
+
+
+                    <Dialog
+                open={open}
+                onClose={handleClose}
+            >
+                <DialogTitle
+                >
+                    Save Flashcards
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please enter a name for your flashcards collection
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        label="Collection name"
+                        type="text"
+                        fullWidth
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        variant="outlined"
+                    >
+
+                    </TextField>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={saveFlashcards}>Save</Button>
+                </DialogActions>
+            </Dialog>
+            </Box>
+
+            /*
             <Box
                 sx={{mt:4, mb:6, display:'flex', flexDirection: 'column', alignItems: 'center'}}
                 backgroundColor ={col1}
@@ -337,18 +524,7 @@ export default function Generate(){
                             color: 'white',  // Label color when focused
                     }}}
                     />
-                    <Button
-                        variant='contained'
-                        sx={{
-                            bgcolor:col5,
-                            color:col1
-                        }}
-                        onClick={handleSubmit}
-                        
-                    >
-                        Submit
-                        <BoltIcon></BoltIcon>
-                    </Button>
+                    
                 </Paper>
             </Box>
             {
@@ -498,38 +674,9 @@ export default function Generate(){
                 </Box>
             )}
 
-            <Dialog
-                open={open}
-                onClose={handleClose}
-            >
-                <DialogTitle
-                >
-                    Save Flashcards
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please enter a name for your flashcards collection
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        label="Collection name"
-                        type="text"
-                        fullWidth
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        variant="outlined"
-                    >
-
-                    </TextField>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={saveFlashcards}>Save</Button>
-                </DialogActions>
-            </Dialog>
+            
             </Box>
-        
+        */
 
     )
 }

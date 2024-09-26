@@ -12,7 +12,7 @@ const systemPrompt=`You are a flash card generator. Your task is to create flash
   ]
 }
 
-Do not include any explanation, extra text, or commentary. Only return 10 flashcards in valid JSON format.
+Do not include any explanation, extra text, or commentary. Only return 8 flashcards in valid JSON format.
 `;
 
 export async function POST(req) {
