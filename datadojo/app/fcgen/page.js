@@ -266,7 +266,7 @@ export default function Generate(){
                         </Box>
                         <Box
                             width={'76vw'}
-                            height={'70vh'}
+                            height={'75vh'}
                             margin={'0 2vw 4vh 2vw'}
                             
                             padding={'1em'}
@@ -285,7 +285,6 @@ export default function Generate(){
                                     <Typography
                                         variant="p"
                                         color={col4}
-                                        marginBottom={'0.5em'}
                                     >
                                         Review and save the generated flashcards
                                     </Typography>
@@ -293,14 +292,15 @@ export default function Generate(){
                                     <Box
                                     width={'100%'}
                                     display={'flex'}
-                                    justifyContent={'center'}
+                                    marginTop={'1em'}
+                                    justifyContent={'flex-start'}
                                     >
                                         <Box
-                                        width={'70vw'}
+                                        width={'60vw'}
                                         height={'60vh'}
                                         overflow={'hidden'}
                                         >
-                                            <Grid container spacing={3}
+                                            <Grid container spacing={4}
                                             
                                             >
                                         {flashcards.map((flashcard, index) =>
