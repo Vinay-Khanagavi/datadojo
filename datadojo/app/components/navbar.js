@@ -121,7 +121,7 @@ const Navbar = () => {
 
                                 <Button
                                     fullWidth
-                                    href='./editor/'
+                                    href='./fcgen/'
                                     
                                     sx={{color:col4,
                                         padding:'1em',
@@ -139,7 +139,7 @@ const Navbar = () => {
 
                                 <Button
                                     fullWidth
-                                    href='./editor/'
+                                    href='./chat/'
                                     
                                     sx={{color:col4,
                                         padding:'1em',
@@ -157,7 +157,7 @@ const Navbar = () => {
                                 
                                 <Button
                                     fullWidth
-                                    href='./editor/'
+                                    href='./test/'
                                     
                                     sx={{color:col4,
                                         padding:'1em',
@@ -179,7 +179,7 @@ const Navbar = () => {
                                 
                                 <Button
                                     fullWidth
-                                    href='./editor/'
+                                    href='./profile/'
                                     sx={{color:col4,
                                         padding:'1em',
                                         
