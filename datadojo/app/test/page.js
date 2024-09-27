@@ -1,7 +1,7 @@
 'use client'
 
 import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
-import questions from '../editor/questions.json';
+import Image from 'next/image';
 
 // MUI Icons
 import HomeIcon from '@mui/icons-material/Home';
@@ -19,6 +19,8 @@ import WhatshotIcon from '@mui/icons-material/Whatshot';
 
 //Components
 import Navbar from '../components/navbar';
+import QuestionCard from '../components/QuestionCard';
+import ResultDialog from '../components/ResultDialog';
 
 import {auth, db} from '../firebase';
 import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove } from 'firebase/firestore';
@@ -41,29 +43,60 @@ const col8 = ['#2b2d44']; //Darker shade
 export default function Home(){
 
     // Redirect section
-    const router = useRouter(); 
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState(null);
     const handleLogout = useLogout();
 
+    const [topic, setTopic] = useState('');
+    const [questions, setQuestions] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [userAnswers, setUserAnswers] = useState({});
+    const [showResults, setShowResults] = useState(false);
+    const [score, setScore] = useState(0);
     
-    const [questions, setQuestions] = useState([])
-    const [flipped, setFlipped] = useState([])
-    const [text, setText] = useState('')
-    const [name, setName] = useState('')
-    const [open, setOpen] = useState(false)
-    
-    const handleSubmit =async() =>{
-        
-        fetch('api/quiz',{
-            method: 'POST',
-            body:text,
-        })
-        .then((res) => res.json())
-        .then((data) => setQuestions(data))
-        console.log(questions)
-    }
+    const handleSubmit = async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ topic, count: 10 }),
+            });
+            const data = await response.json();
+            setQuestions(data);
+            setCurrentQuestionIndex(0);
+            setUserAnswers({});
+        } catch (error) {
+            console.error("Error fetching questions:", error);
+        }
+        setIsLoading(false);
+    };
 
+    const handleAnswer = (answer) => {
+        setUserAnswers({ ...userAnswers, [currentQuestionIndex]: answer });
+    };
+
+    const handleNavigation = (direction) => {
+        if (direction === 'next' && currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else if (direction === 'prev' && currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+        }
+    };
+
+    const handleSubmitQuiz = () => {
+        let correctAnswers = 0;
+        questions.forEach((question, index) => {
+            if (userAnswers[index] === question.Answer) {
+                correctAnswers++;
+            }
+        });
+        setScore(correctAnswers);
+        setShowResults(true);
+    };
 
     useEffect(() => {
         console.log("Component mounted, starting auth check");
@@ -177,8 +210,8 @@ return(
                                     width={'85%'}
                                 >
                                     <TextField
-                                        value={text}
-                                        onChange={(e) => setText(e.target.value)}
+                                        value={topic}
+                                        onChange={(e) => setTopic(e.target.value)}
                                         label="Enter a topic name"
                                         fullWidth
 
@@ -237,13 +270,22 @@ return(
                             
                             padding={'1em'}
                         >
-                            
+                            {questions.length > 0 && (
+                        <QuestionCard
+                            question={questions[currentQuestionIndex]}
+                            onAnswer={handleAnswer}
+                            userAnswer={userAnswers[currentQuestionIndex]}
+                            onNavigate={handleNavigation}
+                            currentIndex={currentQuestionIndex}
+                            totalQuestions={questions.length}
+                            onSubmit={handleSubmitQuiz}
+                        />
+                    )}
                         
                         </Box>
                     </Box>
 
-
-                    
+                    <ResultDialog open={showResults} onClose={() => setShowResults(false)} score={score} totalQuestions={questions.length} />
             </Box>
 
 
