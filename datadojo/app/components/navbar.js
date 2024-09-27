@@ -12,7 +12,7 @@ import { CircularProgress } from "@mui/material";
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
-import QuizIcon from '@mui/icons-material/Quiz';
+import DynamicFormIcon from '@mui/icons-material/DynamicForm';
 
 //Import component
 import handleLogout from './logout';
@@ -174,7 +174,7 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <QuizIcon />
+                                    <DynamicFormIcon />
                                     Mock Test
                                 </Button>
                                 
