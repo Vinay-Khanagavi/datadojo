@@ -430,7 +430,6 @@ const toggleAppraisal = async (threadId) => {
                                     gap={1}
                                     overflow={'auto'}
                                     flexWrap={'wrap'}
-                                    
                                 >
                                     {cards.map((card) =>(
                                     <Link
@@ -442,7 +441,7 @@ const toggleAppraisal = async (threadId) => {
                                         color={col4}
                                         bgcolor={col8}
                                         minWidth={'3em'}
-                                        maxWidth={'5em'}
+                                        maxWidth={'8em'}
                                         minHeight={'6em'}
                                         padding={'1em 1em'}
                                         borderRadius={2}
