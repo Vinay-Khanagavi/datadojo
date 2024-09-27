@@ -53,6 +53,7 @@ const QuestionCard = ({ question, onAnswer, userAnswer, onNavigate, currentIndex
                                 mb: 2,
                                 justifyContent: "flex-start",
                                 textAlign: "left",
+                                
                                 color: 'white',
                                 borderColor: 'rgba(255, 255, 255, 0.1)',
                                 padding:'1em',
