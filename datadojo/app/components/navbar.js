@@ -125,16 +125,7 @@ const Navbar = () => {
                                 </Link>
                             </Typography>
                             
-                            <Box
-                                width={'100%'}
-
-                            >
-                                <Typography
-                                color={col4}>
-                                Welcome!
-                                </Typography>
-                                
-                            </Box>
+                            
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
