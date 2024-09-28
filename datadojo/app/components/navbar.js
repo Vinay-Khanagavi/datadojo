@@ -20,7 +20,7 @@ import useLogout from './logout';
 
 //Import react components
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname} from "next/navigation";
 
 //Import firebase config & firestore components
 import {auth, db} from '../firebase';
@@ -38,6 +38,8 @@ const lcol1 = ['#E4E2DE']; //Offwhite
 const lcol2 = ['#FFF']; //White
 const lcol3 = [''];
 
+const activeColor = col1;
+
 const logout = useLogout();
 
 const Navbar = () => {
@@ -46,6 +48,10 @@ const Navbar = () => {
     const handleClose = () => setOpen(false);
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const isActive = (path) => pathname === path;
 
     useEffect(() => {
         const fetchLeaderboardData = async () => {
@@ -63,6 +69,32 @@ const Navbar = () => {
 
         fetchLeaderboardData();
     }, []);
+
+    const NavButton = ({ href, icon, text }) => (
+        <Button
+            fullWidth
+            href={href}
+            sx={{
+                color: col4,
+                textTransform: 'none',
+                padding: '1em',
+                textAlign: 'left',
+                justifyContent: 'flex-start',
+                backgroundColor: isActive(href) ? activeColor : 'transparent',
+                '&:hover': {
+                    color: col1,
+                    backgroundColor: isActive(href) ? activeColor : col4,
+                }
+            }}
+        >
+            <Box width='15%'>
+                {icon}
+            </Box>
+            <Typography>
+                {text}
+            </Typography>
+        </Button>
+    );
 
     return(
                     <Box
@@ -111,146 +143,12 @@ const Navbar = () => {
                                 width={'100%'}
                                 paddingTop={'5vh'}
                             >
-                                <Button
-                                    fullWidth
-                                    href='./dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        textTransform: 'none',
-                                        padding:'1em',
-                                        background:col1,
-                                        textAlign: 'left',
-                                        justifyContent: 'flex-start',
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                        }
+                                <NavButton href="/dashboard" icon={<HomeIcon />} text="Dashboard" />
+                                <NavButton href="/editor" icon={<CodeIcon />} text="Code Editor" />
+                                <NavButton href="/fcgen" icon={<BoltIcon />} text="Flashcards" />
+                                <NavButton href="/chat" icon={<SupportAgentIcon />} text="Socratic Bot" />
+                                <NavButton href="/test" icon={<DynamicFormIcon />} text="Mock Test" />
 
-                                    }}
-                                >
-                                    <Box
-                                        width={'15%'}
-                                    >
-                                        <HomeIcon/>
-                                    </Box>
-                                    <Typography>
-                                        Dashboard
-                                    </Typography>
-                                    
-                                    
-                                </Button>
-                                <Button
-                                    fullWidth
-                                    href='./editor/'
-                                    
-                                    sx={{color:col4,
-                                        textTransform: 'none',
-                                        padding:'1em',
-                                        textAlign: 'left',
-                                        justifyContent: 'flex-start',
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    
-                                    
-                                    <Box
-                                        width={'15%'}
-                                    >
-                                        <CodeIcon />
-                                    </Box>
-                                    <Typography>
-                                        Code Editor
-                                    </Typography>
-
-                                </Button>
-
-                                <Button
-                                    fullWidth
-                                    href='./fcgen/'
-                                    
-                                    sx={{color:col4,
-                                        textTransform: 'none',
-                                        padding:'1em',
-                                        textAlign: 'left',
-                                        justifyContent: 'flex-start',
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    
-                                    
-                                    <Box
-                                        width={'15%'}
-                                    >
-                                        <BoltIcon />
-                                    </Box>
-                                    <Typography>
-                                    Flashcards
-                                    </Typography>
-                                </Button>
-
-                                <Button
-                                    fullWidth
-                                    href='./chat/'
-                                    
-                                    sx={{color:col4,
-                                        textTransform: 'none',
-                                        padding:'1em',
-                                        textAlign: 'left',
-                                        justifyContent: 'flex-start',
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    
-                                    
-                                    <Box
-                                        width={'15%'}
-                                    >
-                                        <SupportAgentIcon />
-                                    </Box>
-                                    <Typography>
-                                        Socratic Bot
-                                    </Typography>
-                                </Button>
-                                
-                                <Button
-                                    fullWidth
-                                    href='./test/'
-                                    
-                                    sx={{color:col4,
-                                        textTransform: 'none',
-                                        padding:'1em',
-                                        textAlign: 'left',
-                                        justifyContent: 'flex-start',
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    
-                                    
-                                    <Box
-                                        width={'15%'}
-                                    >
-                                        <DynamicFormIcon />
-                                    </Box>
-                                    <Typography>
-                                        Mock Test
-                                    </Typography>
-                                </Button>
 
                                 <Button
                                     fullWidth
