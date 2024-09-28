@@ -1,7 +1,7 @@
 'use client'
 
 import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
-import Image from 'next/image';
+
 
 // MUI Icons
 import HomeIcon from '@mui/icons-material/Home';

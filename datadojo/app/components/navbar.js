@@ -1,5 +1,5 @@
 'use client';
-import {Box, Link, Typography, Button, Stack} from "@mui/material"
+import { Box, Link, Typography, Button, Stack, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from "@mui/material";
 
 //MUI Icons used: Keep adding here to have a consistent dependency
 import HomeIcon from '@mui/icons-material/Home';
@@ -8,18 +8,23 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { CircularProgress } from "@mui/material";
+
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import DynamicFormIcon from '@mui/icons-material/DynamicForm';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 
 //Import component
-import handleLogout from './logout';
+import useLogout from './logout';
 
 //Import react components
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+//Import firebase config & firestore components
+import {auth, db} from '../firebase';
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 const col6 = ['#3D405B']; // Dark shade
 const col2 = ['#E07A5F']; // red
@@ -33,9 +38,32 @@ const lcol1 = ['#E4E2DE']; //Offwhite
 const lcol2 = ['#FFF']; //White
 const lcol3 = [''];
 
-
+const logout = useLogout();
 
 const Navbar = () => {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [leaderboardData, setLeaderboardData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchLeaderboardData = async () => {
+            setLoading(true);
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, orderBy("score", "desc"));
+            const querySnapshot = await getDocs(q);
+            const data = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setLeaderboardData(data);
+            setLoading(false);
+        };
+
+        fetchLeaderboardData();
+    }, []);
+
     return(
                     <Box
                         width='20vw'
@@ -88,6 +116,7 @@ const Navbar = () => {
                                     href='./dashboard/'
                                     
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         background:col1,
                                         textAlign: 'left',
@@ -115,6 +144,7 @@ const Navbar = () => {
                                     href='./editor/'
                                     
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -143,6 +173,7 @@ const Navbar = () => {
                                     href='./fcgen/'
                                     
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -170,6 +201,7 @@ const Navbar = () => {
                                     href='./chat/'
                                     
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -197,6 +229,7 @@ const Navbar = () => {
                                     href='./test/'
                                     
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -218,6 +251,101 @@ const Navbar = () => {
                                         Mock Test
                                     </Typography>
                                 </Button>
+
+                                <Button
+                                    fullWidth
+                                    onClick={handleOpen}
+                                    
+                                    sx={{color:col4,
+                                        textTransform: 'none',
+                                        padding:'1em',
+                                        textAlign: 'left',
+                                        justifyContent: 'flex-start',
+                                        '&:hover':{
+                                            color:col1,
+                                            backgroundColor:col4
+                                        }
+
+                                    }}
+                                >
+                                    
+                                    
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <LeaderboardIcon />
+                                    </Box>
+                                    <Typography>
+                                        Leaderboard
+                                    </Typography>
+                                </Button>
+
+                                {/*/////////////// Modal ///////////////////*/}
+                            
+                                <Modal
+                                    open={open}
+                                    onClose={handleClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                >
+                                    <Box
+                                        width={'40vw'}
+                                        maxHeight={'50vh'}
+                                        overflow={'auto'}
+                                        sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        
+                                        bgcolor: col6,
+                                        color:col4,
+                                        boxShadow: 24,
+                                        p: 4,
+                                    }}>
+                                        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mb: 2 }}>
+                                            Leaderboard
+                                        </Typography>
+                                        {loading ? (
+                                            <CircularProgress />
+                                        ) : (
+                                            <TableContainer
+                                                component={Paper}
+                                                sx={{
+                                                    bgcolor:col4,
+                                                    color:col4
+                                                }}
+                                            >
+                                                <Table sx={{ minWidth: 350 }} aria-label="leaderboard table">
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell>Rank</TableCell>
+                                                            <TableCell>Name</TableCell>
+                                                            <TableCell align="right">Score</TableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        {leaderboardData.map((row, index) => (
+                                                            <TableRow
+                                                                key={row.id}
+                                                                sx={{ 
+                                                                    '&:last-child td, &:last-child th': { border: 0 },
+                                                                    backgroundColor: row.email === auth.currentUser?.email ? col3 : 'inherit'
+                                                                }}
+                                                            >
+                                                                <TableCell component="th" scope="row">
+                                                                    {index + 1}
+                                                                </TableCell>
+                                                                <TableCell>{row.name}</TableCell>
+                                                                <TableCell align="right">{row.score}</TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </TableContainer>
+                                        )}
+                                    </Box>
+                                </Modal>
                                 
                             </Box>
                             
@@ -229,6 +357,7 @@ const Navbar = () => {
                                     fullWidth
                                     href='./profile/'
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -252,8 +381,9 @@ const Navbar = () => {
                                 <Button
                                     fullWidth
                                     
-                                    onClick={handleLogout}
+                                    onClick={logout}
                                     sx={{color:col4,
+                                        textTransform: 'none',
                                         padding:'1em',
                                         textAlign: 'left',
                                         justifyContent: 'flex-start',
@@ -277,6 +407,8 @@ const Navbar = () => {
                                 </Button>
                             </Box>
                             
+                            
+
                         </Box>
                         )
 
