@@ -135,9 +135,9 @@ const Navbar = () => {
                                 paddingTop={'5vh'}
                             >
                                 <NavButton href="/dashboard" icon={<HomeIcon />} text="Dashboard" />
+                                <NavButton href="/chat" icon={<SupportAgentIcon />} text="Socratic Bot" />
                                 <NavButton href="/editor" icon={<CodeIcon />} text="Code Editor" />
                                 <NavButton href="/fcgen" icon={<BoltIcon />} text="Flashcards" />
-                                <NavButton href="/chat" icon={<SupportAgentIcon />} text="Socratic Bot" />
                                 <NavButton href="/test" icon={<DynamicFormIcon />} text="Mock Test" />
 
 

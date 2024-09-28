@@ -1,6 +1,6 @@
 'use client'
 
-import {Box, Link, Typography, Button, Stack} from "@mui/material"
+import {Box, Link, Typography, Button, Stack, ToggleButton, ToggleButtonGroup} from "@mui/material"
 import questions from '../editor/questions.json';
 
 
@@ -17,6 +17,8 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import QuizIcon from '@mui/icons-material/Quiz';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
+import PublicIcon from '@mui/icons-material/Public';
+import PersonIcon from '@mui/icons-material/Person';
 
 //Components
 import Navbar from '../components/navbar';
@@ -337,23 +339,50 @@ const toggleAppraisal = async (threadId) => {
                                 bgcolor={col6}
                             >
                                     <Box
-                                    height={'8vh'}
+                                    height={'12vh'}
                                     width={'100%'}
 
                                     display={'flex'}
                                     alignItems={'center'}
                                     justifyContent={'center'}
+                                    flexDirection={'column'}
                                 >
                                     <Typography
                                         color={col4}
+                                        variant="h6"
                                     >
-                                         Discussion Threads
+                                         Bot Threads
                                     </Typography>
+                                    <Typography
+                                        variant="p"
+                                    >
+
+                                    </Typography>
+                                    <ToggleButtonGroup
+                                        color="secondary"
+                                        exclusive
+                                        sx={{color:col4,
+                                            fontSize:'0.8em'
+                                        }}
+                                        >
+                                            <ToggleButton value="private" sx={{color:col4}}>
+                                                <Typography>
+                                                    <PersonIcon/>
+                                                </Typography>
+                                            </ToggleButton>
+                                            <ToggleButton value="public" sx={{color:col4}}>
+                                                <Typography
+                                                    fontSize={'0.8em'}
+                                                >
+                                                    <PublicIcon/>
+                                                </Typography>
+                                            </ToggleButton>
+                                    </ToggleButtonGroup>
                                 </Box>
 
                                 {/*////////////////////// the saved chats here /////////////////////////////*/}
                                 <Box
-                                    height={'62vh'}
+                                    height={'58vh'}
                                     width={'100%'}
                                     overflow={'auto'}
                                     padding={'0.5em'}
