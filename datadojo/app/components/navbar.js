@@ -99,8 +99,16 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <HomeIcon display={'block'} />
-                                    Dashboard
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <HomeIcon/>
+                                    </Box>
+                                    <Typography>
+                                        Dashboard
+                                    </Typography>
+                                    
+                                    
                                 </Button>
                                 <Button
                                     fullWidth
@@ -117,8 +125,17 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <CodeIcon />
-                                    Code Editor
+                                    
+                                    
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <CodeIcon />
+                                    </Box>
+                                    <Typography>
+                                        Code Editor
+                                    </Typography>
+
                                 </Button>
 
                                 <Button
@@ -136,8 +153,16 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <BoltIcon />
+                                    
+                                    
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <BoltIcon />
+                                    </Box>
+                                    <Typography>
                                     Flashcards
+                                    </Typography>
                                 </Button>
 
                                 <Button
@@ -155,8 +180,16 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <SupportAgentIcon />
-                                    Socratic Bot
+                                    
+                                    
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <SupportAgentIcon />
+                                    </Box>
+                                    <Typography>
+                                        Socratic Bot
+                                    </Typography>
                                 </Button>
                                 
                                 <Button
@@ -174,13 +207,23 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <DynamicFormIcon />
-                                    Mock Test
+                                    
+                                    
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <DynamicFormIcon />
+                                    </Box>
+                                    <Typography>
+                                        Mock Test
+                                    </Typography>
                                 </Button>
                                 
                             </Box>
                             
-                            <Box>
+                            <Box
+                                width={'100%'}
+                            >
                                 
                                 <Button
                                     fullWidth
@@ -196,8 +239,15 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <Person4Icon/>
-                                    Profile
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <Person4Icon/>
+                                    </Box>
+                                    <Typography>
+                                        Profile
+                                    </Typography>
+                                    
                                 </Button>
                                 <Button
                                     fullWidth
@@ -214,8 +264,16 @@ const Navbar = () => {
 
                                     }}
                                 >
-                                    <LogoutIcon/>
-                                    Logout
+                                    <Box
+                                        width={'15%'}
+                                    >
+                                        <LogoutIcon/>
+                                    </Box>
+                                    <Typography>
+                                        Logout
+                                    </Typography>
+                                    
+                                    
                                 </Button>
                             </Box>
                             
