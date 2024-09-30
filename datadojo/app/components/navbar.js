@@ -77,7 +77,7 @@ const Navbar = () => {
             setCol1('#EDE8E2');
             setCol2('#E07A5F');
             setCol3('#81B29A');
-            setCol4('#F4F1DE');
+            setCol4('#000');
             setCol5('#F2CC8F');
             setCol6('#F4F1ED');
             setCol7('#5FA8D3');

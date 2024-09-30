@@ -24,14 +24,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import Navbar from '../components/navbar';
 
 import {auth, db} from '../firebase';
-import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove } from 'firebase/firestore';
+import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove, onSnapshot, userDocRef } from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
-
-
-
-
 
 
 export default function Home(){
@@ -61,31 +57,6 @@ export default function Home(){
     const [col8, setCol8] = useState('#2b2d44'); //Darker shade
 
 
-    const handleMode = async(event) => {
-        
-        if(mode == "light")
-        {
-            setCol1('#fff');
-            setCol2('#E07A5F');
-            setCol3('#81B29A');
-            setCol4('#F4F1DE');
-            setCol5('#F2CC8F');
-            setCol6('#F4F1ED');
-            setCol7('#5FA8D3');
-            setCol8('#2b2d44');
-        }
-        else
-        {
-            setCol1('#191c35');
-            setCol2('#E07A5F');
-            setCol3('#81B29A');
-            setCol4('#F4F1DE');
-            setCol5('#F2CC8F');
-            setCol6('#3D405B');
-            setCol7('#5FA8D3');
-            setCol8('#2b2d44');
-        }
-    }
 
 
     // Function to fetch max score from db
@@ -98,8 +69,7 @@ export default function Home(){
             
             if (!querySnapshot.empty) {
               let maxScore = 0;
-              
-              
+
               querySnapshot.forEach((doc) => {
                 const userData = doc.data();
                 const userScore = userData.score;
@@ -219,10 +189,32 @@ const toggleAppraisal = async (threadId) => {
       }
 
     useEffect(() => {
+        if(mode == "light")
+            {
+                setCol1('#EDE8E2');
+                setCol2('#E07A5F');
+                setCol3('#81B29A');
+                setCol4('#000');
+                setCol5('#F2CC8F');
+                setCol6('#F4F1ED');
+                setCol7('#5FA8D3');
+                setCol8('#FFF'); 
+            }
+            else
+            {
+                setCol1('#191c35');
+                setCol2('#E07A5F');
+                setCol3('#81B29A');
+                setCol4('#F4F1DE');
+                setCol5('#F2CC8F');
+                setCol6('#3D405B');
+                setCol7('#5FA8D3');
+                setCol8('#2b2d44');
+            }
         getMaxScore();
         getCards();
         getChats();
-        handleMode();
+        
         console.log("Component mounted, starting auth check");
         const timeoutId = setTimeout(() => {
             if (isLoading) {
@@ -232,6 +224,8 @@ const toggleAppraisal = async (threadId) => {
             }
         }, 1200000); 
 
+       
+
         const unsubscribe = auth.onAuthStateChanged((user) => {
             console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
             if (user) {
@@ -239,6 +233,18 @@ const toggleAppraisal = async (threadId) => {
                 getChatsWithAppraisals(user.email);
                 setIsLoading(false);
                 getNameByEmail(user.email);
+                const unsubs = onSnapshot(doc(db,"users",user.email), (doc) => {
+                    if (doc.exists()) {
+                      const userData = doc.data();
+                      alert(userData.mode);
+                      if (userData?.mode) {
+                        setMode(userData.mode);
+                      }
+                    }
+                  });
+                  return () => {
+                    unsubs();
+                };
             } else {
                 console.log("User not authenticated, redirecting to signin");
                 router.push('/signin');
@@ -249,11 +255,16 @@ const toggleAppraisal = async (threadId) => {
             setIsLoading(false);
         });
 
+        
+
         return () => {
             unsubscribe();
             clearTimeout(timeoutId);
+            
         };
     }, [router]);
+
+
 
     if (isLoading) {
         return (
