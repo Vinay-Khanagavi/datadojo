@@ -32,14 +32,6 @@ import useLogout from '../components/logout';
 
 
 
-const col6 = ['#3D405B']; // Dark shade
-const col2 = ['#E07A5F']; // red
-const col3 = ['#81B29A']; // green
-const col4 = ['#F4F1DE']; // white
-const col5 = ['#F2CC8F']; // yellow
-const col1 = ['#191c35']; // Darkest shade
-const col7 = ['#5FA8D3']; //Blue
-const col8 = ['#2b2d44']; //Darker shade
 
 
 export default function Home(){
@@ -56,7 +48,46 @@ export default function Home(){
     const [highestScore, setHighestScore] = useState('');
     const [appraisalCounts, setAppraisalCounts] = useState({});
     const [userEmail, setUserEmail] = useState('');
+    const [mode, setMode] = useState('dark');
     
+    // state variables for colour mode
+    const [col1, setCol1] = useState('#191c35'); // Darker shade
+    const [col2, setCol2] = useState('#E07A5F'); // red
+    const [col3, setCol3] = useState('#81B29A'); // green
+    const [col4, setCol4] = useState('#F4F1DE'); // white
+    const [col5, setCol5] = useState('#F2CC8F'); // yellow
+    const [col6, setCol6] = useState('#3D405B'); // Dark shade
+    const [col7, setCol7] = useState('#5FA8D3'); //Blue
+    const [col8, setCol8] = useState('#2b2d44'); //Darker shade
+
+
+    const handleMode = async(event) => {
+        
+        if(mode == "light")
+        {
+            setCol1('#fff');
+            setCol2('#E07A5F');
+            setCol3('#81B29A');
+            setCol4('#F4F1DE');
+            setCol5('#F2CC8F');
+            setCol6('#F4F1ED');
+            setCol7('#5FA8D3');
+            setCol8('#2b2d44');
+        }
+        else
+        {
+            setCol1('#191c35');
+            setCol2('#E07A5F');
+            setCol3('#81B29A');
+            setCol4('#F4F1DE');
+            setCol5('#F2CC8F');
+            setCol6('#3D405B');
+            setCol7('#5FA8D3');
+            setCol8('#2b2d44');
+        }
+    }
+
+
     // Function to fetch max score from db
     const getMaxScore = async() => {
         try {
@@ -161,6 +192,7 @@ const toggleAppraisal = async (threadId) => {
             setName(userData.name);
             setUserEmail(email);
             setYourScore(userData.score);
+            setMode(userData.mode);
           } else {
             console.log("No user found with this email.");
             setAuthError("User data not found.");
@@ -190,6 +222,7 @@ const toggleAppraisal = async (threadId) => {
         getMaxScore();
         getCards();
         getChats();
+        handleMode();
         console.log("Component mounted, starting auth check");
         const timeoutId = setTimeout(() => {
             if (isLoading) {

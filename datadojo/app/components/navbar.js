@@ -1,5 +1,8 @@
 'use client';
+//MUI components
 import { Box, Link, Typography, Button, Stack, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from "@mui/material";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 //MUI Icons used: Keep adding here to have a consistent dependency
 import HomeIcon from '@mui/icons-material/Home';
@@ -8,12 +11,17 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+
 
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import DynamicFormIcon from '@mui/icons-material/DynamicForm';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+
+
 
 //Import component
 import useLogout from './logout';
@@ -24,21 +32,15 @@ import { useRouter, usePathname} from "next/navigation";
 
 //Import firebase config & firestore components
 import {auth, db} from '../firebase';
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, updateDoc } from "firebase/firestore";
 
-const col6 = ['#3D405B']; // Dark shade
-const col2 = ['#E07A5F']; // red
-const col3 = ['#81B29A']; // green
-const col4 = ['#F4F1DE']; // white
-const col5 = ['#F2CC8F']; // yellow
-const col1 = ['#191c35']; // Darker shade
-const col7 = ['#5FA8D3']; //Blue
+
 
 const lcol1 = ['#E4E2DE']; //Offwhite
 const lcol2 = ['#FFF']; //White
 const lcol3 = [''];
 
-const activeColor = col1;
+
 
 const logout = useLogout();
 
@@ -50,6 +52,52 @@ const Navbar = () => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const pathname = usePathname();
+    const [mode, setMode] = useState('dark');
+    const [email, setEmail] = useState('');
+
+    // state variables for colour mode
+    const [col1, setCol1] = useState('#191c35'); // Darker shade
+    const [col2, setCol2] = useState('#E07A5F'); // red
+    const [col3, setCol3] = useState('#81B29A'); // green
+    const [col4, setCol4] = useState('#F4F1DE'); // white
+    const [col5, setCol5] = useState('#F2CC8F'); // yellow
+    const [col6, setCol6] = useState('#3D405B'); // Dark shade
+    const [col7, setCol7] = useState('#5FA8D3'); //Blue
+    const [col8, setCol8] = useState('#2b2d44'); //Darker shade
+
+    const handleMode = async(event, newmode) => {
+        if(newmode!=null)
+        {
+            setMode(newmode);
+            const userRef = doc(db, 'users', email); // Reference to the user's document
+            await updateDoc(userRef, { mode: newmode});    
+        }
+        if(newmode == "light")
+        {
+            setCol1('#EDE8E2');
+            setCol2('#E07A5F');
+            setCol3('#81B29A');
+            setCol4('#F4F1DE');
+            setCol5('#F2CC8F');
+            setCol6('#F4F1ED');
+            setCol7('#5FA8D3');
+            setCol8('#FFF'); //
+        }
+        else
+        {
+            setCol1('#191c35');
+            setCol2('#E07A5F');
+            setCol3('#81B29A');
+            setCol4('#F4F1DE');
+            setCol5('#F2CC8F');
+            setCol6('#3D405B');
+            setCol7('#5FA8D3');
+            setCol8('#2b2d44');
+        }
+    }
+    
+
+    const activeColor = col1;
 
     const isActive = (path) => pathname === path;
 
@@ -66,6 +114,20 @@ const Navbar = () => {
             setLeaderboardData(data);
             setLoading(false);
         };
+
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
+            if (user) {
+                setEmail(user.email)
+            } else {
+                console.log("User not authenticated, redirecting to signin");
+                
+            }
+        }, (error) => {
+            console.error("Auth error:", error);
+            setAuthError(error.message);
+            setIsLoading(false);
+        });
 
         fetchLeaderboardData();
     }, []);
@@ -125,7 +187,30 @@ const Navbar = () => {
                                 </Link>
                             </Typography>
                             
-                            
+                            {/*///////// Light modes  /////////////*/}
+                            <ToggleButtonGroup
+                                color="primary"
+                                size="small"
+                                value={mode}
+                                exclusive
+                                onChange={handleMode}
+                                sx={{
+                                  '& .MuiToggleButtonGroup-grouped': {
+                                    color: '#fff', // Default color
+                                    borderColor: 'rgba(256,256,256,0.1)', // Border color
+                                    '&.Mui-selected': {
+                                      backgroundColor: '#fff',
+                                      color: '#191c35',
+                                      borderColor: 'rgba(256,256,256,0.2)',
+                                    },
+                                  },
+                                }}
+                                >
+                                    <ToggleButton value="light"><LightModeIcon/></ToggleButton>
+                                    <ToggleButton value="dark"><DarkModeIcon/></ToggleButton>
+                                    
+                            </ToggleButtonGroup>
+
                             <Box
                                 display={'flex'}
                                 flexDirection={'column'}
