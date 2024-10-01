@@ -220,13 +220,21 @@ export default function Generate(){
             overflow={'hidden'}
             >
                     <Navbar />
-                    
+                    <Box
+                        sx={{
+                            position:'fixed',
+                            top:'20vh',
+                            right:'-100px'
+                        }}
+                    >
                         <Image
-                            src={'/tarot-card.png'}
-                            width={'200'}
-                            height={'200'}
-                            
-                        />
+                                src={'/tarot-card.png'}
+                                width={'200'}
+                                height={'200'}
+                                
+                            />
+                    </Box>
+                        
                     <Box
                         width={'80vw'}
                         height={'100vh'}
