@@ -13,6 +13,9 @@ import useLogout from '../../components/logout';
 import {CircularProgress} from '@mui/material';
 
 
+//Components
+import Navbar from "../../components/navbar";
+
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
@@ -206,128 +209,14 @@ if (authError) {
       height={'100vh'}
       overflow={'hidden'}
       boxSizing={'border-box'}
-      
+      display={'flex'}
+      flexDirection={'row'}      
     >
-      {/*/////////// Navbar starts //////////////*/}
-      <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
-                        >
-                            <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
-                            >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='../'
-                                >
-                                    Learn Buddy
-                                </Link>
-                            </Typography>
-
-                            <Box
-                                display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
-                            >
-                                <Button
-                                    href='../dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                                    
-                                        }
-
-                                    }}
-                                >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='../editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col2
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='../chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='../fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col5
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-                            
-                            <Box>
-                                {/* <Button
-                                    href="./profile/"
-                                    sx={{color:col4,
-                                        
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <Person4Icon/>
-                                </Button> */}
-                                <Button
-                                    href="./profile/"
-                                    onClick={handleLogout}
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-                                    }}
-                                >
-                                    <LogoutIcon/>
-                                </Button>
-                            </Box>
-                            
-                        </Box>
-
-                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
+      <Navbar/>
                         
       {/* ///////////////// Top pane ends here ////////////////// */}
       <Box
-        height={'90vh'}
+        height={'100vh'}
         padding={'1em'}
         margin={{xs:'0 0 10vh 0'}}
         width={{ xs: '90vw', sm: '80vw', md: '100vw' }}
