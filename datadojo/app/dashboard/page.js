@@ -44,9 +44,10 @@ export default function Home(){
     const [highestScore, setHighestScore] = useState('');
     const [appraisalCounts, setAppraisalCounts] = useState({});
     const [userEmail, setUserEmail] = useState('');
-    const [mode, setMode] = useState('dark');
+    
     
     // state variables for colour mode
+    const [mode, setMode] = useState('dark');
     const [col1, setCol1] = useState('#191c35'); // Darker shade
     const [col2, setCol2] = useState('#E07A5F'); // red
     const [col3, setCol3] = useState('#81B29A'); // green
@@ -189,28 +190,7 @@ const toggleAppraisal = async (threadId) => {
       }
 
     useEffect(() => {
-        if(mode == "light")
-            {
-                setCol1('#EDE8E2');
-                setCol2('#E07A5F');
-                setCol3('#81B29A');
-                setCol4('#000');
-                setCol5('#F2CC8F');
-                setCol6('#F4F1ED');
-                setCol7('#5FA8D3');
-                setCol8('#FFF'); 
-            }
-            else
-            {
-                setCol1('#191c35');
-                setCol2('#E07A5F');
-                setCol3('#81B29A');
-                setCol4('#F4F1DE');
-                setCol5('#F2CC8F');
-                setCol6('#3D405B');
-                setCol7('#5FA8D3');
-                setCol8('#2b2d44');
-            }
+        
         getMaxScore();
         getCards();
         getChats();
@@ -233,18 +213,44 @@ const toggleAppraisal = async (threadId) => {
                 getChatsWithAppraisals(user.email);
                 setIsLoading(false);
                 getNameByEmail(user.email);
+
+
+                // Add this section for colour modes
                 const unsubs = onSnapshot(doc(db,"users",user.email), (doc) => {
                     if (doc.exists()) {
                       const userData = doc.data();
-                      alert(userData.mode);
-                      if (userData?.mode) {
+                      if (userData.mode) {
                         setMode(userData.mode);
                       }
+                      if(userData.mode == "light")
+                        {
+                            setCol1('#EDE8E2');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#000');
+                            setCol5('#F2CC8F');
+                            setCol6('#F4F1ED');
+                            setCol7('#5FA8D3');
+                            setCol8('#FFF'); 
+                        }
+                        else
+                        {
+                            setCol1('#191c35');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#F4F1DE');
+                            setCol5('#F2CC8F');
+                            setCol6('#3D405B');
+                            setCol7('#5FA8D3');
+                            setCol8('#2b2d44');
+                        }
                     }
                   });
                   return () => {
                     unsubs();
                 };
+                    // Colour modes' section ends here
+                
             } else {
                 console.log("User not authenticated, redirecting to signin");
                 router.push('/signin');

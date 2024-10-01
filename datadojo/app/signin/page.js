@@ -127,18 +127,21 @@ export default function Home() {
               
             >
                 <Typography
-                  color={col4}
-                  margin='0.5em'
-                  fontSize='2em'
-                >
-                    <Link
-                        color='inherit'
-                        underline='none'
-                        href='./'
-                    >
-                        Learn Buddy
-                    </Link>
-                </Typography>
+                            color={col4}
+                            margin='0.5em'
+                            fontSize='2em'
+                            textAlign={'left'}
+                            borderBottom={'1px solid rgba(0,0,0,0.3)'}
+                            >
+                                <Link
+                                    color='inherit'
+                                    underline='none'
+                                    href='./'
+                                    textAlign={'left'}
+                                >
+                                    DataDojo
+                                </Link>
+                            </Typography>
             </Box>
           {/*/////////////////////// Central box /////////////////////////////*/}
 
