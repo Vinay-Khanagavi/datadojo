@@ -8,6 +8,7 @@ import {auth, db} from '../firebase';
 import Head from 'next/head';
 import { useEffect } from "react";
 import useLogout from '../components/logout';
+import Image from "next/image";
 
 //Components
 import Navbar from "../components/navbar";
@@ -219,7 +220,13 @@ export default function Generate(){
             overflow={'hidden'}
             >
                     <Navbar />
-
+                    
+                        <Image
+                            src={'/tarot-card.png'}
+                            width={'200'}
+                            height={'200'}
+                            
+                        />
                     <Box
                         width={'80vw'}
                         height={'100vh'}
