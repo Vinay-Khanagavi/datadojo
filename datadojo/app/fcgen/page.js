@@ -223,14 +223,15 @@ export default function Generate(){
                     <Box
                         sx={{
                             position:'fixed',
-                            top:'20vh',
-                            right:'-100px'
+                            top:'24vh',
+                            right:'-100px',
+                            transform:'rotateZ(-45deg)'
                         }}
                     >
                         <Image
                                 src={'/tarot-card.png'}
-                                width={'200'}
-                                height={'200'}
+                                width={'300'}
+                                height={'300'}
                                 
                             />
                     </Box>
