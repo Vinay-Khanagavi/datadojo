@@ -2,7 +2,7 @@
 
 import { collection, writeBatch, doc, getDoc, setDoc, onSnapshot} from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
+import { Container,Link, Typography, Card, Box, Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
 import {auth, db} from '../firebase';
 import Head from 'next/head';
@@ -265,20 +265,20 @@ export default function Generate(){
                                         sx={{
                                             '& .MuiOutlinedInput-root': {
                                               '& fieldset': {
-                                                borderColor: 'white',
+                                                borderColor: col4,
                                               },
                                               '&:hover fieldset': {
-                                                borderColor: 'white',
+                                                borderColor: col4,
                                               },
                                               '&.Mui-focused fieldset': {
-                                                borderColor: 'white',
+                                                borderColor: col4,
                                               },
                                             },
                                             '& .MuiInputLabel-root': {
-                                              color: 'white',
+                                              color: col4,
                                             },
                                             '& .MuiOutlinedInput-input': {
-                                              color: 'white',
+                                              color: col4,
                                             },
                                           }}
                                     />
@@ -291,7 +291,7 @@ export default function Generate(){
                                         variant='contained'
                                         sx={{
                                             bgcolor:col5,
-                                            color:col1,
+                                            color:'#444',
                                             borderRadius:'2em',
                                             padding:'0.8em 2em',
                                             '&:hover':{
@@ -334,15 +334,15 @@ export default function Generate(){
                                     </Typography>
 
                                     <Box
-                                    width={'100%'}
-                                    display={'flex'}
-                                    marginTop={'1em'}
-                                    justifyContent={'flex-start'}
+                                        width={'100%'}
+                                        display={'flex'}
+                                        marginTop={'1em'}
+                                        justifyContent={'flex-start'}
                                     >
                                         <Box
-                                        width={'60vw'}
-                                        height={'60vh'}
-                                        overflow={'hidden'}
+                                            width={'60vw'}
+                                            height={'60vh'}
+                                            overflow={'hidden'}
                                         >
                                             <Grid container spacing={4}
                                             

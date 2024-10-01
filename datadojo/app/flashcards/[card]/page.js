@@ -229,20 +229,24 @@ export default function Generate({params}){
                         textAlign={'center'}
                         fontWeight={'100'}
                     >
-                        Flashcards Preview
+                        Flashcards Viewer
                     </Typography>
                     <Box
-                    width={'100vw'}
-                    display={'flex'}
-                    justifyContent={'center'}
+                        width={'100%'}
+                        display={'flex'}
+                        marginTop={'1em'}
+                        justifyContent={'center'}
                     >
                     <Box
-                    width={'80vw'}>
+                                            width={'60vw'}
+                                            height={'85vh'}
+                                            overflow={'hidden'}
+                                        >
                     <Grid container spacing={3}
                     
                     >
                         {flashcards.map((flashcard, index) =>
-                            (  <Grid item xs={12} sm={6} md={4} key = {index}
+                            (  <Grid item xs={6} sm={6} md={3} key = {index}
                                 
                                 >
                                 <Card
@@ -268,7 +272,7 @@ export default function Generate({params}){
                                                         transformStyle: 'preserve-3d',
                                                         position: 'relative',
                                                         width:'100%',
-                                                        height:'200px',
+                                                        height:'150px',
                                                         boxShadow: '0 4px 8px 0 rgba(0,0,0, 0.6)',
                                                         transform: flipped[index]
                                                         ? 'rotateY(180deg)'
@@ -320,7 +324,8 @@ export default function Generate({params}){
                                                             alignItems={'center'}
                                                         >
                                                         <Typography
-                                                            variant="h5"
+                                                            variant="h6"
+                                                            fontSize={'1.1em'}
                                                             component="div"
                                                             color={col4}
                                                         >
@@ -334,7 +339,7 @@ export default function Generate({params}){
                                                         <Typography
                                                             variant="h5"
                                                             fontWeight={'100'}
-                                                            fontSize={'1.2em'}
+                                                            fontSize={'1em'}
                                                             textAlign={'center'}
                                                             component="div"
                                                             color={col4}

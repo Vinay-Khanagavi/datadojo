@@ -305,7 +305,7 @@ const Navbar = () => {
                                     <Box
                                         width={'40vw'}
                                         maxHeight={'50vh'}
-                                        overflow={'auto'}
+                                        
                                         sx={{
                                         position: 'absolute',
                                         top: '50%',
@@ -325,12 +325,16 @@ const Navbar = () => {
                                         ) : (
                                             <TableContainer
                                                 component={Paper}
+                                                
                                                 sx={{
                                                     bgcolor:'#fff',
                                                     color:col4
                                                 }}
                                             >
-                                                <Table sx={{ minWidth: 350 }} aria-label="leaderboard table">
+                                                <Table
+                                                    overflow={'auto'}
+                                                    sx={{ minWidth: 350 }}
+                                                    aria-label="leaderboard table">
                                                     <TableHead>
                                                         <TableRow>
                                                             <TableCell>Rank</TableCell>
