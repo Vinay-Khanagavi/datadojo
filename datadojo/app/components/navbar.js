@@ -326,7 +326,7 @@ const Navbar = () => {
                                             <TableContainer
                                                 component={Paper}
                                                 sx={{
-                                                    bgcolor:col4,
+                                                    bgcolor:'#fff',
                                                     color:col4
                                                 }}
                                             >
