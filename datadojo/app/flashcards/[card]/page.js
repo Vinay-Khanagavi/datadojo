@@ -10,6 +10,10 @@ import { useEffect } from "react";
 import useLogout from '../../components/logout';
 
 
+//Component
+
+import Navbar from "../../components/navbar";
+
 import HomeIcon from '@mui/icons-material/Home';
 import CodeIcon from '@mui/icons-material/Code';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
@@ -17,6 +21,8 @@ import BoltIcon from '@mui/icons-material/Bolt';
 import Person4Icon from '@mui/icons-material/Person4';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { CircularProgress } from "@mui/material";
+import { ImportExport } from "@mui/icons-material";
+
 
 
 
@@ -109,6 +115,44 @@ export default function Generate({params}){
             if (user) {
                 console.log("User authenticated, setting loading to false");
                 setIsLoading(false);
+
+                // Add this section for colour modes
+                const unsubs = onSnapshot(doc(db,"users",user.email), (doc) => {
+                    if (doc.exists()) {
+                      const userData = doc.data();
+                      if (userData.mode) {
+                        setMode(userData.mode);
+                      }
+                      if(userData.mode == "light")
+                        {
+                            setCol1('#EDE8E2');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#000');
+                            setCol5('#F2CC8F');
+                            setCol6('#F4F1ED');
+                            setCol7('#5FA8D3');
+                            setCol8('#FFF'); 
+                        }
+                        else
+                        {
+                            setCol1('#191c35');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#F4F1DE');
+                            setCol5('#F2CC8F');
+                            setCol6('#3D405B');
+                            setCol7('#5FA8D3');
+                            setCol8('#2b2d44');
+                        }
+                    }
+                  });
+                  return () => {
+                    unsubs();
+                };
+                    // Colour modes' section ends here
+
+
             } else {
                 console.log("User not authenticated, redirecting to signin");
                 router.push('/signin');
@@ -170,125 +214,15 @@ export default function Generate({params}){
             width={'100vw'}
             minHeight={'100vh'}
             backgroundColor={col1}
+            display={'flex'}
+            flexDirection={'row'}
+            overflow={'hidden'}
             >
-                <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
-                        >
-                            <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
-                            >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='../'
-                                >
-                                    Learn Buddy
-                                </Link>
-                            </Typography>
-
-                            <Box
-                                display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
-                            >
-                                <Button
-                                    href='../dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                                    
-                                        }
-
-                                    }}
-                                >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='../editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col2
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='../chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='../fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col5
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-                            
-                            <Box>
-                                {/* <Button
-                                    href="./profile/"
-                                    sx={{color:col4,
-                                        
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <Person4Icon/>
-                                </Button> */}
-                                <Button
-                                    href="../profile/"
-                                    onClick={handleLogout}
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-                                    }}
-                                >
-                                    <LogoutIcon/>
-                                </Button>
-                            </Box>
-                            
-                        </Box>
-
-                        {/*//////////////////////////// Navbar ends here /////////////////////////////////*/}
+            
+            <Navbar/>
             
             {
-                flashcards.length>0 && (<Box sx={{mt:4}}>
+                flashcards.length>0 && (<Box width={'80vw'} sx={{mt:4}}>
                     <Typography
                         variant="h5"
                         color={col4}
