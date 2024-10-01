@@ -196,11 +196,11 @@ const Navbar = () => {
                                 onChange={handleMode}
                                 sx={{
                                   '& .MuiToggleButtonGroup-grouped': {
-                                    color: '#fff', // Default color
+                                    color: col4, // Default color
                                     borderColor: 'rgba(256,256,256,0.1)', // Border color
                                     '&.Mui-selected': {
-                                      backgroundColor: '#fff',
-                                      color: '#191c35',
+                                      backgroundColor: col1,
+                                      color: col4,
                                       borderColor: 'rgba(256,256,256,0.2)',
                                     },
                                   },

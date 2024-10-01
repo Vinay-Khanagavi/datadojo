@@ -21,6 +21,10 @@ import {useEffect, useState} from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 
+//Components
+
+import Navbar from '../components/navbar';
+
 export default function ProblemSolver() {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
@@ -152,6 +156,45 @@ export default function ProblemSolver() {
 useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
+
+    // Add this section for colour modes
+    const unsubs = onSnapshot(doc(db,"users",currentUser.email), (doc) => {
+      if (doc.exists()) {
+        const userData = doc.data();
+        if (userData.mode) {
+          setMode(userData.mode);
+        }
+        if(userData.mode == "light")
+          {
+              setCol1('#EDE8E2');
+              setCol2('#E07A5F');
+              setCol3('#81B29A');
+              setCol4('#000');
+              setCol5('#F2CC8F');
+              setCol6('#F4F1ED');
+              setCol7('#5FA8D3');
+              setCol8('#FFF'); 
+          }
+          else
+          {
+              setCol1('#191c35');
+              setCol2('#E07A5F');
+              setCol3('#81B29A');
+              setCol4('#F4F1DE');
+              setCol5('#F2CC8F');
+              setCol6('#3D405B');
+              setCol7('#5FA8D3');
+              setCol8('#2b2d44');
+          }
+      }
+    });
+    return () => {
+      unsubs();
+  };
+      // Colour modes' section ends here
+
+
+
   });
 
   return () => unsubscribe();
@@ -167,123 +210,11 @@ useEffect(() => {
 
 
   return (
-    <Box width="100vw" height="100vh" bgcolor={col1}>
-      <Box
-                        width='92vw'
-                        height='8vh'
-                        display='flex'
-                        justifyContent='space-between'
-                        alignItems='center'
-                        padding={'0 4vw'}
-                        >
-                            <Typography
-                            color={col4}
-                            margin='0.5em'
-                            fontSize='2em'
-                            >
-                                <Link
-                                    color='inherit'
-                                    underline='none'
-                                    href='./'
-                                >
-                                    Learn Buddy
-                                </Link>
-                            </Typography>
+    <Box width="100vw" height="100vh" bgcolor={col1} display={'flex'} overflow={'hidden'}>
+      <Navbar/>
 
-                            <Box
-                                display={'flex'}
-                                justifyContent={'space-around'}
-                                width={'30vw'}
-                            >
-                                <Button
-                                    href='./dashboard/'
-                                    
-                                    sx={{color:col4,
-                                        borderBottom:`4px solid ${col4}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4,
-                                                    
-                                        }
-
-                                    }}
-                                >
-                                    <HomeIcon display={'block'} />
-                                    
-                                </Button>
-                                <Button
-                                    href='./editor/'
-                                    sx={{color:col2,
-                                        borderBottom:`4px solid ${col2}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col2
-                                        }
-
-                                    }}
-                                >
-                                    <CodeIcon />
-                                </Button>
-                                <Button
-                                    href='./chat/'
-                                    sx={{color:col3,
-                                        borderBottom:`4px solid ${col3}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col3
-                                        }
-
-                                    }}
-                                >
-                                    <SupportAgentIcon />
-                                </Button>
-                                <Button
-                                    href='./fcgen/'
-                                    sx={{color:col5,
-                                        borderBottom:`4px solid ${col5}`,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col5
-                                        }
-
-                                    }}
-                                >
-                                    <BoltIcon />
-                                </Button>
-                            </Box>
-                            
-                            <Box>
-                                {/* <Button
-                                    href="./profile/"
-                                    sx={{color:col4,
-                                        
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-
-                                    }}
-                                >
-                                    <Person4Icon/>
-                                </Button> */}
-                                <Button
-                                    href="./profile/"
-                                    onClick={handleLogout}
-                                    sx={{color:col4,
-                                        '&:hover':{
-                                            color:col1,
-                                            backgroundColor:col4
-                                        }
-                                    }}
-                                >
-                                    <LogoutIcon/>
-                                </Button>
-                            </Box>
-                            
-                        </Box>
-
-      <Box display="flex" flexDirection="row" bgcolor={col1} gap={2} width="100vw" height="92vh">
-        <Box flex={1} sx={{ p: 2 }}>
+      <Box display="flex" flexDirection="row" bgcolor={col1} gap={2} width="80vw" height="92vh">
+        <Box flex={1} width={'30vw'} sx={{ p: 2 }}>
           <Paper elevation={3} sx={{ p: 2, mb: 2, bgcolor: col6, color: col4 }}>
             <Typography variant="h6" gutterBottom>
               Problem Statement
@@ -365,7 +296,7 @@ useEffect(() => {
           
         </Box>
             
-        <Box flex={2} sx={{ p: 2, bgcolor: col1 }}>
+        <Box width={'45vw'} flex={2} sx={{ p: 2, bgcolor: col1 }}>
           <Paper elevation={3} sx={{ p: 2, bgcolor: col6, color: col4 }}>
             <Tabs value={language} onChange={handleLanguageChange} sx={{ color: col4 }}>
               <Tab label="Python" sx={{ color: col4 }} />
