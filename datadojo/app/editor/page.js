@@ -8,7 +8,7 @@ import { db } from '../firebase';
 import questions from './questions.json'; // Direct import from JSON
 import useLogout from '../components/logout';
 import Editor from '@monaco-editor/react';
-import {collection, query, where, getDocs, doc, updateDoc} from 'firebase/firestore';
+import {collection, query, where, getDocs, doc, updateDoc, onSnapshot} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 
@@ -24,15 +24,22 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export default function ProblemSolver() {
   const [selectedQuestion, setSelectedQuestion] = useState(null);
 
+  // state variables for colour mode
+  const [mode, setMode] = useState('dark');
+  const [col1, setCol1] = useState('#191c35'); // Darker shade
+  const [col2, setCol2] = useState('#E07A5F'); // red
+  const [col3, setCol3] = useState('#81B29A'); // green
+  const [col4, setCol4] = useState('#F4F1DE'); // white
+  const [col5, setCol5] = useState('#F2CC8F'); // yellow
+  const [col6, setCol6] = useState('#3D405B'); // Dark shade
+  const [col7, setCol7] = useState('#5FA8D3'); //Blue
+  const [col8, setCol8] = useState('#2b2d44'); //Darker shade
+
+
   // For Handling undefined or non-integer id gracefully
   
 
-  const col6 = ['#3D405B']; // Dark shade
-  const col2 = ['#E07A5F']; // red
-  const col3 = ['#81B29A']; // green
-  const col4 = ['#F4F1DE']; // white
-  const col5 = ['#F2CC8F']; // yellow
-  const col1 = ['#191c35']; // Darker shade
+
 
   const [language, setLanguage] = useState(0);
   const [code, setCode] = useState('');

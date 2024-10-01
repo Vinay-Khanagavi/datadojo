@@ -1,6 +1,6 @@
 'use client'
 
-import { collection, writeBatch, doc, getDoc, setDoc, query,where, getDocs} from "firebase/firestore";
+import { collection, writeBatch, doc, getDoc, setDoc, query,where, getDocs, onSnapshot} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { Container,Link, Typography, Card, Box,Grid, Paper, TextField, Button, CardActionArea, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { useState} from "react";
@@ -19,12 +19,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { CircularProgress } from "@mui/material";
 
 
-const col6 = ['#3D405B'] // Dark shade
-const col2 = ['#E07A5F'] //red
-const col3 = ['#81B29A'] //green
-const col4 = ['#F4F1DE'] //white
-const col5 = ['#F2CC8F'] //yellow
-const col1 = ['#191c35']; // Darker shade
 
 export default function Generate({params}){
     const {card} = params;
@@ -35,7 +29,18 @@ export default function Generate({params}){
     const [authError, setAuthError] = useState(null);
     const handleLogout = useLogout();
 
-    
+    // state variables for colour mode
+    const [mode, setMode] = useState('dark');
+    const [col1, setCol1] = useState('#191c35'); // Darker shade
+    const [col2, setCol2] = useState('#E07A5F'); // red
+    const [col3, setCol3] = useState('#81B29A'); // green
+    const [col4, setCol4] = useState('#F4F1DE'); // white
+    const [col5, setCol5] = useState('#F2CC8F'); // yellow
+    const [col6, setCol6] = useState('#3D405B'); // Dark shade
+    const [col7, setCol7] = useState('#5FA8D3'); //Blue
+    const [col8, setCol8] = useState('#2b2d44'); //Darker shade
+
+
     const [flashcards, setFlashcards] = useState([])
     const [flipped, setFlipped] = useState([])
     
