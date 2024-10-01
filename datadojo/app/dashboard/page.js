@@ -24,7 +24,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Navbar from '../components/navbar';
 
 import {auth, db} from '../firebase';
-import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove, onSnapshot, userDocRef } from 'firebase/firestore';
+import {collection, query, where, getDocs, doc, updateDoc,arrayUnion, arrayRemove, onSnapshot} from 'firebase/firestore';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useLogout from '../components/logout';
@@ -359,6 +359,7 @@ const toggleAppraisal = async (threadId) => {
                                     href="./chat"
                                     sx={{
                                         background:col6,
+                                        color:col4,
                                         '&:hover':
                                         {
                                             background:col4,

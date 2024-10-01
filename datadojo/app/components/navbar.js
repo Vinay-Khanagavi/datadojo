@@ -32,7 +32,7 @@ import { useRouter, usePathname} from "next/navigation";
 
 //Import firebase config & firestore components
 import {auth, db} from '../firebase';
-import { collection, getDocs, query, orderBy, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, doc, updateDoc, onSnapshot } from "firebase/firestore";
 
 
 
@@ -118,7 +118,44 @@ const Navbar = () => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             console.log("Auth state changed:", user ? "User logged in" : "User not logged in");
             if (user) {
-                setEmail(user.email)
+                setEmail(user.email);
+
+                // Add this section for colour modes
+                const unsubs = onSnapshot(doc(db,"users",user.email), (doc) => {
+                    if (doc.exists()) {
+                      const userData = doc.data();
+                      if (userData.mode) {
+                        setMode(userData.mode);
+                      }
+                      if(userData.mode == "light")
+                        {
+                            setCol1('#EDE8E2');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#000');
+                            setCol5('#F2CC8F');
+                            setCol6('#F4F1ED');
+                            setCol7('#5FA8D3');
+                            setCol8('#FFF'); 
+                        }
+                        else
+                        {
+                            setCol1('#191c35');
+                            setCol2('#E07A5F');
+                            setCol3('#81B29A');
+                            setCol4('#F4F1DE');
+                            setCol5('#F2CC8F');
+                            setCol6('#3D405B');
+                            setCol7('#5FA8D3');
+                            setCol8('#2b2d44');
+                        }
+                    }
+                  });
+                  return () => {
+                    unsubs();
+                };
+                    // Colour modes' section ends here
+
             } else {
                 console.log("User not authenticated, redirecting to signin");
                 
@@ -130,6 +167,9 @@ const Navbar = () => {
         });
 
         fetchLeaderboardData();
+        return() => {
+            unsubscribe();
+        }
     }, []);
 
     const NavButton = ({ href, icon, text }) => (
@@ -196,11 +236,11 @@ const Navbar = () => {
                                 onChange={handleMode}
                                 sx={{
                                   '& .MuiToggleButtonGroup-grouped': {
-                                    color: '#fff', // Default color
+                                    color: col4, // Default color
                                     borderColor: 'rgba(256,256,256,0.1)', // Border color
                                     '&.Mui-selected': {
-                                      backgroundColor: '#fff',
-                                      color: '#191c35',
+                                      backgroundColor: col1,
+                                      color: col4,
                                       borderColor: 'rgba(256,256,256,0.2)',
                                     },
                                   },
@@ -265,7 +305,7 @@ const Navbar = () => {
                                     <Box
                                         width={'40vw'}
                                         maxHeight={'50vh'}
-                                        overflow={'auto'}
+                                        
                                         sx={{
                                         position: 'absolute',
                                         top: '50%',
@@ -285,12 +325,16 @@ const Navbar = () => {
                                         ) : (
                                             <TableContainer
                                                 component={Paper}
+                                                
                                                 sx={{
-                                                    bgcolor:col4,
+                                                    bgcolor:'#fff',
                                                     color:col4
                                                 }}
                                             >
-                                                <Table sx={{ minWidth: 350 }} aria-label="leaderboard table">
+                                                <Table
+                                                    overflow={'auto'}
+                                                    sx={{ minWidth: 350 }}
+                                                    aria-label="leaderboard table">
                                                     <TableHead>
                                                         <TableRow>
                                                             <TableCell>Rank</TableCell>
